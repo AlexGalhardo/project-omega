@@ -1,6 +1,6 @@
 # Stage 1 — Research summary
 
-Date: 2026-10-23. Status: **research checkpoint delivered; Stage 2 awaiting the first owner decision**. Planning is not complete. No game implementation, feasibility spike, benchmark, REA inspection or independent model review has occurred.
+Date: 2026-10-23. Status: **research checkpoint delivered; Stage 2 in progress**. The later owner approval of the integration strategy is canonical in [DEC-001](../decisions/decision-register.md#dec-001--bevy-integration-strategy); recommendations below retain their research context. Planning is not complete. No game implementation, feasibility spike, benchmark, REA inspection or independent model review has occurred.
 
 ## Project mandate and current state
 
@@ -72,4 +72,4 @@ No GDD, Art Bible, architecture ADRs, implementation specs, agent contract, road
 
 The full traceability chain is the later planning acceptance condition: evidence -> approved decision -> GDD requirement -> ADR/architecture -> spec -> roadmap task -> acceptance test. At this stage only evidence, proposals and question IDs exist; absent later links are **intentionally pending**, not a passed planning audit.
 
-**Next question:** Q01, fork strategy. Recommended answer: B, with C retained as a controlled escalation path. Wait for the owner before advancing the brainstorming queue.
+**Continuation:** Q01 is resolved in [DEC-001](../decisions/decision-register.md#dec-001--bevy-integration-strategy). Next is Q02, the 1.0 platform scope. Wait for the owner before advancing the brainstorming queue.

@@ -8,11 +8,11 @@ Status: end of Stage 1, 2026-10-23. This is the canonical research question queu
 
 ## Stage 2 owner decisions, in priority order
 
-All entries are **Open**, except the explicitly supplied repository. Suggested defaults are **Recommendations**, not decisions. Ask one high-impact question at a time, with rationale and alternatives; do not present this entire queue as a questionnaire.
+Q01 is resolved in the [decision register](../decisions/decision-register.md); the repository destination was also supplied. Other entries remain **Open**. Suggested defaults are **Recommendations**, not decisions. Ask one high-impact question at a time, with rationale and alternatives; do not present this entire queue as a questionnaire.
 
 | ID | Question / provisional default | Impact and resolution point |
 | --- | --- | --- |
-| Q01 | Fork strategy? Recommend upstream Bevy + own plugins (B); retain minimal-patch escalation (C). | First Stage 2 question. Determines maintenance responsibilities and dependency strategy. [Trade-offs](03-bevy-and-fork-strategy.md). |
+| Q01 | Resolved: see [DEC-001](../decisions/decision-register.md#dec-001--bevy-integration-strategy). | [Research trade-offs](03-bevy-and-fork-strategy.md). |
 | Q02 | Which shipping platforms and development OS? Recommend one desktop platform first, selected by the owner. Current session is Windows/PowerShell, not proof of an exclusive development or shipping target. | Before design scope and CI/platform promises. Web/mobile/controller-device coverage changes cost. |
 | Q03 | What Rust/Bevy experience, hours per week and horizon are available? The brief reports web/Phaser experience; Rust/Bevy proficiency is unconfirmed. | Before content counts, architecture complexity and schedule estimates. No productivity multiplier for AI is assumed. |
 | Q04 | What is the affordable 1.0 content envelope: characters, weapons, enemies, bosses, items, arenas and modes? Recommend a small complete offering, calibrated by an early slice. | Before Stage 3; counts must be owner-approved, not copied from references. |
@@ -28,7 +28,7 @@ All entries are **Open**, except the explicitly supplied repository. Suggested d
 | Q14 | Commercial or personal release, stores and distribution license? | Release QA, branding, legal review, packaging and storefront integration. |
 | Q15 | Budget and paid tools? Recommend no paid-service prerequisite. | Asset-production options, recurring costs and approval boundaries. |
 
-Before Stage 3, resolve or explicitly defer every design-affecting entry with a consequence and revisit trigger. The decision register will become canonical for answers; link to it when created rather than maintaining competing decisions here.
+Before Stage 3, resolve or explicitly defer every design-affecting entry with a consequence and revisit trigger. The [decision register](../decisions/decision-register.md) is canonical for answers; this queue links to it rather than maintaining competing decisions.
 
 ## Technical unknowns and proposed ways to resolve them
 
