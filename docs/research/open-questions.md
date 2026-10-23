@@ -1,34 +1,14 @@
 # Open questions and evidence gaps
 
-Status: end of Stage 1, 2026-10-23. This is the canonical research question queue, not a list of approved decisions or implementation tasks. Product choices require the owner. Confidence and sources: [ledger](sources.md). Detailed trade-offs remain in the relevant track.
+Status: technical evidence gaps after Stage 2 decision collection, 2026-10-23. Product decisions are canonical in the [decision register](../decisions/decision-register.md); this file does not repeat them. Confidence and sources: [ledger](sources.md). Detailed trade-offs remain in the relevant track.
 
 ## Findings and evidence
 
-**Verified (owner brief):** the intended products are an original arena-survival roguelite and a reusable 2D layer on Bevy, maintained by one developer with agent assistance. Repository artifacts must be English; owner conversation is Brazilian Portuguese. **Unknown:** the product and capacity choices below. The reference repositories' settings and experience claims do not establish answers for this project.
+**Verified (owner brief and answers):** the intended products are an original arena-survival roguelite and a reusable 2D layer on Bevy, maintained by one developer with agent assistance. Repository artifacts must be English; owner conversation is Brazilian Portuguese. Product answers/defaults are in the decision register. **Unknown:** the technical gaps below. The reference repositories' settings and experience claims do not establish answers for this project.
 
-## Stage 2 owner decisions, in priority order
+## Stage 2 result
 
-Q01 and the 1.0 shipping-platform portion of Q02 are resolved in the [decision register](../decisions/decision-register.md); the repository destination was also supplied. Other entries remain **Open**. Suggested defaults are **Recommendations**, not decisions. Ask one high-impact question at a time, with rationale and alternatives; do not present this entire queue as a questionnaire.
-
-| ID | Question / provisional default | Impact and resolution point |
-| --- | --- | --- |
-| Q01 | Resolved: see [DEC-001](../decisions/decision-register.md#dec-001--bevy-integration-strategy). | [Research trade-offs](03-bevy-and-fork-strategy.md). |
-| Q02 | 1.0 shipping platform resolved: see [DEC-002](../decisions/decision-register.md#dec-002--version-10-platform-scope). Current Windows/PowerShell environment is the working development baseline. | Minimum OS/hardware remain open; confirm any additional development OS only if needed. |
-| Q03 | Experience recorded in [DEC-003](../decisions/decision-register.md#dec-003--owner-experience-baseline); weekly availability in [DEC-004](../decisions/decision-register.md#dec-004--weekly-owner-availability). Release horizon remains unspecified. | No proficiency level, measured throughput or productivity multiplier for AI is assumed. Establish a deadline only if the owner supplies one or later approves an evidence-based schedule. |
-| Q04 | Resolved: compact content envelope approved in [DEC-005](../decisions/decision-register.md#dec-005--compact-version-10-content-envelope); counts are canonical in [scope](../decisions/scope-and-non-goals.md#approved-content-envelope). | Feasibility remains to measure; later scope changes require owner approval. |
-| Q05 | Identity resolved in [DEC-006](../decisions/decision-register.md#dec-006--original-thematic-identity). Principal mechanical differentiator and working name remain open. | Before GDD/art direction. `project-omega` is a repository identifier, not an approved final title. Name clearance depends on release plans. |
-| Q06 | What aiming and attack agency is intended? Recommend auto-fire as a candidate consistent with the brief; manual aim is an alternative to discuss. | Input, targeting, controller/accessibility, attention budget. |
-| Q07 | What weapon-slot and build constraints should create decisions? | Combat schemas, shop, HUD and balance scope. Six slots are a reference fact, not a requirement. |
-| Q08 | What wave/run cadence, arena behavior, boss structure and victory/death rules are intended? | Spawn model, state transitions, camera and total content production. |
-| Q09 | Which stat families, shop tools and progression model are essential? Recommend a small transparent stat set and deliberate economy; distinguish unlock variety from permanent power. | Formulas, save data, fairness, balance/test combinations. |
-| Q10 | What SVG style and animation ambition are intended? Recommend simple readable silhouettes with offline exports. | Art production, camera scale and presentation pipeline. Logical geometry stays separate. |
-| Q11 | What audio direction and production method are affordable? Recommend licensed/original placeholders and simple SFX/music first. | Audio scope, provenance and optional paid tools. |
-| Q12 | What controller and accessibility commitments belong in 1.0? | Remapping, focus/navigation, readability, reduced effects, assistance settings and native QA. |
-| Q13 | Repository organization and visibility? Destination **supplied by owner:** `https://github.com/AlexGalhardo/project-omega`. Recommend one workspace in this repository. | No need to ask for the URL again. Visibility, public engine API and licensing are still choices; do not change remote visibility implicitly. |
-| Q14 | Commercial or personal release, stores and distribution license? | Release QA, branding, legal review, packaging and storefront integration. |
-| Q15 | Budget and paid tools? Recommend no paid-service prerequisite. | Asset-production options, recurring costs and approval boundaries. |
-
-Before Stage 3, resolve or explicitly defer every design-affecting entry with a consequence and revisit trigger. The [decision register](../decisions/decision-register.md) is canonical for answers; this queue links to it rather than maintaining competing decisions.
+Brainstorming choices and owner-accepted defaults are recorded in [DEC-001–DEC-010](../decisions/decision-register.md). The owner requested no further brainstorming questions and instructed the planner to use recommendations for remaining questions. Explicitly deferred release and legal choices have consequences and revisit triggers in DEC-010. The complete decision summary must still be approved before Stage 3.
 
 ## Technical unknowns and proposed ways to resolve them
 
