@@ -9,6 +9,7 @@ Stage 2 in progress, 2026-10-23. Only owner-mandated constraints and approved de
 - Windows release support under [DEC-002](decision-register.md#dec-002--version-10-platform-scope), including native validation and packaging. Minimum OS version and hardware remain undecided.
 - Original code/content and compliance with the [IP policy](../legal/ip-policy.md).
 - The approved compact content envelope below, under [DEC-005](decision-register.md#dec-005--compact-version-10-content-envelope).
+- The thematic identity approved in [DEC-006](decision-register.md#dec-006--original-thematic-identity). Its mechanical differentiator and detailed art direction remain undecided.
 - Verified acceptance evidence before completion claims. Detailed release criteria await the remaining decisions and later approved specifications.
 
 ### Approved content envelope

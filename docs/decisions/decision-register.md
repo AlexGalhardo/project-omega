@@ -76,10 +76,25 @@ Stage 2 in progress. This file is the canonical record of owner choices. Researc
 | Revisit condition | Review measured prototype production and playtest evidence; any count changes require an explicit owner decision and synchronized scope/design/task updates. |
 | Not decided | Individual content identities, tiers, weapon-slot count, difficulty settings, wave structure, unlocks, original differentiator and release date. |
 
+## DEC-006 — Original thematic identity
+
+| Field | Record |
+| --- | --- |
+| Question | Q05, identity portion: which central fantasy should guide the game? |
+| Options | Scrap robots in an industrial arena; alchemists against laboratory creatures; small guardians in a hostile garden; another owner-proposed direction. |
+| Choice | Scrap robots in an industrial arena. |
+| Status | Approved |
+| Approval evidence | Verified: on 2026-10-23, the owner explicitly selected scrap robots in an industrial arena. |
+| Origin | Original design direction approved by the owner; not copied reference-game identity or content. |
+| Rationale | Owner selected the proposed theme. Inferred production opportunity: geometric silhouettes and modular mechanical forms may suit SVG authoring; no production savings or visual quality have been measured. |
+| Consequences | Use this identity to guide later character, weapon, environment and visual proposals within the approved content envelope. This choice does not add mechanics or content counts. |
+| Revisit condition | Explicit owner change of direction, with affected design and asset-production impact reviewed. |
+| Not decided | Principal mechanical differentiator, name, world details, tone, final palette, art pipeline and animation scope. Thematic modularity does not approve a crafting or construction system. |
+
 ## Supplied repository destination
 
 **Verified owner instruction, 2026-10-23:** save the project in [AlexGalhardo/project-omega](https://github.com/AlexGalhardo/project-omega). This settles the destination portion of Q13 only; repository visibility, workspace organization and licensing remain undecided.
 
 ## Next decision
 
-Q05: establish the original game identity, then its principal differentiator and working name. Content scope is recorded in DEC-005; no release deadline has been supplied. All other unresolved questions remain in the [research queue](../research/open-questions.md). No complete Stage 2 decision summary has been approved.
+Q05: choose the principal mechanical differentiator within the identity approved in DEC-006; a working name remains to select. Content scope is recorded in DEC-005; no release deadline has been supplied. All other unresolved questions remain in the [research queue](../research/open-questions.md). No complete Stage 2 decision summary has been approved.
