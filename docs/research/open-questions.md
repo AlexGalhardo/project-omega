@@ -8,12 +8,12 @@ Status: end of Stage 1, 2026-10-23. This is the canonical research question queu
 
 ## Stage 2 owner decisions, in priority order
 
-Q01 is resolved in the [decision register](../decisions/decision-register.md); the repository destination was also supplied. Other entries remain **Open**. Suggested defaults are **Recommendations**, not decisions. Ask one high-impact question at a time, with rationale and alternatives; do not present this entire queue as a questionnaire.
+Q01 and the 1.0 shipping-platform portion of Q02 are resolved in the [decision register](../decisions/decision-register.md); the repository destination was also supplied. Other entries remain **Open**. Suggested defaults are **Recommendations**, not decisions. Ask one high-impact question at a time, with rationale and alternatives; do not present this entire queue as a questionnaire.
 
 | ID | Question / provisional default | Impact and resolution point |
 | --- | --- | --- |
 | Q01 | Resolved: see [DEC-001](../decisions/decision-register.md#dec-001--bevy-integration-strategy). | [Research trade-offs](03-bevy-and-fork-strategy.md). |
-| Q02 | Which shipping platforms and development OS? Recommend one desktop platform first, selected by the owner. Current session is Windows/PowerShell, not proof of an exclusive development or shipping target. | Before design scope and CI/platform promises. Web/mobile/controller-device coverage changes cost. |
+| Q02 | 1.0 shipping platform resolved: see [DEC-002](../decisions/decision-register.md#dec-002--version-10-platform-scope). Current Windows/PowerShell environment is the working development baseline. | Minimum OS/hardware remain open; confirm any additional development OS only if needed. |
 | Q03 | What Rust/Bevy experience, hours per week and horizon are available? The brief reports web/Phaser experience; Rust/Bevy proficiency is unconfirmed. | Before content counts, architecture complexity and schedule estimates. No productivity multiplier for AI is assumed. |
 | Q04 | What is the affordable 1.0 content envelope: characters, weapons, enemies, bosses, items, arenas and modes? Recommend a small complete offering, calibrated by an early slice. | Before Stage 3; counts must be owner-approved, not copied from references. |
 | Q05 | What original identity, working name and one principal differentiator should define the game? | Before GDD/art direction. `project-omega` is a repository identifier, not an approved final title. Name clearance depends on release plans. |

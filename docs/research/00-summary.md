@@ -72,4 +72,4 @@ No GDD, Art Bible, architecture ADRs, implementation specs, agent contract, road
 
 The full traceability chain is the later planning acceptance condition: evidence -> approved decision -> GDD requirement -> ADR/architecture -> spec -> roadmap task -> acceptance test. At this stage only evidence, proposals and question IDs exist; absent later links are **intentionally pending**, not a passed planning audit.
 
-**Continuation:** Q01 is resolved in [DEC-001](../decisions/decision-register.md#dec-001--bevy-integration-strategy). Next is Q02, the 1.0 platform scope. Wait for the owner before advancing the brainstorming queue.
+**Continuation:** Q01 is resolved in [DEC-001](../decisions/decision-register.md#dec-001--bevy-integration-strategy); Windows-only 1.0 scope is approved in [DEC-002](../decisions/decision-register.md#dec-002--version-10-platform-scope). Next is Q03, owner experience and capacity. Wait for the owner before advancing the brainstorming queue.

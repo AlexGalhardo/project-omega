@@ -17,10 +17,25 @@ Stage 2 in progress. This file is the canonical record of owner choices. Researc
 | Revisit condition | A reproduced blocker on the selected release, evidence that public hooks and an acceptable upstream solution are insufficient, a minimal regression-tested patch proposal, maintenance/removal criteria and explicit owner approval. |
 | Not decided | Final dependency/toolchain pin, workspace layout, target platforms, specific reusable features, content scope and performance budgets. |
 
+## DEC-002 — Version 1.0 platform scope
+
+| Field | Record |
+| --- | --- |
+| Question | Q02: which shipping platforms are mandatory for version 1.0? |
+| Options | Windows only; Windows and Linux; broader desktop, web or mobile support. |
+| Choice | Windows only for version 1.0. |
+| Status | Approved |
+| Approval evidence | Verified: owner answered Windows on 2026-10-23 to the question about mandatory version 1.0 platforms. |
+| Rationale | Owner selected the recommended single-platform scope. Inferred benefit: concentrate packaging and native validation on one platform. No quantitative savings have been measured. |
+| Evidence | Owner answer; platform trade-offs in [Track C](../research/03-bevy-and-fork-strategy.md). |
+| Consequences | Plan native Windows validation and packaging. Other operating systems, web and mobile are outside mandatory 1.0 scope; future ports are not promised. |
+| Revisit condition | An explicit owner decision to change release scope, with its testing, distribution and schedule impact reviewed. |
+| Not decided | Minimum Windows version, CPU architecture, target hardware, storefront and detailed packaging requirements. The current Windows/PowerShell environment is the working development baseline; exclusive developer-OS support is not implied. |
+
 ## Supplied repository destination
 
 **Verified owner instruction, 2026-10-23:** save the project in [AlexGalhardo/project-omega](https://github.com/AlexGalhardo/project-omega). This settles the destination portion of Q13 only; repository visibility, workspace organization and licensing remain undecided.
 
 ## Next decision
 
-Q02: choose the 1.0 shipping platforms, then confirm the development OS if needed. All other unresolved questions remain in the [research queue](../research/open-questions.md). No complete Stage 2 decision summary has been approved.
+Q03: establish the owner's Rust/Bevy experience and available capacity before setting content scope or estimating the roadmap. All other unresolved questions remain in the [research queue](../research/open-questions.md). No complete Stage 2 decision summary has been approved.
