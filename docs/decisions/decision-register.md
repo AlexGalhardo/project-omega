@@ -61,10 +61,25 @@ Stage 2 in progress. This file is the canonical record of owner choices. Researc
 | Revisit condition | Availability changes or observed delivery/review effort requires recalibration. |
 | Not decided | Total time budget, deadline, sustained output per week and allocation between engine, game and validation. |
 
+## DEC-005 — Compact version 1.0 content envelope
+
+| Field | Record |
+| --- | --- |
+| Question | Q04: select the initial version 1.0 content envelope. |
+| Options | Lean, compact or expanded content scope, with explicit counts presented to the owner. |
+| Choice | Compact. Canonical approved counts and counting rules are in [scope and non-goals](scope-and-non-goals.md#approved-content-envelope). |
+| Status | Approved |
+| Approval evidence | Verified: on 2026-10-23, the owner selected compact in response to the concrete content comparison. |
+| Origin | Original design proposal approved by the owner; not derived reference-game content. |
+| Rationale | Balance build variety with production and combination-testing work. Feasibility and delivery cost remain unmeasured. |
+| Consequences | Use these counts for the GDD and subsequent task coverage. They describe the initial 1.0 baseline, not prototype deliverables or permission to expand the engine. |
+| Revisit condition | Review measured prototype production and playtest evidence; any count changes require an explicit owner decision and synchronized scope/design/task updates. |
+| Not decided | Individual content identities, tiers, weapon-slot count, difficulty settings, wave structure, unlocks, original differentiator and release date. |
+
 ## Supplied repository destination
 
 **Verified owner instruction, 2026-10-23:** save the project in [AlexGalhardo/project-omega](https://github.com/AlexGalhardo/project-omega). This settles the destination portion of Q13 only; repository visibility, workspace organization and licensing remain undecided.
 
 ## Next decision
 
-Q04: select an initial version 1.0 content envelope. Experience and weekly availability are recorded in DEC-003 and DEC-004; no release deadline has been supplied. All other unresolved questions remain in the [research queue](../research/open-questions.md). No complete Stage 2 decision summary has been approved.
+Q05: establish the original game identity, then its principal differentiator and working name. Content scope is recorded in DEC-005; no release deadline has been supplied. All other unresolved questions remain in the [research queue](../research/open-questions.md). No complete Stage 2 decision summary has been approved.
