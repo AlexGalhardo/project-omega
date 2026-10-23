@@ -44,7 +44,22 @@ Stage 2 in progress. This file is the canonical record of owner choices. Researc
 | Rationale | Use the owner's stated experience to avoid prescribing a beginner onboarding phase. |
 | Consequences | Begin future Foundation work with project-specific compatibility and workflow validation. Do not infer expert proficiency, measured throughput or a larger content budget from this answer. |
 | Revisit condition | A concrete implementation or review reveals a learning need; address it within the affected task. |
-| Still open | Available hours, scheduling constraints and release horizon. |
+| Capacity follow-up | Available time is recorded in DEC-004. Scheduling constraints and release horizon remain unspecified. |
+
+## DEC-004 — Weekly owner availability
+
+| Field | Record |
+| --- | --- |
+| Question | Q03, capacity portion: how much time can the owner regularly dedicate each week? |
+| Options | Owner-supplied availability; illustrative ranges were 5–10, 10–20 and 20–40 hours weekly. |
+| Choice | Use the owner's reported availability of 20–40 hours per week as the planning capacity range. |
+| Status | Approved |
+| Approval evidence | Verified as owner report: on 2026-10-23, the owner answered 20–40 hours to the weekly availability question. |
+| Rationale | Ground scope and future estimates in declared owner capacity rather than assuming full-time availability or unmeasured AI acceleration. |
+| Consequences | The range informs future planning but is not measured throughput or a release-date commitment. Account for review, testing, playtesting and content work within the owner's time. |
+| Planning recommendation | Start estimates from the lower end of the range and recalibrate after delivered slices. This conservative estimate policy is a Recommendation, not an additional approved owner commitment. |
+| Revisit condition | Availability changes or observed delivery/review effort requires recalibration. |
+| Not decided | Total time budget, deadline, sustained output per week and allocation between engine, game and validation. |
 
 ## Supplied repository destination
 
@@ -52,4 +67,4 @@ Stage 2 in progress. This file is the canonical record of owner choices. Researc
 
 ## Next decision
 
-Q03, capacity portion: establish available owner time before setting content scope or estimating the roadmap. Experience is recorded in DEC-003. All other unresolved questions remain in the [research queue](../research/open-questions.md). No complete Stage 2 decision summary has been approved.
+Q04: select an initial version 1.0 content envelope. Experience and weekly availability are recorded in DEC-003 and DEC-004; no release deadline has been supplied. All other unresolved questions remain in the [research queue](../research/open-questions.md). No complete Stage 2 decision summary has been approved.

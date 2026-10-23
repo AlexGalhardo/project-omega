@@ -4,7 +4,7 @@ Date: 2026-10-23. Status: **research checkpoint delivered; Stage 2 in progress**
 
 ## Project mandate and current state
 
-**Verified (owner-provided constraints):** build two products: a reusable 2D layer over Bevy and an original top-down arena-survival roguelite serving as its reference game. Shipping a stable, maintainable 1.0 takes precedence over expanding the engine. The owner reports roughly ten years of web development and TypeScript/Phaser game work; Subsequent owner clarification confirms prior development with Rust and Bevy in [DEC-003](../decisions/decision-register.md#dec-003--owner-experience-baseline); available time remains **Unknown**.
+**Verified (owner-provided constraints):** build two products: a reusable 2D layer over Bevy and an original top-down arena-survival roguelite serving as its reference game. Shipping a stable, maintainable 1.0 takes precedence over expanding the engine. The owner reports roughly ten years of web development and TypeScript/Phaser game work. Subsequent owner clarification confirms prior development with Rust and Bevy in [DEC-003](../decisions/decision-register.md#dec-003--owner-experience-baseline); weekly availability is recorded as 20?40 hours in [DEC-004](../decisions/decision-register.md#dec-004--weekly-owner-availability). Delivery throughput and release date remain **Unknown**.
 
 The planning role researches, proposes and specifies; other agents implement after approvals. Agent identities are not repository dependencies. All repository artifacts, future code/comments/UI/tests/commits and agent instructions must be English. Owner conversation is Brazilian Portuguese. Behavioral inspiration must comply with the canonical [IP policy](../legal/ip-policy.md).
 
@@ -49,7 +49,7 @@ Use fixed-step gameplay with explicit ordering and a presentation boundary, type
 
 ## Risks and unknowns
 
-**Unknown:** weekly capacity, minimum Windows/hardware requirements, original differentiator, approved 1.0 content, actual feel, build/runtime performance, exact reference formulas and independent review findings. These are tracked in [open questions](open-questions.md), not silently resolved here.
+**Unknown:** delivery throughput and release horizon, minimum Windows/hardware requirements, original differentiator, approved 1.0 content, actual feel, build/runtime performance, exact reference formulas and independent review findings. These are tracked in [open questions](open-questions.md), not silently resolved here.
 
 **Inferred:** the largest delivery risks are excessive content, engine generalization before need, learning/migration overhead, unproven integration, and confusing automated test success with a satisfying playable game. The strongest mitigations are small approved scope, an early complete playable slice, native playtesting and evidence-based cuts. No schedule or performance budget is established.
 
@@ -72,4 +72,4 @@ No GDD, Art Bible, architecture ADRs, implementation specs, agent contract, road
 
 The full traceability chain is the later planning acceptance condition: evidence -> approved decision -> GDD requirement -> ADR/architecture -> spec -> roadmap task -> acceptance test. At this stage only evidence, proposals and question IDs exist; absent later links are **intentionally pending**, not a passed planning audit.
 
-**Continuation:** Q01 is resolved in [DEC-001](../decisions/decision-register.md#dec-001--bevy-integration-strategy); Windows-only 1.0 scope is approved in [DEC-002](../decisions/decision-register.md#dec-002--version-10-platform-scope). Owner experience is recorded in [DEC-003](../decisions/decision-register.md#dec-003--owner-experience-baseline). Next is the remaining capacity portion of Q03. Wait for the owner before advancing the brainstorming queue.
+**Continuation:** Q01 is resolved in [DEC-001](../decisions/decision-register.md#dec-001--bevy-integration-strategy); Windows-only 1.0 scope is approved in [DEC-002](../decisions/decision-register.md#dec-002--version-10-platform-scope). Owner experience is recorded in [DEC-003](../decisions/decision-register.md#dec-003--owner-experience-baseline). Weekly availability is recorded in [DEC-004](../decisions/decision-register.md#dec-004--weekly-owner-availability). Next is Q04, the initial 1.0 content envelope. Wait for the owner before advancing the brainstorming queue.
