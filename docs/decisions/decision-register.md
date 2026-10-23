@@ -32,10 +32,24 @@ Stage 2 in progress. This file is the canonical record of owner choices. Researc
 | Revisit condition | An explicit owner decision to change release scope, with its testing, distribution and schedule impact reviewed. |
 | Not decided | Minimum Windows version, CPU architecture, target hardware, storefront and detailed packaging requirements. The current Windows/PowerShell environment is the working development baseline; exclusive developer-OS support is not implied. |
 
+## DEC-003 — Owner experience baseline
+
+| Field | Record |
+| --- | --- |
+| Question | Q03, experience portion: what is the owner's current Rust and Bevy experience? |
+| Options | New to both; experienced with Rust but new to Bevy; prior development with both. |
+| Choice | Plan for an owner who has already developed with both Rust and Bevy. |
+| Status | Approved |
+| Approval evidence | Verified as owner report: on 2026-10-23, the owner stated prior development experience with both Rust and Bevy. Proficiency depth, project scale and versions used were not assessed. |
+| Rationale | Use the owner's stated experience to avoid prescribing a beginner onboarding phase. |
+| Consequences | Begin future Foundation work with project-specific compatibility and workflow validation. Do not infer expert proficiency, measured throughput or a larger content budget from this answer. |
+| Revisit condition | A concrete implementation or review reveals a learning need; address it within the affected task. |
+| Still open | Available hours, scheduling constraints and release horizon. |
+
 ## Supplied repository destination
 
 **Verified owner instruction, 2026-10-23:** save the project in [AlexGalhardo/project-omega](https://github.com/AlexGalhardo/project-omega). This settles the destination portion of Q13 only; repository visibility, workspace organization and licensing remain undecided.
 
 ## Next decision
 
-Q03: establish the owner's Rust/Bevy experience and available capacity before setting content scope or estimating the roadmap. All other unresolved questions remain in the [research queue](../research/open-questions.md). No complete Stage 2 decision summary has been approved.
+Q03, capacity portion: establish available owner time before setting content scope or estimating the roadmap. Experience is recorded in DEC-003. All other unresolved questions remain in the [research queue](../research/open-questions.md). No complete Stage 2 decision summary has been approved.
