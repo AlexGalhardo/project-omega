@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **run:** Add the run lifecycle (Wave, Shop, Victory, Defeat, Summary) with death precedence, Start guard, wave-entry reset, transient cleanup and idempotent settlement (DA-03, DA-11, DA-13) (SHA_PLACEHOLDER)
+- **run:** Add the run lifecycle (Wave, Shop, Victory, Defeat, Summary) with death precedence, Start guard, wave-entry reset, transient cleanup and idempotent settlement (DA-03, DA-11, DA-13) ([8fea1ba](https://github.com/AlexGalhardo/project-omega/commit/8fea1ba35db51ad599fc6046d57b4c25504e7252))
 - **content:** Ship the prototype content subset in assets/content, load it in the client sandbox and validate it in the local gate and release package ([52836c6](https://github.com/AlexGalhardo/project-omega/commit/52836c68ef59b3d2f2b8d6c53bc5efd4c46ee41d))
 - **shop:** Add atomic buy, upgrade, replacement and energy-allocation commands with stale-revision and no-RNG-change rejection (DA-02, DA-08, DA-09) ([2d848a3](https://github.com/AlexGalhardo/project-omega/commit/2d848a3637c54bf5179ea74576a189a0bbf80678))
 - **shop:** Add shop eligibility, one-ceiling prices, two/two offer draws with fallback and one paid refresh ([2d848a3](https://github.com/AlexGalhardo/project-omega/commit/2d848a3637c54bf5179ea74576a189a0bbf80678))
