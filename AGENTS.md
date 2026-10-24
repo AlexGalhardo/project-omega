@@ -61,6 +61,10 @@ Follow the quality gates and scoped spec commands. Unit formulas, integration/he
 
 Important claims use Verified / Inferred / Recommendation / Unknown with provenance. Separate owner-approved rules, provisional balance values and actual results. No invented tool runs, tests, benchmarks, file writes or independent reviews. When a check cannot run, record why and keep affected completion status honest. Documentation-only changes use documentary checks; do not claim Cargo validation without a Cargo project.
 
+## Code map and test layers
+
+The game crate keeps rules headless (`content`, `sim`, `combat`, `encounters`, `shop`, `profile`, `persist`, `input`, `ui` view models, `audio` mapping, `balance`, `qa`) and puts Bevy glue in `client` and `*/client.rs`. Test layers (ROADMAP rule 1.11): unit and contract tests under `crates/*/tests`, integration through `SimHarness`, e2e scripts in `tests/e2e/*.json` (`omega-game --headless --e2e-script`), and the seeded QA bot (`--qa-bot`). Balance changes need `omega-sim --scenario balance` before and after reports (rule 1.12). Long jobs run in a background agent or a separate worktree and are listed under "Running jobs" in the local `questions-to-dev.md`.
+
 ## Handoff report
 
 Report task ID (or planning stage ID), status, commit and changed paths; explain observable change/reason. Map acceptance IDs to exact commands, exit codes and evidence paths; include environment, native results, limits and blocked checks. State reviewer/integration outcome truthfully and the next task/gate. A concise report may link canonical evidence rather than repeat it.

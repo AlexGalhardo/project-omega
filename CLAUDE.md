@@ -31,4 +31,13 @@ powershell -NoProfile -File scripts/check.ps1        # all local gates (fmt, cli
 cargo test --workspace --no-default-features --locked
 cargo run -p omega_game --locked --bin omega-game     # native client
 bun run lint                                          # markdownlint
+cargo run -p omega_game --locked --bin omega-game -- --play --fast-forward-ticks 3700 --skip-hints   # live sandbox (shop after wave 1)
+cargo run -p omega_game --features client --locked --bin omega-game -- --headless --e2e-script tests/e2e/prototype-loop.json   # e2e, no GPU
+cargo run -p omega_game --features client --locked --bin omega-game -- --headless --qa-bot cautious --seed <64 hex>          # simulated human QA
+cargo run --release -p omega_game --no-default-features --bin omega-sim -- --scenario balance --policies all --seeds 200 --label <date>-<name>
+cargo run --release -p omega_game --no-default-features --bin omega-sim -- --scenario perf02 --seed <64 hex> --output <json>
 ```
+
+## Code map (game crate)
+
+`crates/omega_game/src/`: `content` (strict JSON catalogs), `sim` (schedule, RNG, `run.rs` lifecycle), `combat` (stats, weapons, damage), `encounters` (waves, enemy AI, bosses), `shop`, `profile` and `persist` (grants, settings, two-slot saves), `input` (keyboard, mouse, controller, bindings), `ui` (view models, menus, widgets), `audio`, `balance` (simulator), `qa` (e2e runner and bot), `diagnostics` (PERF reports), `client` (native app). Rules stay headless; `client` and `*/client.rs` hold the Bevy glue.
