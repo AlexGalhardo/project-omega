@@ -6,6 +6,7 @@ pub mod content;
 pub mod diagnostics;
 pub mod encounters;
 pub mod input;
+pub mod shop;
 pub mod sim;
 
 #[cfg(feature = "client")]

@@ -1,6 +1,6 @@
 # ROADMAP.md: development plan for Project Omega
 
-> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** RES-P2-002 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
+> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-009 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
 >
 > This is the onboarding file. It says where the project is, what the next task is and how to prove it is done. Every work session, human or AI agent, starts here.
 >
@@ -625,7 +625,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Asserts:** note exists and passes markdownlint; `git grep` finds no pasted code or data blocks from the game; every difference has a CR or a recorded decision.
 
-#### GAME-P2-007. Shop eligibility, prices and one refresh (M) — TODO
+#### GAME-P2-007. Shop eligibility, prices and one refresh (M) — DONE
 
 **Depends on:** GAME-P1-003, GAME-P2-001. **Read first:** [SP-009](docs/specs/sp-009-shop.md) (GDD-008 (§8); DA-08/09/10).
 
@@ -633,14 +633,14 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Promote: files `crates/omega_game/src/shop/`, `tests/shop_contract.rs`
-- [ ] Test first: two weapons + two items, exhaustion fill from the other category, Empty slots
-- [ ] Prices with one final ceiling (28/42/56 example), refresh cost `8 + 2(w-1)`, one refresh per visit, RNG untouched on rejection (DA-10)
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
+- [x] Promote: files `crates/omega_game/src/shop/`, `tests/shop_contract.rs`
+- [x] Test first: two weapons + two items, exhaustion fill from the other category, Empty slots
+- [x] Prices with one final ceiling (28/42/56 example), refresh cost `8 + 2(w-1)`, one refresh per visit, RNG untouched on rejection (DA-10)
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
 
 **Asserts:** V09 AC1/3/5 — plus `scripts/check.ps1` exit 0.
 
-#### GAME-P2-008. Purchase, upgrade, replacement and allocation transactions (M) — TODO
+#### GAME-P2-008. Purchase, upgrade, replacement and allocation transactions (M) — DONE
 
 **Depends on:** GAME-P2-007. **Read first:** [SP-009](docs/specs/sp-009-shop.md) (GDD-008 (§8); DA-08/09/10).
 
@@ -648,10 +648,10 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Test first: DA-08 (42 scrap charge, 41 rejected with no state/RNG change), DA-09 replacement cancel/confirm, DA-02 energy limits
-- [ ] Atomic `ShopCommand` → `ShopOutcome` or typed rejection; lowest empty slot; replacement keeps slot energy
-- [ ] Energy allocation commands with the six-point invariant and 0–3 per slot
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
+- [x] Test first: DA-08 (42 scrap charge, 41 rejected with no state/RNG change), DA-09 replacement cancel/confirm, DA-02 energy limits
+- [x] Atomic `ShopCommand` → `ShopOutcome` or typed rejection; lowest empty slot; replacement keeps slot energy
+- [x] Energy allocation commands with the six-point invariant and 0–3 per slot
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
 
 **Asserts:** V09 AC2/4; DA-02/03/08/09 — plus `scripts/check.ps1` exit 0.
 
