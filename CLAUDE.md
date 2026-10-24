@@ -31,6 +31,7 @@ When running unattended (via `run-overnight.ps1` or `/loop`):
 3. **Commit small:** one task = one commit. If something fails 3 times, note it in PLAN.md and move to the next task.
 4. **Keep context:** after `/compact`, resume with `/loop` and the same pacing.
 5. **Mark DONE when:** acceptance criteria passed, test commands succeed, linked spec marked VERIFIED.
+6. **Permissions:** restricted to safe subsets in `.claude/settings.json` (no `git push`, `bun -e`, direct shell escapes). If task requires blocked command, escalate.
 
 ## Code Style
 

@@ -1,9 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "PowerShell(bun *)",
-      "PowerShell(cargo *)",
-      "PowerShell(rustc *)",
+      "PowerShell(bun test)",
+      "PowerShell(bun run *)",
+      "PowerShell(bun install)",
+      "PowerShell(cargo build)",
+      "PowerShell(cargo test)",
+      "PowerShell(cargo check)",
+      "PowerShell(cargo clippy)",
+      "PowerShell(cargo fmt)",
       "PowerShell(git add *)",
       "PowerShell(git commit *)",
       "PowerShell(git status)",
@@ -26,6 +31,10 @@
       "Edit(PROMPT.md)"
     ],
     "deny": [
+      "PowerShell(bun -e *)",
+      "PowerShell(bun x *)",
+      "PowerShell(bunx *)",
+      "PowerShell(rustc *)",
       "PowerShell(git push *)",
       "PowerShell(git reset --hard *)",
       "PowerShell(git force-push *)",
