@@ -1,8 +1,12 @@
 //! Bevy UI widgets for the HUD, shop, pause, abandon and result screens (SP-014).
 //! Widgets only render `ScreenView`/`HudView` data and queue typed `UiAction` requests.
 
-use super::{ScreenView, UiAction, UiMode, apply_action, hud_text, hud_view, screen_view};
-use crate::input::InputBuffer;
+use super::{
+	ScreenView, UiAction, UiFocus, UiMode, apply_action, back_action, hud_text, hud_view,
+	screen_view,
+};
+use crate::input::gamepad::{InputSource, NavDirection, NavRepeat};
+use crate::input::{ActiveSource, InputBuffer, PadNav};
 use crate::sim::SimPaused;
 use crate::sim::run::{Run, RunState};
 use bevy::prelude::*;
@@ -30,8 +34,11 @@ struct ActionQueue(Vec<UiAction>);
 #[derive(Resource, Default)]
 pub struct UiMessage(pub String);
 
+/// The panel and focus index currently built, to rebuild only on change.
 #[derive(Resource, Default)]
-struct LastScreen(Option<ScreenView>);
+struct LastScreen(Option<ScreenView>, Option<usize>);
+
+const FOCUS_COLOR: Color = Color::srgb_u8(0x3f, 0x6e, 0x9a);
 
 pub struct UiClientPlugin;
 
@@ -41,6 +48,7 @@ impl Plugin for UiClientPlugin {
 			.init_resource::<UiMessage>()
 			.init_resource::<UiMode>()
 			.init_resource::<LastScreen>()
+			.init_resource::<UiFocus>()
 			.add_systems(Startup, spawn_roots)
 			.add_systems(
 				Update,
@@ -95,6 +103,7 @@ fn spawn_roots(mut commands: Commands) {
 	));
 }
 
+#[allow(clippy::too_many_arguments)]
 fn keyboard_actions(
 	keys: Res<ButtonInput<KeyCode>>,
 	mode: Res<UiMode>,
@@ -102,6 +111,12 @@ fn keyboard_actions(
 	run: Option<Res<Run>>,
 	mut buffer: ResMut<InputBuffer>,
 	mut queue: ResMut<ActionQueue>,
+	active: Res<ActiveSource>,
+	nav: Res<PadNav>,
+	time: Res<Time<Real>>,
+	last: Res<LastScreen>,
+	mut focus: ResMut<UiFocus>,
+	mut repeat: Local<NavRepeat>,
 ) {
 	let Some(run) = run else {
 		return;
@@ -112,6 +127,27 @@ fn keyboard_actions(
 		return;
 	}
 	let edges = buffer.take_ui_edges();
+	if active.0 == InputSource::Controller
+		&& let Some(view) = &last.0
+	{
+		focus.clamp(view);
+		match repeat.update(nav.0, time.elapsed_secs_f64()) {
+			Some(NavDirection::Up | NavDirection::Left) => focus.step(view, false),
+			Some(NavDirection::Down | NavDirection::Right) => focus.step(view, true),
+			None => {}
+		}
+		if edges.confirm
+			&& let Some(action) = focus.activate(view)
+		{
+			queue.0.push(action);
+		}
+		if edges.back
+			&& let Some(action) = back_action(view)
+		{
+			queue.0.push(action);
+		}
+		return;
+	}
 	let digit = [
 		KeyCode::Digit1,
 		KeyCode::Digit2,
@@ -193,10 +229,20 @@ fn refresh_screen(world: &mut World) {
 	let mode = *world.resource::<UiMode>();
 	let paused = world.resource::<SimPaused>().0;
 	let view = screen_view(world, mode, paused);
-	if world.resource::<LastScreen>().0 == view {
-		return;
+	let focused = (world.resource::<ActiveSource>().0 == InputSource::Controller)
+		.then(|| world.resource::<UiFocus>().index);
+	{
+		let last = world.resource::<LastScreen>();
+		if last.0 == view && last.1 == focused {
+			return;
+		}
 	}
-	world.resource_mut::<LastScreen>().0 = view.clone();
+	if let Some(view) = &view {
+		world.resource_mut::<UiFocus>().clamp(view);
+	}
+	let mut last = world.resource_mut::<LastScreen>();
+	last.0 = view.clone();
+	last.1 = focused;
 	let Some(root) = world
 		.query_filtered::<Entity, With<ScreenRoot>>()
 		.iter(world)
@@ -223,8 +269,10 @@ fn refresh_screen(world: &mut World) {
 	for line in &view.lines {
 		children.push(world.spawn(text_node(line.clone(), 15.0, MUTED_COLOR)).id());
 	}
-	for button in &view.buttons {
-		let color = if button.enabled {
+	for (i, button) in view.buttons.iter().enumerate() {
+		let color = if focused == Some(i) {
+			FOCUS_COLOR
+		} else if button.enabled {
 			BUTTON_COLOR
 		} else {
 			BUTTON_OFF_COLOR

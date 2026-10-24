@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **input:** Add controller dead zones, aim stick, button edges, UI focus navigation with repeat, disconnect pause and the remappable bindings model (SHA_PLACEHOLDER)
 - **encounters:** Verify The Foreman schedule and keep-distance recovery movement ([8736bae](https://github.com/AlexGalhardo/project-omega/commit/8736bae4dea2463ad882ed6aa2be6653abc078ad))
 - **encounters:** Add boss encounters (fixed warning with uncapped postponement, The Press stamp and ram, The Foreman volley and discharge, completion blocking) ([8736bae](https://github.com/AlexGalhardo/project-omega/commit/8736bae4dea2463ad882ed6aa2be6653abc078ad))
 - **persist:** Add fault-injected interrupted-write, corrupt, future-schema and quarantine recovery with contract tests ([4d27b0a](https://github.com/AlexGalhardo/project-omega/commit/4d27b0ab24d630dafa7f6d940d364fb0ea4b4b25))

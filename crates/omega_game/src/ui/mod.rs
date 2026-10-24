@@ -575,3 +575,64 @@ pub fn apply_action(world: &mut World, action: UiAction) -> String {
 		}
 	}
 }
+
+/// Keyboard and controller focus over the enabled buttons of the current screen.
+#[derive(Resource, Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct UiFocus {
+	pub index: usize,
+}
+
+impl UiFocus {
+	fn enabled(view: &ScreenView) -> Vec<usize> {
+		view.buttons
+			.iter()
+			.enumerate()
+			.filter(|(_, b)| b.enabled)
+			.map(|(i, _)| i)
+			.collect()
+	}
+
+	/// Keeps the focus on an enabled button after the screen changed.
+	pub fn clamp(&mut self, view: &ScreenView) {
+		let enabled = Self::enabled(view);
+		if !enabled.contains(&self.index) {
+			self.index = enabled.first().copied().unwrap_or(0);
+		}
+	}
+
+	/// Moves to the previous or next enabled button, wrapping at the ends.
+	pub fn step(&mut self, view: &ScreenView, forward: bool) {
+		let enabled = Self::enabled(view);
+		if enabled.is_empty() {
+			return;
+		}
+		let at = enabled.iter().position(|&i| i == self.index).unwrap_or(0);
+		let next = if forward {
+			(at + 1) % enabled.len()
+		} else {
+			(at + enabled.len() - 1) % enabled.len()
+		};
+		self.index = enabled[next];
+	}
+
+	/// The action under the focus, if that button is enabled.
+	pub fn activate(&self, view: &ScreenView) -> Option<UiAction> {
+		view.buttons
+			.get(self.index)
+			.filter(|b| b.enabled)
+			.map(|b| b.action)
+	}
+}
+
+/// What Back does on the current screen (never buys or starts anything).
+pub fn back_action(view: &ScreenView) -> Option<UiAction> {
+	view.buttons
+		.iter()
+		.find(|b| {
+			matches!(
+				b.action,
+				UiAction::CancelReplace | UiAction::CancelAbandon | UiAction::Resume
+			)
+		})
+		.map(|b| b.action)
+}

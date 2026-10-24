@@ -4,10 +4,13 @@
 //! [`TickSample`] per tick. Held state applies to every tick of a frame, digital edges
 //! are delivered exactly once, and a frame with zero ticks keeps its edges pending.
 
+pub mod bindings;
+pub mod gamepad;
+
 #[cfg(feature = "client")]
 mod client;
 #[cfg(feature = "client")]
-pub use client::InputClientPlugin;
+pub use client::{ActiveSource, InputClientPlugin, PadNav};
 
 use crate::sim::{AimInput, SimPaused, TickInput};
 use bevy::math::DVec2;
@@ -60,6 +63,10 @@ pub struct InputBuffer {
 	held: FrameInput,
 	pending: Vec<Edge>,
 	last_aim: DVec2,
+	/// Analog movement after the dead zone, magnitude at most one (controller).
+	pad_move: DVec2,
+	/// Normalized aim direction while the aim stick is beyond its dead zone.
+	pad_aim: Option<DVec2>,
 	/// True while a menu or modal owns Confirm and Back.
 	pub ui_focus: bool,
 }
@@ -70,6 +77,8 @@ impl Default for InputBuffer {
 			held: FrameInput::default(),
 			pending: Vec::new(),
 			last_aim: DVec2::X,
+			pad_move: DVec2::ZERO,
+			pad_aim: None,
 			ui_focus: false,
 		}
 	}
@@ -80,6 +89,14 @@ impl InputBuffer {
 	pub fn begin_frame(&mut self, mut frame: FrameInput) {
 		self.pending.append(&mut frame.edges);
 		self.held = frame;
+	}
+
+	/// Controller contribution for the current frame; replaces the previous frame's analog state.
+	pub fn set_pad(&mut self, pad: &gamepad::PadFrame) {
+		self.pad_move = gamepad::radial_deadzone(pad.left_stick, gamepad::MOVE_DEADZONE);
+		let aim = gamepad::radial_deadzone(pad.right_stick, gamepad::AIM_DEADZONE);
+		self.pad_aim = (aim != DVec2::ZERO).then(|| aim.normalize());
+		self.pending.extend(pad.edges());
 	}
 
 	/// Samples one fixed tick. Held state repeats; the pause edge is consumed once.
@@ -96,12 +113,15 @@ impl InputBuffer {
 		let held = &self.held;
 		let axis = |pos: bool, neg: bool| f64::from(i8::from(pos) - i8::from(neg));
 		let raw = DVec2::new(axis(held.right, held.left), axis(held.up, held.down));
-		let movement = if raw == DVec2::ZERO {
-			raw
-		} else {
+		let movement = if raw != DVec2::ZERO {
 			raw.normalize()
+		} else {
+			self.pad_move.clamp_length_max(1.0)
 		};
-		let aim = if held.manual_aim_held {
+		let aim = if let Some(direction) = self.pad_aim {
+			self.last_aim = direction;
+			AimInput::Manual(direction)
+		} else if held.manual_aim_held {
 			if let Some(cursor) = held.cursor_world {
 				let delta = cursor - origin;
 				if delta.length() >= 1.0 {

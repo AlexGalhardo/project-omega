@@ -1051,7 +1051,7 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 **Asserts:** V14 menu/state cases — plus `scripts/check.ps1` exit 0.
 
-#### GAME-P3-013. Controller actions, remapping and disconnection (M) — TODO
+#### GAME-P3-013. Controller actions, remapping and disconnection (M) — IN_REVIEW
 
 **Depends on:** GAME-P3-012, GAME-P2-002. **Read first:** [SP-005](docs/specs/sp-005-input.md) (GDD-004 (§5) input table; ADR-008; `omega_2d::camera`).
 
@@ -1059,10 +1059,10 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 **Microtasks:**
 
-- [ ] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
-- [ ] Write the failing acceptance tests first
-- [ ] Implement within the spec allowed paths
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence
+- [x] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
+- [x] Write the failing acceptance tests first
+- [x] Implement within the spec allowed paths
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence
 
 **Asserts:** V05 plus actual controller evidence — plus `scripts/check.ps1` exit 0.
 
