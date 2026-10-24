@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **input:** Add the keyboard/mouse action buffer, aim mapping and focus pause with SP-005 contract tests ([b6d8691](https://github.com/AlexGalhardo/project-omega/commit/b6d86910198fe3b3d074abaffa86ad1ef19f0124))
 - **combat:** Add exact stat, fire-rate, damage, energy and regeneration evaluators with SP-006 contract tests ([29badf4](https://github.com/AlexGalhardo/project-omega/commit/29badf496b2ef21eceffe675343d51c38ddd5e62))
 
 ## [0.3.0] - 2026-10-24

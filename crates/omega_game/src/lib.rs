@@ -17,6 +17,10 @@ pub struct GameCorePlugin;
 
 impl Plugin for GameCorePlugin {
 	fn build(&self, app: &mut App) {
-		app.add_plugins((omega_2d::Omega2dPlugin, sim::GameSimPlugin));
+		app.add_plugins((
+			omega_2d::Omega2dPlugin,
+			sim::GameSimPlugin,
+			combat::CombatPlugin,
+		));
 	}
 }

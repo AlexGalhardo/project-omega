@@ -1,6 +1,6 @@
 # ROADMAP.md: development plan for Project Omega
 
-> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-003 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
+> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-004 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
 >
 > This is the onboarding file. It says where the project is, what the next task is and how to prove it is done. Every work session, human or AI agent, starts here.
 >
@@ -140,7 +140,7 @@ Engine work is limited to BUILD-001, the three 2D contracts (ENG-GEOM-001, ENG-C
 | RES-P1-001 | REA setup and Brotato inventory under DEC-019 | TODO | REA and Ghidra installed 2026-10-24 |
 | GAME-P2-001 | Stats, energy and exact numeric rules | DONE | GAME-P1-003 |
 | GAME-P2-002 | Keyboard/mouse action buffer and aim | DONE | GAME-P1-001; ENG-P1-003 [ENG-CAM-001] |
-| GAME-P2-003 | Player movement and actor state | TODO | GAME-P2-001, GAME-P2-002; ENG-P1-002 [ENG-GEOM-001] |
+| GAME-P2-003 | Player movement and actor state | DONE | GAME-P2-001, GAME-P2-002; ENG-P1-002 [ENG-GEOM-001] |
 | GAME-P2-004 | Bolt and saw attack emission | TODO | GAME-P2-003 |
 | GAME-P2-005 | Damage, death, healing and scrap | TODO | GAME-P2-004 |
 | GAME-P2-006 | Chaser/runner and three-wave scheduling | TODO | GAME-P2-005 |
@@ -443,7 +443,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Asserts:** V05 AC1–4 (controller device evidence later) — plus `scripts/check.ps1` exit 0.
 
-#### GAME-P2-003. Player movement and actor state (S) — TODO
+#### GAME-P2-003. Player movement and actor state (S) — DONE
 
 **Depends on:** GAME-P2-001, GAME-P2-002; ENG-P1-002 [ENG-GEOM-001]. **Read first:** [SP-007](docs/specs/sp-007-combat.md) (GDD-005 (§6), §7.2–7.3, §9.2; DA-05/06/07/13).
 
@@ -451,11 +451,11 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Promote: files `crates/omega_game/src/combat/{actor,movement}.rs`, `tests/combat_contract.rs`
-- [ ] Test first: DA-01 initial Patch state (slot 1 tier-1 Bolt at 3 points, HP 120, scrap 0) and DA-07 diagonal speed
-- [ ] Spawn the player entity with `SimId`, `Body`, `Health`, `Loadout` from the content snapshot
-- [ ] Movement in `TickSet::Movement`: normalized input × speed/60, clamp with `Bounds2::clamp_circle_center`
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
+- [x] Promote: files `crates/omega_game/src/combat/{actor,movement}.rs`, `tests/combat_contract.rs`
+- [x] Test first: DA-01 initial Patch state (slot 1 tier-1 Bolt at 3 points, HP 120, scrap 0) and DA-07 diagonal speed
+- [x] Spawn the player entity with `SimId`, `Body`, `Health`, `Loadout` from the content snapshot
+- [x] Movement in `TickSet::Movement`: normalized input × speed/60, clamp with `Bounds2::clamp_circle_center`
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
 
 **Asserts:** V07 movement fixtures; DA-01/07 — plus `scripts/check.ps1` exit 0.
 
