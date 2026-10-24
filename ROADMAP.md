@@ -883,7 +883,7 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
-#### GAME-P3-004. The Press encounter (M) — TODO
+#### GAME-P3-004. The Press encounter (M) — DONE
 
 **Depends on:** GAME-P3-019; ENG-P3-001 [ENG-VIS-001]. **Read first:** [SP-008](docs/specs/sp-008-encounters.md) (GDD-010/011 (§10–11); CR-001; DA-11/12/17/18).
 
@@ -891,14 +891,14 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 **Microtasks:**
 
-- [ ] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
-- [ ] Write the failing acceptance tests first
-- [ ] Implement within the spec allowed paths
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence
+- [x] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
+- [x] Write the failing acceptance tests first
+- [x] Implement within the spec allowed paths
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence
 
 **Asserts:** V08 boss-Press fixtures — plus `scripts/check.ps1` exit 0.
 
-#### GAME-P3-005. The Foreman encounter (M) — TODO
+#### GAME-P3-005. The Foreman encounter (M) — DONE
 
 **Depends on:** GAME-P3-004. **Read first:** [SP-008](docs/specs/sp-008-encounters.md) (GDD-010/011 (§10–11); CR-001; DA-11/12/17/18).
 
@@ -906,10 +906,10 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 **Microtasks:**
 
-- [ ] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
-- [ ] Write the failing acceptance tests first
-- [ ] Implement within the spec allowed paths
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence
+- [x] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
+- [x] Write the failing acceptance tests first
+- [x] Implement within the spec allowed paths
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence
 
 **Asserts:** V08 boss-Foreman fixtures; DA-12/13 — plus `scripts/check.ps1` exit 0.
 

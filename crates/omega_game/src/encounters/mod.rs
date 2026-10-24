@@ -4,6 +4,7 @@
 //! authors a boss is held open here by `boss_blocking` until GAME-P3-004 settles it.
 
 pub mod ai;
+pub mod boss;
 pub mod hostile;
 
 use crate::combat::actor::{
@@ -29,6 +30,17 @@ pub const ANCHOR_SAFE_LU: f64 = 180.0;
 /// Extra clearance added to the radius sum in the occupied-warning test.
 pub const OCCUPIED_MARGIN_LU: f64 = 30.0;
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum BossPhase {
+	/// The wave authors no boss.
+	None,
+	/// Authored but its warning has not been requested yet.
+	Pending,
+	Warning,
+	Alive,
+	Defeated,
+}
+
 /// Wave progress; `tick0` is the `SimTick` at wave entry, so wave tick = tick - tick0.
 #[derive(Resource, Debug, Clone, PartialEq, Eq)]
 pub struct WaveRuntime {
@@ -39,6 +51,7 @@ pub struct WaveRuntime {
 	pub cursor: usize,
 	/// A boss is authored for this wave and not yet settled.
 	pub boss_blocking: bool,
+	pub boss: BossPhase,
 	/// Eligibility fact only: the lifecycle decides what completion means.
 	pub completed: bool,
 }
@@ -83,6 +96,11 @@ pub fn start_wave(world: &mut World, number: u32) -> Result<(), WaveError> {
 		duration: u64::from(wave.duration_ticks),
 		cursor: 0,
 		boss_blocking: wave.boss.is_some(),
+		boss: if wave.boss.is_some() {
+			BossPhase::Pending
+		} else {
+			BossPhase::None
+		},
 		completed: false,
 	});
 	clear_hostiles(world);
@@ -347,6 +365,21 @@ impl Plugin for EncounterPlugin {
 		.add_systems(
 			GameTick,
 			ai::cancel_orphaned_cues.in_set(TickSet::Transition),
+		)
+		.add_systems(
+			GameTick,
+			(boss::schedule_boss, boss::resolve_boss_warning)
+				.chain()
+				.after(advance_tick)
+				.in_set(TickSet::Spawn),
+		)
+		.add_systems(GameTick, boss::move_boss.in_set(TickSet::Movement))
+		.add_systems(GameTick, boss::run_boss_attacks.in_set(TickSet::Emit))
+		.add_systems(
+			GameTick,
+			boss::settle_boss
+				.before(complete_wave)
+				.in_set(TickSet::Transition),
 		)
 		.add_systems(GameTick, complete_wave.in_set(TickSet::Transition));
 	}

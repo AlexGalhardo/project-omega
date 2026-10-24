@@ -90,7 +90,7 @@ fn pair(v: DVec2) -> [f64; 2] {
 	[v.x, v.y]
 }
 
-fn unit(v: DVec2, fallback: DVec2) -> DVec2 {
+pub(super) fn unit(v: DVec2, fallback: DVec2) -> DVec2 {
 	if v.length_squared() > 0.0 {
 		v.normalize()
 	} else {
@@ -217,7 +217,7 @@ pub fn move_enemies(
 	}
 }
 
-fn cue_for(
+pub(super) fn cue_for(
 	attack_payload: &HostilePayload,
 	body_radius: f64,
 	aim: DVec2,
@@ -432,7 +432,7 @@ pub fn run_attacks(
 }
 
 #[allow(clippy::too_many_arguments)]
-fn emit(
+pub(super) fn emit(
 	payload: &HostilePayload,
 	wave: u32,
 	origin: DVec2,
