@@ -1,6 +1,6 @@
 # ROADMAP.md: development plan for Project Omega
 
-> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-010 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
+> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-011 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
 >
 > This is the onboarding file. It says where the project is, what the next task is and how to prove it is done. Every work session, human or AI agent, starts here.
 >
@@ -670,7 +670,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Asserts:** V03 profile tests; V18 subset fixtures — plus `scripts/check.ps1` exit 0.
 
-#### GAME-P2-010. Prototype Wave/Shop/Defeat lifecycle (M) — TODO
+#### GAME-P2-010. Prototype Wave/Shop/Defeat lifecycle (M) — DONE
 
 **Depends on:** GAME-P2-006, GAME-P2-008, GAME-P2-009. **Read first:** [SP-011](docs/specs/sp-011-run-states.md) (GDD-003 (§4); DA-03/11/13/16).
 
@@ -678,10 +678,10 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Promote: files `crates/omega_game/src/sim/{run,transitions}.rs` (SP-011 ownership), `tests/run_contract.rs`
-- [ ] Test first: three-wave fixture Wave → Shop → Wave → … → Defeat with death precedence (DA-13) and Start guard (DA-03)
-- [ ] Transient cleanup on wave exit; HP restore and cooldown reset on wave entry
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
+- [x] Promote: files `crates/omega_game/src/sim/{run,transitions}.rs` (SP-011 ownership), `tests/run_contract.rs`
+- [x] Test first: three-wave fixture Wave → Shop → Wave → … → Defeat with death precedence (DA-13) and Start guard (DA-03)
+- [x] Transient cleanup on wave exit; HP restore and cooldown reset on wave entry
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
 
 **Asserts:** V11 prototype subset; DA-03/11/13/16 — plus `scripts/check.ps1` exit 0.
 

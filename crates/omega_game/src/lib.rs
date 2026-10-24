@@ -24,6 +24,7 @@ impl Plugin for GameCorePlugin {
 			sim::GameSimPlugin,
 			combat::CombatPlugin,
 			encounters::EncounterPlugin,
+			sim::run::RunPlugin,
 		));
 	}
 }

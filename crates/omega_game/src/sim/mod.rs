@@ -6,6 +6,7 @@
 
 mod harness;
 mod rng;
+pub mod run;
 
 pub use harness::{SimHarness, TraceEntry};
 pub use rng::{RngStreams, RunSeed, SeedParseError, SimRng, StreamTag};

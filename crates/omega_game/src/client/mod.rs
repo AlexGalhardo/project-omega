@@ -143,7 +143,7 @@ fn dev_seed() -> RunSeed {
 
 /// Development sandbox on the shipped prototype content until GAME-P2-010 adds the lifecycle.
 fn start_play(world: &mut World) {
-	use crate::combat::actor::{ArenaRes, ContentRes, spawn_player};
+	use crate::combat::actor::{ArenaRes, ContentRes};
 	use crate::content::{Profile, load_dir};
 	let content = match load_dir(&asset_root().join("content"), Profile::Prototype) {
 		Ok(c) => c,
@@ -152,14 +152,11 @@ fn start_play(world: &mut World) {
 			return;
 		}
 	};
-	let arena = content.catalogs.arenas["arena_foundry"].clone();
+	let bounds = content.catalogs.arenas["arena_foundry"].bounds;
 	world.insert_resource(ContentRes(std::sync::Arc::new(content)));
-	world.insert_resource(ArenaRes(arena.bounds));
-	if let Err(e) = spawn_player(world, "char_patch", arena.player_spawn) {
-		error!("cannot spawn player: {e:?}");
-	}
-	if let Err(e) = crate::encounters::start_wave(world, 1) {
-		error!("cannot start wave: {e:?}");
+	world.insert_resource(ArenaRes(bounds));
+	if let Err(e) = crate::sim::run::begin_run(world, "char_patch", Default::default()) {
+		error!("cannot begin run: {e:?}");
 	}
 }
 
