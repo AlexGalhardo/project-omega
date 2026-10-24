@@ -1,7 +1,8 @@
 //! Actor components and run setup shared by every combat system (SP-007).
 
 use super::energy::EnergyAllocation;
-use super::stats::{EffectiveStats, StatError, effective_stats};
+use super::stats::{EffectiveStats, RegenAccumulator, StatError, effective_stats};
+use super::weapons::WeaponTimers;
 use crate::content::ContentSnapshot;
 use crate::sim::IdAllocator;
 use bevy::math::DVec2;
@@ -71,6 +72,7 @@ impl Loadout {
 pub enum SpawnError {
 	UnknownCharacter,
 	UnknownWeapon,
+	UnknownEnemy,
 	Stats(StatError),
 }
 
@@ -121,6 +123,73 @@ pub fn spawn_player(
 			},
 			PlayerStats(stats),
 			loadout,
+			WeaponTimers::ready(),
+			Invulnerability::default(),
+			RegenAccumulator::default(),
+		))
+		.id())
+}
+
+/// Hostile marker with the content ID it came from.
+#[derive(Component, Debug, Clone, PartialEq, Eq)]
+pub struct Enemy {
+	pub id: String,
+}
+
+/// Unscaled-per-spawn values the combat rules read (armor, speed and reward do not scale).
+#[derive(Component, Debug, Clone, Copy, PartialEq)]
+pub struct EnemyStats {
+	pub armor: u32,
+	pub contact_damage: u32,
+	pub scrap: u32,
+	pub knockback_multiplier: f64,
+	pub speed_lu_s: f64,
+}
+
+#[derive(Component, Debug, Clone, Copy, PartialEq, Eq)]
+pub struct Pickup {
+	pub value: u32,
+}
+
+/// Global incoming-hit window (GDD section 7.3): a hit is accepted on or after this tick.
+#[derive(Component, Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub struct Invulnerability {
+	pub next_accept_tick: u64,
+}
+
+/// Spawns one enemy with its already wave-scaled HP and contact damage.
+pub fn spawn_enemy(
+	world: &mut World,
+	enemy_id: &str,
+	position: DVec2,
+	hp: u32,
+	contact_damage: u32,
+) -> Result<Entity, SpawnError> {
+	let content = world.resource::<ContentRes>().0.clone();
+	let def = content
+		.catalogs
+		.enemies
+		.get(enemy_id)
+		.ok_or(SpawnError::UnknownEnemy)?;
+	let id = world.resource_mut::<IdAllocator>().sim_id();
+	Ok(world
+		.spawn((
+			id,
+			Enemy { id: def.id.clone() },
+			Pose2(position),
+			PreviousPose2(position),
+			Body(def.radius_lu),
+			Health {
+				current: hp,
+				max: hp,
+			},
+			EnemyStats {
+				armor: def.armor,
+				contact_damage,
+				scrap: def.scrap,
+				knockback_multiplier: def.knockback_multiplier,
+				speed_lu_s: def.speed_lu_s,
+			},
 		))
 		.id())
 }

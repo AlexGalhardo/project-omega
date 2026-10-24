@@ -117,6 +117,48 @@ pub struct TickInput {
 pub enum PresentationKind {
 	/// Scenario/test marker with a caller-chosen value.
 	Marker(u32),
+	/// A player weapon attack was emitted (slot is 0-based).
+	AttackEmitted {
+		attack: u64,
+		slot: u8,
+		origin: [f64; 2],
+		direction: [f64; 2],
+	},
+	ProjectileSpawned {
+		sim_id: u64,
+		attack: u64,
+		origin: [f64; 2],
+		direction: [f64; 2],
+		radius: f64,
+	},
+	ProjectileEnded {
+		sim_id: u64,
+		position: [f64; 2],
+	},
+	Explosion {
+		attack: u64,
+		center: [f64; 2],
+		radius: f64,
+	},
+	HitAccepted {
+		attack: u64,
+		target: u64,
+		damage: u32,
+		crit: bool,
+		position: [f64; 2],
+	},
+	EnemyDied {
+		target: u64,
+		position: [f64; 2],
+		scrap: u32,
+	},
+	PlayerDamaged {
+		damage: u32,
+		hp_after: u32,
+	},
+	PickupCollected {
+		value: u32,
+	},
 }
 
 #[derive(Debug, Clone, PartialEq)]

@@ -1,6 +1,6 @@
 # ROADMAP.md: development plan for Project Omega
 
-> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-004 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
+> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-005 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
 >
 > This is the onboarding file. It says where the project is, what the next task is and how to prove it is done. Every work session, human or AI agent, starts here.
 >
@@ -105,7 +105,38 @@ One active integration task at a time. Parallel agents or worktrees need the own
 - **LU:** logical unit, world distance; the arena is 1200 × 675 LU. **Tick:** one 1/60 s simulation step.
 - **SimHarness:** headless driver of the exact `GameTick` schedule. **Trace:** sorted authoritative state per tick, compared for repeatability.
 - **Profile:** content validation mode, `prototype` or `full`. **Skin:** a presentation catalog; swapping skins never changes traces (DA-20).
+- **RES task:** a REA study of one Brotato system (rule 1.10). **QA bot:** the seeded simulated-human player of rule 1.11.
 - **V01–V18:** the validation commands of SP-001–SP-018. **DA-NN / AA-NN:** design and art acceptance examples in GDD-018 / Art Bible 13.
+
+### 1.10 REA study loop: learn the mechanics, then re-implement them
+
+Objective 1 (DEC-017) is to understand how Brotato's game design and mechanics work by reverse engineering the owner's copy with REA (DEC-019), and to re-implement them in this game with original code, names and art. Every gameplay system follows this loop:
+
+1. **Study (RES task).** Before the first GAME task of a system, its RES task inspects the owner's copy with REA (static analysis of `Brotato.pck`/`Brotato.exe` where the tool supports it) and with ordinary play observation, and answers concrete questions: rules, formulas, timings, state flow, data shapes. Raw output stays in `%LOCALAPPDATA%\ProjectOmega\rea\`.
+2. **Describe (prose note).** Write `docs/research/brotato-notes/NN-<system>.md` in your own words with confidence labels (Verified / Inferred / Unknown) and the method used. Never paste code, scripts, data tables, strings or extracted assets; the repository is public.
+3. **Compare.** List each difference between the note and the current GDD rule for that system.
+4. **Decide.** Adopting a Brotato behavior that differs from the GDD needs a change request (`docs/decisions/change-requests/`) that cites the note; DEC-020 lets an autonomous session approve it provisionally, listing it in `questions-to-dev.md`. Keeping the GDD rule is also a valid outcome; record why.
+5. **Implement.** The GAME tasks then implement the GDD as amended, and their tests use the amended numbers from content.
+
+If REA cannot answer a question (for example a package format it does not support), record that in the note, fall back to play observation and public sources, and do not block the GAME task: it implements the current GDD rule and the open question goes to `questions-to-dev.md`. Never bypass DRM or protections, and never add another extraction tool without the owner's decision.
+
+### 1.11 Test layers and phase-end QA
+
+Every task tests at the layers it touches; every phase ends with all four layers green on the release candidate commit:
+
+| Layer | What it proves | Where and how |
+| --- | --- | --- |
+| Unit | One rule or function in isolation: formulas, clamps, parsers, geometry | `#[cfg(test)]` modules and `crates/*/tests/*_contract.rs`; exact GDD numbers from content fixtures |
+| Integration | Several systems through the real `GameTick` schedule | `SimHarness` scenarios with seeded input; authoritative trace assertions |
+| End-to-end (e2e) | The real native client binary from launch to exit | `omega-game --e2e-script <script.json>`: scripted input timeline, state checkpoints exported as JSON, screenshots, exit code; runs in CI where a GPU is not required (headless path) and natively on the reference machine |
+| Simulated human QA | The game behaves for a person, not only for a script | The QA bot (`omega-game --qa-bot <profile>`): seeded human-like play (reaction delay, imperfect aim, hesitation, menu exploration, mistaken inputs, pause/focus/resize abuse) following `docs/validation/qa-checklist.md`, producing a report with findings, screenshots and the seed to reproduce each one |
+
+Phase-end QA task rules (QA-P2-002, QA-P3-002, QA-P4-004, QA-P5-003):
+
+1. Run the full unit and integration suites, every e2e script and the QA bot across all its profiles and at least 20 seeds per profile; record counts, durations and seeds.
+2. Walk `docs/validation/qa-checklist.md` with the QA bot and with screenshot review; every failed item becomes a bug task with a reproducing test before it is fixed.
+3. Write `docs/validation/reports/<YYYY-MM-DD>-<phase>-qa.md`: version, commit, environment, results per layer, findings, open items. The phase closes only with no open high-priority finding.
+4. Items a bot cannot judge (fun, feel, readability, audio mix) go to `questions-to-dev.md` as owner checks; they do not block the phase in autonomous sessions (DEC-020) but stay listed in the report.
 
 ## 2. Overview
 
@@ -138,10 +169,11 @@ Engine work is limited to BUILD-001, the three 2D contracts (ENG-GEOM-001, ENG-C
 | QA-P1-002 | Empty-scene and build baseline | IN_REVIEW | ENG-P1-004, GAME-P1-001, GAME-P1-004 |
 | ENG-P1-006 | Vendored Bevy fork wiring (DEC-018) | DONE | ENG-P1-001 |
 | RES-P1-001 | REA setup and Brotato inventory under DEC-019 | TODO | REA and Ghidra installed 2026-10-24 |
+| QA-P1-003 | End-to-end and simulated-QA harness | TODO | ENG-P1-004, GAME-P1-001 |
 | GAME-P2-001 | Stats, energy and exact numeric rules | DONE | GAME-P1-003 |
 | GAME-P2-002 | Keyboard/mouse action buffer and aim | DONE | GAME-P1-001; ENG-P1-003 [ENG-CAM-001] |
 | GAME-P2-003 | Player movement and actor state | DONE | GAME-P2-001, GAME-P2-002; ENG-P1-002 [ENG-GEOM-001] |
-| GAME-P2-004 | Bolt and saw attack emission | TODO | GAME-P2-003 |
+| GAME-P2-004 | Bolt and saw attack emission | DONE | GAME-P2-003 |
 | GAME-P2-005 | Damage, death, healing and scrap | TODO | GAME-P2-004 |
 | GAME-P2-006 | Chaser/runner and three-wave scheduling | TODO | GAME-P2-005 |
 | ENG-P2-001 | Live pose/projectile presentation | TODO | ENG-P1-004 |
@@ -152,6 +184,9 @@ Engine work is limited to BUILD-001, the three 2D contracts (ENG-GEOM-001, ENG-C
 | GAME-P2-011 | Minimal HUD, shop controls and pause | TODO | GAME-P2-010; ENG-P2-001 [ENG-VIS-001] |
 | GAME-P2-012 | Cleared placeholder event audio | TODO | GAME-P2-011; ENG-P1-005 [ENG-VIS-001 asset manifest] |
 | QA-P2-001 | Prototype regressions and first playtest | TODO | GAME-P2-011, GAME-P2-012 |
+| QA-P2-002 | Prototype phase-end QA: unit, integration, e2e and simulated human QA | TODO | QA-P2-001, QA-P1-003 |
+| RES-P2-001 | REA study: player stats, weapons and combat | TODO | RES-P1-001 |
+| RES-P2-002 | REA study: shop, economy and run flow | TODO | RES-P1-001 |
 | ENG-P3-001 | Phase-driven warning/clip presentation | TODO | ENG-P2-001 |
 | GAME-P3-001 | Remaining projectile/area payloads | TODO | GAME-P2-005 |
 | GAME-P3-002 | Ranged, stationary and charge enemy profiles | CANCELLED | Split into GAME-P3-016 to GAME-P3-019 (REV-010) |
@@ -174,6 +209,9 @@ Engine work is limited to BUILD-001, the three 2D contracts (ENG-GEOM-001, ENG-C
 | GAME-P3-014 | Accessible layouts, effects and onboarding | TODO | GAME-P3-013 |
 | GAME-P3-015 | Complete shop comparisons and confirmation UI | TODO | GAME-P3-012, GAME-P2-008 |
 | QA-P3-001 | Full-run and catalog integration qualification | TODO | GAME-P3-014, GAME-P3-015, GAME-P3-010, GAME-P3-007 |
+| QA-P3-002 | Alpha phase-end QA: unit, integration, e2e and simulated human QA | TODO | QA-P3-001, QA-P2-002 |
+| RES-P3-001 | REA study: enemies, bosses, waves and spawning | TODO | RES-P2-001 |
+| RES-P3-002 | REA study: characters, unlocks, progression and saves | TODO | RES-P2-002 |
 | GAME-P4-001 | Four production character visuals | TODO | QA-P3-001; ENG-P3-001 [ENG-VIS-001] |
 | GAME-P4-002 | Twelve weapon visuals and shared payload cues | CANCELLED | Split into GAME-P4-007 to GAME-P4-009 (REV-010) |
 | GAME-P4-007 | Weapon visuals batch 1 (bolt, slug, needle, saw) and shared payload cues | TODO | GAME-P4-001 |
@@ -192,6 +230,8 @@ Engine work is limited to BUILD-001, the three 2D contracts (ENG-GEOM-001, ENG-C
 | QA-P4-002 | Two-hour stability and resource trends | TODO | ENG-P4-001, QA-P4-001 |
 | QA-P4-003 | Select shipping hardware and measured budgets | BLOCKED | ENG-P4-001; owner hardware/budget decision |
 | REL-P4-001 | Offline Windows package and clean-launch workflow | TODO | GAME-P4-005, QA-P4-002 |
+| QA-P4-004 | Beta phase-end QA: unit, integration, e2e and simulated human QA | TODO | QA-P4-002, QA-P3-002 |
+| RES-P4-001 | REA study: balance numbers and pacing | TODO | RES-P3-001, RES-P3-002 |
 | ENG-P5-001 | Freeze reusable contracts and verify feature graph | TODO | ENG-P4-001, QA-P4-002 |
 | GAME-P5-001 | Freeze content and candidate behavior | TODO | GAME-P4-006, QA-P4-001 |
 | REL-P5-001 | Resolve release/license/distribution decisions | BLOCKED | Owner deferred DEC-010 choices |
@@ -199,9 +239,10 @@ Engine work is limited to BUILD-001, the three 2D contracts (ENG-GEOM-001, ENG-C
 | REL-P5-002 | Dependency and asset provenance audit | TODO | REL-P5-001, GAME-P5-001 |
 | REL-P5-003 | RC gate and clean target-hardware qualification | TODO | QA-P5-001, REL-P5-002, QA-P4-003 |
 | QA-P5-002 | Validate any post-RC fixes on final artifact | TODO | REL-P5-003 |
-| REL-P5-004 | Final 1.0 gate and release notes | TODO | QA-P5-002, REL-P5-003 |
+| REL-P5-004 | Final 1.0 gate and release notes | TODO | QA-P5-002, REL-P5-003, QA-P5-003 |
+| QA-P5-003 | RC phase-end QA: unit, integration, e2e and simulated human QA on the frozen candidate | TODO | QA-P5-002, QA-P4-004 |
 
-Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2-001 → … → GAME-P2-010 → QA-P2-001 (owner playtest) → Alpha encounters/profile/UI → Beta production and native qualification → RC → separate 1.0 gate.
+Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2-001 → … → GAME-P2-010 → QA-P2-001 (owner playtest) → QA-P2-002 (phase-end QA) → Alpha encounters/profile/UI → Beta production and native qualification → RC → separate 1.0 gate.
 
 ## 3. Phase 1: FOUNDATION
 
@@ -403,11 +444,43 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Phase closing:** release `v0.3.0` ([CHANGELOG.md](CHANGELOG.md), [evidence index](docs/validation/evidence/README.md)). Remaining owner actions: visual review of the GAME-P1-004 screenshots; REA install for RES-P1-001.
 
+#### QA-P1-003. End-to-end and simulated-QA harness (M) — TODO
+
+**Depends on:** ENG-P1-004, GAME-P1-001. **Read first:** rule 1.11; SP-016; SP-017; `crates/omega_game/src/client/`.
+
+**Done when:** `omega-game --e2e-script` runs a JSON input timeline against the real client and exits non-zero on a failed checkpoint; `omega-game --qa-bot <profile> --seed <hex>` drives seeded human-like input; `docs/validation/qa-checklist.md` exists with the Foundation items; CI runs the headless e2e path.
+
+**Microtasks:**
+
+- [ ] Test first: an e2e script that launches the preview, waits for assets, checks the camera/letterbox checkpoint and exits 0; a broken checkpoint exits 1
+- [ ] Implement the e2e runner in the client: timeline of actions (key, mouse, wait ticks, resize, focus loss), checkpoints that export the authoritative snapshot and a screenshot to `artifacts/e2e/`
+- [ ] Implement the QA bot input source behind the same action buffer the player uses (seeded reaction delay, aim error, hesitation, random menu exploration, mistaken inputs); profiles `cautious`, `aggressive`, `chaotic`
+- [ ] Write `docs/validation/qa-checklist.md` (launch, resize, focus loss, pause spam, invalid input, catalog fallback); later phases append their items
+- [ ] Add the headless-capable e2e step to `.github/workflows/ci.yml` and `scripts/check.ps1`; record evidence
+
+**Asserts:** `cargo test -p omega_game --features client --locked --test e2e_contract`; `omega-game --e2e-script tests/e2e/foundation.json` exit 0; QA bot report for 3 profiles x 5 seeds — plus `scripts/check.ps1` exit 0.
+
 ## 4. Phase 2: PROTOTYPE
 
 **Goal:** The GDD-017 prototype is playable: move, auto/manual aim, fight, collect scrap, shop, allocate energy, end in defeat with a summary. Seeded headless tests and one native playtest prove the loop. Entry: Foundation exit evidence, initial content/schema/geometry contracts and original proof assets. Exit: GDD's three-wave/two-weapon prototype can move, auto/manual aim, fight, collect scrap, shop, allocate energy and end in defeat/summary; targeted headless tests and a native playtest demonstrate the loop. No final-content feasibility claim yet.
 
 ### P2-M1: Playable combat slice
+
+#### RES-P2-001. REA study: player stats, weapons and combat (S) — TODO
+
+**Depends on:** RES-P1-001. **Read first:** rule 1.10; DEC-019; GDD §5–§7 and §9.2; docs/research/brotato-notes/README.md.
+
+**Done when:** `docs/research/brotato-notes/` has an original prose note for player stats, weapons and combat answering the questions below, a GDD comparison, and a change request or a recorded "keep GDD" decision for each difference. Informs GAME-P2-001 to GAME-P2-005.
+
+**Microtasks:**
+
+- [ ] Questions: stat list, caps and stacking; weapon tiers and fire-rate rules; damage, armor and crit formulas; projectile, melee and area hit rules; invulnerability after a hit; knockback
+- [ ] Inspect with REA (scope DEC-019) and ordinary play; keep raw output outside the repository
+- [ ] Write the prose note with confidence labels and method; no extracted material
+- [ ] Compare with GDD §5–§7 and §9.2; file change requests or record "keep GDD" per difference; list provisional approvals in `questions-to-dev.md`
+- [ ] Run `bun run lint`; commit the note and any change request
+
+**Asserts:** note exists and passes markdownlint; `git grep` finds no pasted code or data blocks from the game; every difference has a CR or a recorded decision.
 
 #### GAME-P2-001. Stats, energy and exact numeric rules (M) — DONE
 
@@ -459,7 +532,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Asserts:** V07 movement fixtures; DA-01/07 — plus `scripts/check.ps1` exit 0.
 
-#### GAME-P2-004. Bolt and saw attack emission (M) — TODO
+#### GAME-P2-004. Bolt and saw attack emission (M) — DONE
 
 **Depends on:** GAME-P2-003. **Read first:** [SP-007](docs/specs/sp-007-combat.md) (GDD-005 (§6), §7.2–7.3, §9.2; DA-05/06/07/13).
 
@@ -467,11 +540,11 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Test first: DA-04 attack starts 15 ticks apart; no burst after a no-target period; target tie-break by lower `SimId`
-- [ ] Weapon timers and auto/manual target selection in `TickSet::Emit`, attack IDs from `IdAllocator`
-- [ ] Bolt projectile sweep with `sweep_circle` (earliest TOI, then lower target ID); saw capsule with windup/recovery
-- [ ] Presentation records for emission (new `PresentationKind` variants)
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
+- [x] Test first: DA-04 attack starts 15 ticks apart; no burst after a no-target period; target tie-break by lower `SimId`
+- [x] Weapon timers and auto/manual target selection in `TickSet::Emit`, attack IDs from `IdAllocator`
+- [x] Bolt projectile sweep with `sweep_circle` (earliest TOI, then lower target ID); saw capsule with windup/recovery
+- [x] Presentation records for emission (new `PresentationKind` variants)
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
 
 **Asserts:** V07; DA-04/05 — plus `scripts/check.ps1` exit 0.
 
@@ -522,6 +595,22 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 **Asserts:** V12 AC2–4; catalog swap trace — plus `scripts/check.ps1` exit 0.
 
 ### P2-M2: Complete preparation loop
+
+#### RES-P2-002. REA study: shop, economy and run flow (S) — TODO
+
+**Depends on:** RES-P1-001. **Read first:** rule 1.10; DEC-019; GDD §3–§4 and §8; docs/research/brotato-notes/README.md.
+
+**Done when:** `docs/research/brotato-notes/` has an original prose note for shop, economy and run flow answering the questions below, a GDD comparison, and a change request or a recorded "keep GDD" decision for each difference. Informs GAME-P2-007 to GAME-P2-010.
+
+**Microtasks:**
+
+- [ ] Questions: currency drops and collection; shop offer count, rarity and weighting; prices and inflation per wave; reroll cost; item stacking and limits; wave-to-shop flow
+- [ ] Inspect with REA (scope DEC-019) and ordinary play; keep raw output outside the repository
+- [ ] Write the prose note with confidence labels and method; no extracted material
+- [ ] Compare with GDD §3–§4 and §8; file change requests or record "keep GDD" per difference; list provisional approvals in `questions-to-dev.md`
+- [ ] Run `bun run lint`; commit the note and any change request
+
+**Asserts:** note exists and passes markdownlint; `git grep` finds no pasted code or data blocks from the game; every difference has a CR or a recorded decision.
 
 #### GAME-P2-007. Shop eligibility, prices and one refresh (M) — TODO
 
@@ -629,11 +718,42 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Asserts:** V07/V09/V11; PERF-02 prototype; observed playtest — plus `scripts/check.ps1` exit 0.
 
+#### QA-P2-002. Prototype phase-end QA: unit, integration, e2e and simulated human QA (M) — TODO
+
+**Depends on:** QA-P2-001, QA-P1-003. **Read first:** rule 1.11; docs/validation/qa-checklist.md.
+
+**Done when:** All four test layers are green on the Prototype release commit; e2e scripts cover move, fight, shop, energy allocation and defeat; the QA bot completes 20 seeds per profile through three waves; the phase QA report exists with no open high-priority finding.
+
+**Microtasks:**
+
+- [ ] Add Prototype items to `docs/validation/qa-checklist.md` (shop exploits, double purchase, refresh spam, zero-energy start, death during shop transition)
+- [ ] Write e2e scripts for the full prototype loop and for each checklist item that a script can check
+- [ ] Run the QA bot: 3 profiles x 20 seeds; convert each failure into a bug task with a reproducing test, fix, re-run
+- [ ] Write `docs/validation/reports/<date>-prototype-qa.md`; owner-only items go to `questions-to-dev.md`
+
+**Asserts:** unit + integration + e2e + QA bot results in the report; `scripts/check.ps1` exit 0; CI green.
+
 ## 5. Phase 3: ALPHA
 
 **Goal:** All approved systems and the full 4/12/10/2/40 content: ten waves, two bosses, saves, menus, controller and accessibility, full-run tests. Placeholder art and audio allowed. Entry: playable prototype evidence and recorded correction priorities; approved content envelope remains in force. Exit: all approved core systems and full 4/12/10/2/40 content, ten waves/two bosses, saves, menus, controller/accessibility functionality and full-run tests are present. Production polish may still use cleared placeholders.
 
 ### P3-M1: Full combat/content and durable progression
+
+#### RES-P3-001. REA study: enemies, bosses, waves and spawning (S) — TODO
+
+**Depends on:** RES-P2-001. **Read first:** rule 1.10; DEC-019; GDD §10–§11; docs/research/brotato-notes/README.md.
+
+**Done when:** `docs/research/brotato-notes/` has an original prose note for enemies, bosses, waves and spawning answering the questions below, a GDD comparison, and a change request or a recorded "keep GDD" decision for each difference. Informs GAME-P3-016 to GAME-P3-007.
+
+**Microtasks:**
+
+- [ ] Questions: enemy behavior families and their timings; telegraphs; spawn placement and safety; wave scaling of HP and damage; boss phases and attack schedules; elite or special enemies
+- [ ] Inspect with REA (scope DEC-019) and ordinary play; keep raw output outside the repository
+- [ ] Write the prose note with confidence labels and method; no extracted material
+- [ ] Compare with GDD §10–§11; file change requests or record "keep GDD" per difference; list provisional approvals in `questions-to-dev.md`
+- [ ] Run `bun run lint`; commit the note and any change request
+
+**Asserts:** note exists and passes markdownlint; `git grep` finds no pasted code or data blocks from the game; every difference has a CR or a recorded decision.
 
 #### ENG-P3-001. Phase-driven warning/clip presentation (M) — TODO
 
@@ -840,6 +960,22 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 ### P3-M2: Complete player-facing systems
 
+#### RES-P3-002. REA study: characters, unlocks, progression and saves (S) — TODO
+
+**Depends on:** RES-P2-002. **Read first:** rule 1.10; DEC-019; GDD §9.1, §13–§15; docs/research/brotato-notes/README.md.
+
+**Done when:** `docs/research/brotato-notes/` has an original prose note for characters, unlocks, progression and saves answering the questions below, a GDD comparison, and a change request or a recorded "keep GDD" decision for each difference. Informs GAME-P3-008 to GAME-P3-015.
+
+**Microtasks:**
+
+- [ ] Questions: character differences and starting kits; unlock conditions; what persists between runs; menu and result flow; accessibility and input options
+- [ ] Inspect with REA (scope DEC-019) and ordinary play; keep raw output outside the repository
+- [ ] Write the prose note with confidence labels and method; no extracted material
+- [ ] Compare with GDD §9.1, §13–§15; file change requests or record "keep GDD" per difference; list provisional approvals in `questions-to-dev.md`
+- [ ] Run `bun run lint`; commit the note and any change request
+
+**Asserts:** note exists and passes markdownlint; `git grep` finds no pasted code or data blocks from the game; every difference has a CR or a recorded decision.
+
 #### GAME-P3-020. Boot, Menu and character selection flow (M) — TODO
 
 **Depends on:** GAME-P3-007, GAME-P3-010, GAME-P2-010. **Read first:** [SP-011](docs/specs/sp-011-run-states.md) (GDD-003 (§4); DA-03/11/13/16).
@@ -945,11 +1081,42 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 **Asserts:** V10/V11/V18; seeded and native runs — plus `scripts/check.ps1` exit 0.
 
+#### QA-P3-002. Alpha phase-end QA: unit, integration, e2e and simulated human QA (M) — TODO
+
+**Depends on:** QA-P3-001, QA-P2-002. **Read first:** rule 1.11; docs/validation/qa-checklist.md.
+
+**Done when:** All four layers green on the Alpha release commit; e2e covers every state of GDD-003, saves and recovery, controller navigation via injected input; the QA bot finishes full ten-wave runs for every character, 20 seeds per profile; report with no open high-priority finding.
+
+**Microtasks:**
+
+- [ ] Add Alpha items to the checklist (boss stalls, unlock idempotence, save interruption, abandon flows, remapping conflicts, UI scale 150%)
+- [ ] Write e2e scripts for victory, defeat, abandon, unlock grant and save recovery
+- [ ] Run the QA bot across characters and profiles; bug tasks with reproducing tests for every failure
+- [ ] Write `docs/validation/reports/<date>-alpha-qa.md`; owner-only items to `questions-to-dev.md`
+
+**Asserts:** four layers recorded in the report; `scripts/check.ps1` exit 0; CI green.
+
 ## 6. Phase 4: BETA
 
 **Goal:** Production art and audio, balance and readability passes, native controller/accessibility checks, measured budgets, offline package, two-hour stability. Entry: Alpha complete and core features stable. Exit: original/cleared production art/audio, recorded balance/readability passes, native controller/accessibility checks, measured hardware budgets, clean offline package and two-hour stability evidence. Performance work follows observed bottlenecks.
 
 ### P4-M1: Production presentation and balance
+
+#### RES-P4-001. REA study: balance numbers and pacing (S) — TODO
+
+**Depends on:** RES-P3-001, RES-P3-002. **Read first:** rule 1.10; DEC-019; GDD P values in §7–§11; docs/research/brotato-notes/README.md.
+
+**Done when:** `docs/research/brotato-notes/` has an original prose note for balance numbers and pacing answering the questions below, a GDD comparison, and a change request or a recorded "keep GDD" decision for each difference. Informs GAME-P4-006.
+
+**Microtasks:**
+
+- [ ] Questions: typical run length; damage and HP curves per wave; economy pacing; item and weapon power bands; difficulty spikes
+- [ ] Inspect with REA (scope DEC-019) and ordinary play; keep raw output outside the repository
+- [ ] Write the prose note with confidence labels and method; no extracted material
+- [ ] Compare with GDD P values in §7–§11; file change requests or record "keep GDD" per difference; list provisional approvals in `questions-to-dev.md`
+- [ ] Run `bun run lint`; commit the note and any change request
+
+**Asserts:** note exists and passes markdownlint; `git grep` finds no pasted code or data blocks from the game; every difference has a CR or a recorded decision.
 
 #### GAME-P4-001. Four production character visuals (M) — TODO
 
@@ -1201,6 +1368,21 @@ Cancelled: Split into GAME-P4-010 to GAME-P4-013 (REV-010).
 
 **Asserts:** V17 packaging subset; clean directory test — plus `scripts/check.ps1` exit 0.
 
+#### QA-P4-004. Beta phase-end QA: unit, integration, e2e and simulated human QA (M) — TODO
+
+**Depends on:** QA-P4-002, QA-P3-002. **Read first:** rule 1.11; docs/validation/qa-checklist.md.
+
+**Done when:** All four layers green on the Beta release commit with production assets; e2e runs on the packaged build; the QA bot plays two-hour sessions and every character; report with no open high-priority finding.
+
+**Microtasks:**
+
+- [ ] Add Beta items to the checklist (production art readability cues, reduced effects, mute, long sessions, clean-machine launch)
+- [ ] Run e2e scripts against the packaged build from REL-P4-001
+- [ ] Run the QA bot: all profiles, 20 seeds, plus two long sessions; bug tasks for failures
+- [ ] Write `docs/validation/reports/<date>-beta-qa.md`; owner-only items (feel, audio mix, readability) to `questions-to-dev.md`
+
+**Asserts:** four layers recorded in the report; `scripts/check.ps1` exit 0; CI green.
+
 ## 7. Phase 5: RC → 1.0
 
 **Goal:** Feature freeze, full regression, license/asset audit, release candidate and a separate final 1.0 decision. Entry: Beta evidence, fixed scope, complete original content/provenance and resolved shipping-floor budgets. Exit: RC passes, remaining release blockers are resolved, and a separate final 1.0 gate approves the qualified artifact. Store publication or external spending is not implied by planning approval.
@@ -1316,7 +1498,7 @@ Cancelled: Split into GAME-P4-010 to GAME-P4-013 (REV-010).
 
 #### REL-P5-004. Final 1.0 gate and release notes (S) — TODO
 
-**Depends on:** QA-P5-002, REL-P5-003. **Read first:** [SP-017](docs/specs/sp-017-release-validation.md) (quality gates; DEC-010; docs/release.md).
+**Depends on:** QA-P5-002, REL-P5-003, QA-P5-003. **Read first:** [SP-017](docs/specs/sp-017-release-validation.md) (quality gates; DEC-010; docs/release.md).
 
 **Done when:** Separate final owner release verdict, exact artifact/notices/notes and no unresolved release blocker.
 
@@ -1328,6 +1510,20 @@ Cancelled: Split into GAME-P4-010 to GAME-P4-013 (REV-010).
 - [ ] Run the verification commands and `scripts/check.ps1`; record evidence
 
 **Asserts:** Final release evidence checklist; no automatic publication — plus `scripts/check.ps1` exit 0.
+
+#### QA-P5-003. RC phase-end QA: unit, integration, e2e and simulated human QA on the frozen candidate (M) — TODO
+
+**Depends on:** QA-P5-002, QA-P4-004. **Read first:** rule 1.11; docs/validation/qa-checklist.md; SP-017.
+
+**Done when:** All four layers green on the exact release-candidate artifact; full checklist passed; report attached to the RC verdict.
+
+**Microtasks:**
+
+- [ ] Run every suite, e2e script and QA bot profile against the candidate artifact hash
+- [ ] Re-run every regression test created by earlier phase-end QA
+- [ ] Write `docs/validation/reports/<date>-rc-qa.md`; owner-only items to `questions-to-dev.md`
+
+**Asserts:** four layers recorded in the report tied to the artifact hash; CI green.
 
 ## 8. Coverage and maintenance
 

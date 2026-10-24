@@ -2,6 +2,7 @@
 //! All arithmetic is checked integer math; floors and ceilings apply exactly once.
 
 use crate::content::model::{StatId, StatModifier, Weapon};
+use bevy::prelude::Component;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum StatError {
@@ -132,7 +133,7 @@ pub fn enemy_damage(raw: u32, target_armor: u32) -> Result<u32, StatError> {
 }
 
 /// Exact fractional regeneration, stored as 1/600 HP units (tenths of HP/s over 60 ticks).
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+#[derive(Component, Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub struct RegenAccumulator(u32);
 
 impl RegenAccumulator {

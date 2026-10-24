@@ -133,3 +133,224 @@ fn previous_pose_follows_the_last_tick() {
 	assert_eq!(world.get::<PreviousPose2>(e).unwrap().0.x, 3.0);
 	assert_eq!(world.get::<Pose2>(e).unwrap().0.x, 6.0);
 }
+
+// ---- GAME-P2-004: attack emission and collision candidates ----
+
+use omega_game::combat::damage::HitCandidates;
+use omega_game::combat::weapons::Projectile;
+
+fn equip(h: &mut SimHarness, player: bevy::prelude::Entity, weapon: &str) {
+	let mut loadout = h.app_mut().world_mut().get_mut::<Loadout>(player).unwrap();
+	loadout.slots[0].as_mut().unwrap().weapon_id = weapon.to_string();
+}
+
+fn enemy(h: &mut SimHarness, x: f64, y: f64) -> u64 {
+	let e = spawn_enemy(
+		h.app_mut().world_mut(),
+		"enemy_bulwark",
+		DVec2::new(x, y),
+		100_000,
+		1,
+	)
+	.unwrap();
+	h.app().world().get::<SimId>(e).unwrap().0
+}
+
+fn attacks(records: &[PresentationRecord]) -> Vec<(u64, u64, [f64; 2])> {
+	records
+		.iter()
+		.filter_map(|r| match r.kind {
+			PresentationKind::AttackEmitted {
+				attack, direction, ..
+			} => Some((r.tick, attack, direction)),
+			_ => None,
+		})
+		.collect()
+}
+
+fn run_ticks(h: &mut SimHarness, n: u32) -> Vec<PresentationRecord> {
+	let mut out = Vec::new();
+	for _ in 0..n {
+		h.step(TickInput::default());
+		out.extend(h.drain_presentation());
+	}
+	out
+}
+
+#[test]
+fn da04_attack_starts_are_15_ticks_apart() {
+	let mut h = harness();
+	spawn_player(h.app_mut().world_mut(), "char_patch", DVec2::ZERO).unwrap();
+	enemy(&mut h, 200.0, 0.0);
+	let ticks: Vec<u64> = attacks(&run_ticks(&mut h, 60))
+		.iter()
+		.map(|a| a.0)
+		.collect();
+	assert_eq!(ticks, vec![1, 16, 31, 46]);
+}
+
+#[test]
+fn no_burst_after_a_period_without_targets() {
+	let mut h = harness();
+	spawn_player(h.app_mut().world_mut(), "char_patch", DVec2::ZERO).unwrap();
+	assert!(attacks(&run_ticks(&mut h, 200)).is_empty());
+	enemy(&mut h, 200.0, 0.0);
+	let ticks: Vec<u64> = attacks(&run_ticks(&mut h, 31))
+		.iter()
+		.map(|a| a.0)
+		.collect();
+	assert_eq!(ticks, vec![201, 216, 231]);
+}
+
+#[test]
+fn target_tie_breaks_on_the_lower_sim_id() {
+	let mut h = harness();
+	spawn_player(h.app_mut().world_mut(), "char_patch", DVec2::ZERO).unwrap();
+	enemy(&mut h, 0.0, 100.0);
+	enemy(&mut h, 0.0, -100.0);
+	let first = attacks(&run_ticks(&mut h, 1))[0];
+	assert_eq!(first.2, [0.0, 1.0]);
+}
+
+#[test]
+fn out_of_range_enemies_are_not_targeted_but_manual_aim_fires_anyway() {
+	let mut h = harness();
+	spawn_player(h.app_mut().world_mut(), "char_patch", DVec2::ZERO).unwrap();
+	enemy(&mut h, 500.0, 0.0);
+	assert!(attacks(&run_ticks(&mut h, 20)).is_empty());
+	h.step(TickInput {
+		movement: DVec2::ZERO,
+		aim: AimInput::Manual(DVec2::Y),
+	});
+	let manual = attacks(&h.drain_presentation());
+	assert_eq!(manual.len(), 1);
+	assert_eq!(manual[0].2, [0.0, 1.0]);
+}
+
+fn collect_hits(h: &mut SimHarness, ticks: u32) -> Vec<(u64, u64, u64)> {
+	let mut out = Vec::new();
+	for _ in 0..ticks {
+		h.step(TickInput::default());
+		let tick = h.tick();
+		for hit in &h.app().world().resource::<HitCandidates>().0 {
+			out.push((tick, hit.attack.0, hit.target_id.0));
+		}
+	}
+	out
+}
+
+#[test]
+fn bolt_projectile_hits_the_target_once_and_ends() {
+	let mut h = harness();
+	spawn_player(h.app_mut().world_mut(), "char_patch", DVec2::ZERO).unwrap();
+	let target = enemy(&mut h, 100.0, 0.0);
+	let hits = collect_hits(&mut h, 14);
+	assert_eq!(hits.len(), 1, "{hits:?}");
+	assert_eq!(hits[0].2, target);
+	// Bulwark radius 23 + bolt radius 4: contact at 73 LU, 8.33 LU per tick, so tick 9.
+	assert_eq!(hits[0].0, 9);
+	let world = h.app_mut().world_mut();
+	assert_eq!(world.query::<&Projectile>().iter(world).count(), 0);
+}
+
+#[test]
+fn piercing_projectile_hits_one_plus_pierce_distinct_targets() {
+	let mut h = harness();
+	let p = spawn_player(h.app_mut().world_mut(), "char_patch", DVec2::ZERO).unwrap();
+	equip(&mut h, p, "wpn_slug");
+	let ids = [
+		enemy(&mut h, 100.0, 0.0),
+		enemy(&mut h, 180.0, 0.0),
+		enemy(&mut h, 260.0, 0.0),
+	];
+	let hits = collect_hits(&mut h, 60);
+	let first_attack = hits[0].1;
+	let targets: Vec<u64> = hits
+		.iter()
+		.filter(|x| x.1 == first_attack)
+		.map(|x| x.2)
+		.collect();
+	assert_eq!(targets, vec![ids[0], ids[1]]);
+}
+
+#[test]
+fn spread_volley_damages_a_target_once_per_attack_id() {
+	let mut h = harness();
+	let p = spawn_player(h.app_mut().world_mut(), "char_patch", DVec2::ZERO).unwrap();
+	equip(&mut h, p, "wpn_fan");
+	let target = enemy(&mut h, 40.0, 0.0);
+	let hits = collect_hits(&mut h, 12);
+	assert_eq!(hits.len(), 1, "three pellets, one attack: {hits:?}");
+	assert_eq!(hits[0].2, target);
+}
+
+#[test]
+fn explosion_hits_every_target_in_radius_once_without_a_direct_hit() {
+	let mut h = harness();
+	let p = spawn_player(h.app_mut().world_mut(), "char_patch", DVec2::ZERO).unwrap();
+	equip(&mut h, p, "wpn_rocket");
+	let near = enemy(&mut h, 100.0, 0.0);
+	let beside = enemy(&mut h, 130.0, 0.0);
+	let far = enemy(&mut h, 100.0, 120.0);
+	let records = {
+		let mut r = Vec::new();
+		let mut hits = Vec::new();
+		for _ in 0..40 {
+			h.step(TickInput::default());
+			let tick = h.tick();
+			hits.extend(
+				h.app()
+					.world()
+					.resource::<HitCandidates>()
+					.0
+					.iter()
+					.map(|x| (tick, x.target_id.0)),
+			);
+			r.extend(h.drain_presentation());
+		}
+		(r, hits)
+	};
+	let mut targets: Vec<u64> = records.1.iter().map(|x| x.1).collect();
+	targets.sort_unstable();
+	assert_eq!(targets, vec![near, beside]);
+	assert!(!targets.contains(&far));
+	assert_eq!(
+		records
+			.0
+			.iter()
+			.filter(|r| matches!(r.kind, PresentationKind::Explosion { .. }))
+			.count(),
+		1
+	);
+}
+
+#[test]
+fn saw_capsule_hits_on_the_windup_completion_tick() {
+	let mut h = harness();
+	let p = spawn_player(h.app_mut().world_mut(), "char_patch", DVec2::ZERO).unwrap();
+	equip(&mut h, p, "wpn_saw");
+	let target = enemy(&mut h, 50.0, 0.0);
+	let hits = collect_hits(&mut h, 30);
+	let first = hits[0];
+	// Attack starts on tick 1, 6 windup ticks, emits and hits on tick 7.
+	assert_eq!((first.0, first.2), (7, target));
+	// The next attack starts 20 ticks after the first (3 points, 1.5/s) and hits 6 later.
+	assert_eq!(hits[1].0, 27);
+}
+
+#[test]
+fn a_dead_attacker_cancels_pending_attacks() {
+	let mut h = harness();
+	let p = spawn_player(h.app_mut().world_mut(), "char_patch", DVec2::ZERO).unwrap();
+	equip(&mut h, p, "wpn_saw");
+	enemy(&mut h, 50.0, 0.0);
+	run_ticks(&mut h, 3);
+	h.app_mut()
+		.world_mut()
+		.get_mut::<Health>(p)
+		.unwrap()
+		.current = 0;
+	let records = run_ticks(&mut h, 20);
+	assert!(attacks(&records).is_empty());
+	assert!(h.app().world().resource::<HitCandidates>().0.is_empty());
+}

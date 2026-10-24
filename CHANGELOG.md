@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **combat:** Add the player actor spawn and tick movement (DA-01, DA-07) with SP-007 contract tests ([75e649a](https://github.com/AlexGalhardo/project-omega/commit/75e649ad8954481b9a6f90e9a914f6bdba1aa256))
 - **input:** Add the keyboard/mouse action buffer, aim mapping and focus pause with SP-005 contract tests ([b6d8691](https://github.com/AlexGalhardo/project-omega/commit/b6d86910198fe3b3d074abaffa86ad1ef19f0124))
 - **combat:** Add exact stat, fire-rate, damage, energy and regeneration evaluators with SP-006 contract tests ([29badf4](https://github.com/AlexGalhardo/project-omega/commit/29badf496b2ef21eceffe675343d51c38ddd5e62))
 
