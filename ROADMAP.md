@@ -93,6 +93,8 @@ GitHub Actions (`.github/workflows/ci.yml`) runs the same gates on every push to
 
 One active integration task at a time. Parallel agents or worktrees need the owner's explicit yes for that task (global rule), or the DEC-020 pre-authorization in an autonomous session (ETA of 30 minutes or more), and always disjoint file ownership (AGENTS.md). Root manifests, `Cargo.lock`, content catalogs, this file and contracts are edited serially.
 
+Never wait idle: after a push, start the next task and check CI at the next checkpoint (a red run is fixed before the next release). Jobs with an ETA over 10 minutes (balance simulations, QA bot runs, e2e suites, long benchmarks, release builds, REA analyses) run in a background agent or a separate worktree while the main loop continues with the next task.
+
 ### 1.8 When stuck
 
 1. A contract flaw (spec, GDD, ADR): write a change request, set the task BLOCKED with the CR ID, continue the next independent task.
