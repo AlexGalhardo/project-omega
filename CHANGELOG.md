@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **balance:** Add the balance simulator (six bot policies, metrics, JSON and Markdown reports, omega-sim --scenario balance) and the CR-004 prototype pressure calibration with before and after reports (SHA_PLACEHOLDER)
 - **ui:** Add UI scale, first-run hints that pause combat, reduced-effects mapping, a two-column panel layout verified at 1280x720 and 1920x1080, and client profile and settings loading and saving ([38372a7](https://github.com/AlexGalhardo/project-omega/commit/38372a7cff766c6dc5b8e75c1bd213b519d88217))
 - **ui:** Add shop comparisons (damage by tier, actual rates, rates per point count for empty slots, item modifiers) and replacement details ([6e7040c](https://github.com/AlexGalhardo/project-omega/commit/6e7040c8b706c4fcf077c6cc8bfeaddae6003932))
 - **input:** Add controller dead zones, aim stick, button edges, UI focus navigation with repeat, disconnect pause and the remappable bindings model ([641b864](https://github.com/AlexGalhardo/project-omega/commit/641b864e763044babb63e197536513d41b9f93cb))

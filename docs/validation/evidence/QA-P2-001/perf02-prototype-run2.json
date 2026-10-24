@@ -5,10 +5,10 @@
     "build_profile": "release",
     "target_os": "windows",
     "target_arch": "x86_64",
-    "commit": "0fffd87",
+    "commit": "1467252",
     "cpu": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
     "seed_hex": "5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a",
-    "content_revision": "d5f2248cfb2c807bd49cb112836f4e6dff1f58daa637a343f7cdb9373c335f75",
+    "content_revision": "e31c1d064b80cb4ea008063ae9223c4c1b382c672083465548b31b6a7f1ee7ad",
     "settings": [
       [
         "profile",
@@ -16,15 +16,15 @@
       ],
       [
         "ticks",
-        "10800"
+        "6308"
       ],
       [
         "shop_visits",
-        "2"
+        "1"
       ],
       [
         "final_state",
-        "Victory"
+        "Defeat"
       ],
       [
         "player_present",
@@ -41,29 +41,29 @@
     {
       "name": "sim_tick_wall_time",
       "unit": "us",
-      "samples": 10800,
+      "samples": 6308,
       "percentiles": {
-        "p50": 51.400000000000006,
-        "p95": 111.7,
-        "p99": 155.79999999999998,
-        "max": 906.8000000000001
+        "p50": 84.2,
+        "p95": 165.9,
+        "p99": 203.79999999999998,
+        "max": 1221.8999999999999
       }
     },
     {
       "name": "live_enemies",
       "unit": "count",
-      "samples": 10800,
+      "samples": 6308,
       "percentiles": {
-        "p50": 4.0,
-        "p95": 6.0,
-        "p99": 7.0,
-        "max": 8.0
+        "p50": 6.0,
+        "p95": 20.0,
+        "p99": 25.0,
+        "max": 27.0
       }
     },
     {
       "name": "live_projectiles",
       "unit": "count",
-      "samples": 10800,
+      "samples": 6308,
       "percentiles": {
         "p50": 1.0,
         "p95": 3.0,
@@ -74,12 +74,12 @@
     {
       "name": "live_pickups",
       "unit": "count",
-      "samples": 10800,
+      "samples": 6308,
       "percentiles": {
-        "p50": 7.0,
-        "p95": 18.0,
-        "p99": 20.0,
-        "max": 20.0
+        "p50": 9.0,
+        "p95": 21.0,
+        "p99": 21.0,
+        "max": 22.0
       }
     }
   ],

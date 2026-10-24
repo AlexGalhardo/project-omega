@@ -1,6 +1,6 @@
 # CR-004 — Prototype pressure calibration (enemy stats and three-wave counts)
 
-Date: 2026-10-24. Author: GAME-P2-013 (balance simulator). Status: **Proposed**; applied to the prototype content so the simulator measures it, awaiting integrator and owner review for the GDD edit. Blocking scope: none; GAME-P2-013 closes with the numbers applied. If the owner rejects it, revert the nine content values below in both content directories.
+Date: 2026-10-24. Author: GAME-P2-013 (balance simulator). Status: **Approved provisionally under DEC-020 (2026-10-24)**; applied to the prototype content and recorded in GDD section 17 as the prototype profile calibration; the owner may reverse it after playing (Q in the local questions file). Blocking scope: none; GAME-P2-013 closes with the numbers applied. If the owner rejects it, revert the nine content values below in both content directories.
 
 ## Evidence
 

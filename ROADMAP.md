@@ -717,7 +717,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Asserts:** V15 AC1/2; native audition — plus `scripts/check.ps1` exit 0.
 
-#### GAME-P2-013. Balance simulator, bot policies and first prototype tuning (M) — TODO
+#### GAME-P2-013. Balance simulator, bot policies and first prototype tuning (M) — DONE
 
 **Depends on:** GAME-P2-010, QA-P1-003. **Read first:** rule 1.12; docs/validation/balancing.md; SP-016; GDD §7–§8.
 
@@ -725,11 +725,11 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Test first: balance scenario with a fixed seed is repeatable and the `idle` policy dies in waves 1–2
-- [ ] Implement bot policies as `TickInput` and shop/energy command producers (no access to hidden state the player cannot see)
-- [ ] Implement metric collection without touching RNG or authoritative state (diagnostics only observe)
-- [ ] Run 2 policies x 200 seeds quick matrix, then the full prototype matrix; write `docs/validation/reports/<date>-prototype-balance.md`
-- [ ] Propose and apply content changes for missed bands through the GDD (change request), re-run, keep before/after
+- [x] Test first: balance scenario with a fixed seed is repeatable and the `idle` policy dies in waves 1–2
+- [x] Implement bot policies as `TickInput` and shop/energy command producers (no access to hidden state the player cannot see)
+- [x] Implement metric collection without touching RNG or authoritative state (diagnostics only observe)
+- [x] Run 2 policies x 200 seeds quick matrix, then the full prototype matrix; write `docs/validation/reports/<date>-prototype-balance.md`
+- [x] Propose and apply content changes for missed bands through the GDD (change request), re-run, keep before/after
 
 **Asserts:** `cargo test -p omega_game --no-default-features --locked --test balance_contract`; balance report committed; `scripts/check.ps1` exit 0.
 

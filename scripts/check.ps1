@@ -15,6 +15,7 @@ $steps = @(
 	@{ Name = 'content full'; Cmd = { cargo run -q -p omega_game --no-default-features --locked --bin omega-content -- validate crates/omega_game/tests/fixtures/content/full --profile full } },
 	@{ Name = 'content prototype'; Cmd = { cargo run -q -p omega_game --no-default-features --locked --bin omega-content -- validate crates/omega_game/tests/fixtures/content/prototype --profile prototype } },
 	@{ Name = 'content shipped prototype'; Cmd = { cargo run -q -p omega_game --no-default-features --locked --bin omega-content -- validate assets/content --profile prototype } },
+	@{ Name = 'balance smoke'; Cmd = { cargo run -q -p omega_game --no-default-features --locked --bin omega-sim -- --scenario balance --policies idle,human_like --seeds 2 --label smoke --out artifacts/balance/smoke.json } },
 	@{ Name = 'sim smoke'; Cmd = { cargo run -q -p omega_game --no-default-features --locked --bin omega-sim -- --scenario repeatability --seed $zero --ticks 600 } },
 	@{ Name = 'assets'; Cmd = { powershell -NoProfile -File scripts/validate-assets.ps1 -Manifest assets/presentation/proof-manifest.json } }
 )
