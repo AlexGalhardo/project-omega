@@ -1,0 +1,4 @@
+aggressive {'runs': 20, 'passed': 20, 'completed': 20, 'outcome_victory': 20, 'maxwave_3': 20, 'ui_actions': 198, 'ui_mistakes': 45, 'shop_visits': 40, 'abandon_dialogs': 2, 'pause_presses': 508, 'focus_losses': 63, 'resizes': 67, 'mistakes': 4252} ms avg 1495 max 1652
+cautious {'runs': 20, 'passed': 20, 'completed': 20, 'outcome_victory': 20, 'maxwave_3': 20, 'ui_actions': 278, 'ui_mistakes': 42, 'shop_visits': 40, 'abandon_dialogs': 0, 'pause_presses': 240, 'focus_losses': 37, 'resizes': 30, 'mistakes': 1902} ms avg 1517 max 1669
+chaotic {'runs': 20, 'passed': 20, 'completed': 20, 'outcome_victory': 19, 'maxwave_3': 20, 'ui_actions': 905, 'ui_mistakes': 683, 'shop_visits': 40, 'abandon_dialogs': 42, 'pause_presses': 5376, 'focus_losses': 710, 'resizes': 730, 'mistakes': 18731, 'outcome_defeat': 1} ms avg 1526 max 1618
+total 60 bad 0

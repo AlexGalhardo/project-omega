@@ -1,0 +1,20 @@
+{
+	"name": "abandon-cancel",
+	"mode": "prototype",
+	"steps": [
+		{ "do": "wait", "ticks": 30 },
+		{ "do": "pause" },
+		{ "do": "checkpoint", "name": "paused", "expect": { "paused": true, "run.state": "wave", "ui.mode": "normal" } },
+		{ "do": "ui", "action": "ask_abandon" },
+		{ "do": "checkpoint", "name": "dialog-open", "expect": { "ui.mode": "confirm_abandon", "run.state": "wave", "run.settlements": 0 } },
+		{ "do": "ui", "action": "cancel_abandon" },
+		{ "do": "checkpoint", "name": "dialog-cancelled", "expect": {
+			"ui.mode": "normal", "run.state": "wave", "run.settlements": 0, "run.outcome": null, "paused": true
+		} },
+		{ "do": "resume" },
+		{ "do": "wait", "ticks": 10 },
+		{ "do": "checkpoint", "name": "play-continues", "expect": {
+			"paused": false, "run.state": "wave", "run.settlements": 0, "player.hp": { "min": 1 }
+		} }
+	]
+}

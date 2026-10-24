@@ -1,6 +1,9 @@
-use crate::combat::actor::{Enemy, Health, Player, Pose2, Scrap};
+use crate::combat::actor::{Enemy, Health, Loadout, Player, Pose2, Scrap};
 use crate::input::AimOrigin;
+use crate::shop::{Offer, RunBuild, ShopVisit, refresh_cost};
+use crate::sim::run::{Outcome, Run, RunState};
 use crate::sim::{SimPaused, SimTick};
+use crate::ui::{ScreenView, UiMode, screen_view};
 use bevy::math::DVec2;
 use bevy::prelude::*;
 use omega_2d::camera::ViewportMapping;
@@ -40,6 +43,69 @@ pub struct MenuView {
 	pub selected: u8,
 }
 
+#[derive(Debug, Clone, PartialEq, Serialize)]
+pub struct RunFacts {
+	/// Lowercase `RunState`: wave, shop, victory, defeat or summary.
+	pub state: &'static str,
+	pub wave: u32,
+	pub total_waves: u32,
+	/// Set once the run settles: victory, defeat or abandoned.
+	pub outcome: Option<&'static str>,
+	pub waves_completed: Option<u32>,
+	pub settlements: u32,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize)]
+pub struct OfferFacts {
+	/// weapon, item, sold or empty.
+	pub kind: &'static str,
+	pub id: String,
+	pub tier: u8,
+	pub price: u32,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize)]
+pub struct ShopFacts {
+	pub visit: u32,
+	pub revision: u64,
+	pub refresh_used: bool,
+	pub refresh_cost: u32,
+	pub offers: Vec<OfferFacts>,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize)]
+pub struct SlotFacts {
+	pub weapon: Option<String>,
+	pub tier: u8,
+	pub points: u8,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize)]
+pub struct LoadoutFacts {
+	pub slots: Vec<SlotFacts>,
+	pub occupied: u8,
+	pub energy_used: u8,
+	pub items: Vec<String>,
+	pub item_count: u32,
+	pub unallocated: u8,
+	pub powered: bool,
+}
+
+/// What the last typed UI request did, as a person would read it.
+#[derive(Debug, Clone, PartialEq, Serialize)]
+pub struct UiFacts {
+	pub mode: &'static str,
+	pub message: String,
+	pub actions: u32,
+}
+
+/// Message and counter of the last [`crate::ui::UiAction`] the QA harness applied.
+#[derive(Resource, Debug, Clone, Default)]
+pub struct QaUi {
+	pub message: String,
+	pub actions: u32,
+}
+
 /// Authoritative state an e2e checkpoint exports and a driver observes.
 #[derive(Debug, Clone, PartialEq, Serialize)]
 pub struct Snapshot {
@@ -53,8 +119,15 @@ pub struct Snapshot {
 	pub camera: Option<CameraFacts>,
 	pub nearest_enemy: Option<[f64; 2]>,
 	pub aim_origin: [f64; 2],
+	pub run: Option<RunFacts>,
+	pub shop: Option<ShopFacts>,
+	pub loadout: Option<LoadoutFacts>,
+	pub ui: UiFacts,
 	#[serde(skip)]
 	pub menu: Option<MenuView>,
+	/// The legal-action layer: the panel the player sees, `None` during live combat.
+	#[serde(skip)]
+	pub screen: Option<ScreenView>,
 }
 
 pub fn camera_facts(window: [u32; 2]) -> Option<CameraFacts> {
@@ -71,7 +144,108 @@ pub fn camera_facts(window: [u32; 2]) -> Option<CameraFacts> {
 	})
 }
 
+fn state_name(state: RunState) -> &'static str {
+	match state {
+		RunState::Wave => "wave",
+		RunState::Shop => "shop",
+		RunState::Victory => "victory",
+		RunState::Defeat => "defeat",
+		RunState::Summary => "summary",
+	}
+}
+
+fn run_facts(world: &World) -> Option<RunFacts> {
+	let run = world.get_resource::<Run>()?;
+	Some(RunFacts {
+		state: state_name(run.state),
+		wave: run.wave,
+		total_waves: run.total_waves,
+		outcome: run.result.map(|r| match r.outcome {
+			Outcome::Victory => "victory",
+			Outcome::Defeat => "defeat",
+			Outcome::Abandoned => "abandoned",
+		}),
+		waves_completed: run.result.map(|r| r.waves_completed),
+		settlements: run.settlements,
+	})
+}
+
+fn shop_facts(visit: &ShopVisit) -> ShopFacts {
+	let offers = visit
+		.offers
+		.iter()
+		.map(|offer| match offer {
+			Offer::Weapon { id, tier, price } => OfferFacts {
+				kind: "weapon",
+				id: id.clone(),
+				tier: *tier,
+				price: *price,
+			},
+			Offer::Item { id, price } => OfferFacts {
+				kind: "item",
+				id: id.clone(),
+				tier: 0,
+				price: *price,
+			},
+			Offer::Sold => OfferFacts {
+				kind: "sold",
+				id: String::new(),
+				tier: 0,
+				price: 0,
+			},
+			Offer::Empty => OfferFacts {
+				kind: "empty",
+				id: String::new(),
+				tier: 0,
+				price: 0,
+			},
+		})
+		.collect();
+	ShopFacts {
+		visit: visit.visit,
+		revision: visit.revision,
+		refresh_used: visit.refresh_used,
+		refresh_cost: refresh_cost(visit.visit),
+		offers,
+	}
+}
+
+fn loadout_facts(loadout: &Loadout, items: Vec<String>) -> LoadoutFacts {
+	let points = loadout.energy.slots();
+	let occupied = loadout.occupied();
+	LoadoutFacts {
+		slots: loadout
+			.slots
+			.iter()
+			.zip(points)
+			.map(|(slot, points)| SlotFacts {
+				weapon: slot.as_ref().map(|w| w.weapon_id.clone()),
+				tier: slot.as_ref().map_or(0, |w| w.tier),
+				points,
+			})
+			.collect(),
+		occupied: occupied.iter().filter(|o| **o).count() as u8,
+		energy_used: points.iter().sum(),
+		item_count: items.len() as u32,
+		items,
+		unallocated: loadout.energy.remainder(),
+		powered: loadout.energy.any_powered(occupied),
+	}
+}
+
 pub fn capture(world: &mut World, window: [u32; 2]) -> Snapshot {
+	let mode = world.get_resource::<UiMode>().copied().unwrap_or_default();
+	let paused = world.resource::<SimPaused>().0;
+	let screen = screen_view(world, mode, paused);
+	let items = world
+		.get_resource::<RunBuild>()
+		.map_or_else(Vec::new, |b| b.items.iter().cloned().collect());
+	let loadout = world
+		.query_filtered::<&Loadout, With<Player>>()
+		.iter(world)
+		.next()
+		.map(|l| loadout_facts(l, items));
+	let ui = world.get_resource::<QaUi>().cloned().unwrap_or_default();
 	let player = world
 		.query_filtered::<(&Pose2, &Health), With<Player>>()
 		.iter(world)
@@ -106,6 +280,20 @@ pub fn capture(world: &mut World, window: [u32; 2]) -> Snapshot {
 		aim_origin: world
 			.get_resource::<AimOrigin>()
 			.map_or([0.0, 0.0], |a| [a.0.x, a.0.y]),
+		run: run_facts(world),
+		shop: world.get_resource::<ShopVisit>().map(shop_facts),
+		loadout,
+		ui: UiFacts {
+			mode: match mode {
+				UiMode::Normal => "normal",
+				UiMode::Replace(_) => "replace",
+				UiMode::ConfirmAbandon => "confirm_abandon",
+				UiMode::Hint(_) => "hint",
+			},
+			message: ui.message,
+			actions: ui.actions,
+		},
 		menu: None,
+		screen,
 	}
 }

@@ -1,0 +1,105 @@
+{
+  "kind": "qa-bot",
+  "profile": "chaotic",
+  "seed": "9e3779b97f4a7c152ceaee21bf46bc00aa80754d1a1a8d4fb3c4904a6d278932",
+  "frames": 14204,
+  "ticks": 10800,
+  "counts": {
+    "frames": 14204,
+    "decisions": 249,
+    "hesitations": 73,
+    "mistakes": 900,
+    "manual_aim_frames": 3453,
+    "menu_actions": 0,
+    "pause_presses": 170,
+    "focus_losses": 33,
+    "resizes": 35,
+    "ui_actions": 47,
+    "ui_mistakes": 30,
+    "shop_visits": 2,
+    "abandon_dialogs": 2
+  },
+  "findings": [],
+  "panics": 0,
+  "completed": true,
+  "outcome": "victory",
+  "max_wave": 3,
+  "passed": true,
+  "final_snapshot": {
+    "tick": 10800,
+    "paused": false,
+    "window": [
+      3440,
+      1440
+    ],
+    "player": {
+      "x": 16.35199128346429,
+      "y": -153.0707224228329,
+      "hp": 120,
+      "hp_max": 120
+    },
+    "enemy_count": 0,
+    "scrap": 77,
+    "camera": {
+      "content_x": 440.0,
+      "content_y": 0.0,
+      "content_w": 2560.0,
+      "content_h": 1440.0,
+      "pixels_per_lu": 2.1333333333333333,
+      "letterbox": true
+    },
+    "nearest_enemy": null,
+    "aim_origin": [
+      16.35199128346429,
+      -153.0707224228329
+    ],
+    "run": {
+      "state": "summary",
+      "wave": 3,
+      "total_waves": 3,
+      "outcome": "victory",
+      "waves_completed": 3,
+      "settlements": 1
+    },
+    "shop": null,
+    "loadout": {
+      "slots": [
+        {
+          "weapon": "wpn_bolt",
+          "tier": 2,
+          "points": 3
+        },
+        {
+          "weapon": null,
+          "tier": 0,
+          "points": 0
+        },
+        {
+          "weapon": null,
+          "tier": 0,
+          "points": 0
+        },
+        {
+          "weapon": null,
+          "tier": 0,
+          "points": 0
+        }
+      ],
+      "occupied": 1,
+      "energy_used": 3,
+      "items": [
+        "item_bearings",
+        "item_magnet",
+        "item_sealant"
+      ],
+      "item_count": 3,
+      "unallocated": 3,
+      "powered": true
+    },
+    "ui": {
+      "mode": "normal",
+      "message": "Not possible: NoShop",
+      "actions": 47
+    }
+  }
+}

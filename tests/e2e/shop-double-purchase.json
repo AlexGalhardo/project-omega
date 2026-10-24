@@ -1,0 +1,21 @@
+{
+	"name": "shop-double-purchase",
+	"mode": "prototype",
+	"steps": [
+		{ "do": "wait_state", "states": ["shop"] },
+		{ "do": "debug_headless", "ops": [{ "set_scrap": 1000 }] },
+		{ "do": "checkpoint", "name": "before", "expect": { "scrap": 1000, "loadout.item_count": 0, "shop.revision": 0 } },
+		{ "do": "ui", "action": { "buy": 3 } },
+		{ "do": "checkpoint", "name": "first-purchase", "expect": {
+			"scrap": { "max": 999 }, "shop.offers.3.kind": "sold", "shop.revision": 1,
+			"loadout.item_count": 1, "ui.message": "Purchased."
+		} },
+		{ "do": "ui", "action": { "buy": 3 } },
+		{ "do": "ui", "action": { "buy": 3 } },
+		{ "do": "checkpoint", "name": "second-purchase-rejected", "expect": {
+			"scrap": "@scrap", "shop.revision": "@shop.revision", "shop.offers": "@shop.offers",
+			"loadout.item_count": 1, "ui.message": "Not possible: NotForSale",
+			"shop.offers.3.kind": "sold"
+		} }
+	]
+}

@@ -1,0 +1,24 @@
+{
+	"name": "death-at-wave-completion",
+	"mode": "prototype",
+	"steps": [
+		{ "do": "wait", "ticks": 30 },
+		{ "do": "checkpoint", "name": "wave-live", "expect": { "run.state": "wave", "run.wave": 1, "player.hp": { "min": 1 } } },
+		{ "do": "debug_headless", "ops": ["expire_wave", "kill_player"] },
+		{ "do": "wait_state", "states": ["defeat", "shop"] },
+		{ "do": "checkpoint", "name": "death-wins-over-completion", "expect": {
+			"run.state": "defeat", "run.outcome": "defeat", "run.settlements": 1,
+			"run.waves_completed": 0, "shop": null, "player.hp": 0
+		} },
+		{ "do": "frames", "count": 120 },
+		{ "do": "ui", "action": "start" },
+		{ "do": "ui", "action": { "buy": 0 } },
+		{ "do": "checkpoint", "name": "defeat-is-final", "expect": {
+			"run.state": "defeat", "run.settlements": 1, "shop": null, "run.outcome": "defeat"
+		} },
+		{ "do": "ui", "action": "continue" },
+		{ "do": "checkpoint", "name": "summary-keeps-the-result", "expect": {
+			"run.state": "summary", "run.outcome": "defeat", "run.settlements": 1
+		} }
+	]
+}

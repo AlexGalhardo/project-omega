@@ -1,0 +1,18 @@
+{
+	"name": "death-in-shop",
+	"mode": "prototype",
+	"steps": [
+		{ "do": "wait_state", "states": ["shop"] },
+		{ "do": "debug_headless", "ops": ["kill_player"] },
+		{ "do": "frames", "count": 30 },
+		{ "do": "checkpoint", "name": "dead-in-shop-run-continues", "expect": {
+			"run.state": "shop", "run.settlements": 0, "run.outcome": null, "player.hp": 0
+		} },
+		{ "do": "ui", "action": "start" },
+		{ "do": "checkpoint", "name": "next-wave-heals", "expect": {
+			"run.state": "wave", "run.wave": 2, "player.hp": 120, "player.x": 0, "player.y": 0
+		} },
+		{ "do": "frames", "count": 10 },
+		{ "do": "checkpoint", "name": "still-alive", "expect": { "run.state": "wave", "player.hp": { "min": 1 } } }
+	]
+}

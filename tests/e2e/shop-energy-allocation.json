@@ -1,0 +1,44 @@
+{
+	"name": "shop-energy-allocation",
+	"mode": "prototype",
+	"steps": [
+		{ "do": "wait_state", "states": ["shop"] },
+		{ "do": "debug_headless", "ops": [{ "set_scrap": 1000 }] },
+		{ "do": "ui", "action": { "buy": 0 } },
+		{ "do": "ui", "action": { "buy": 1 } },
+		{ "do": "checkpoint", "name": "two-weapons", "expect": {
+			"loadout.occupied": 2, "loadout.energy_used": 3, "loadout.unallocated": 3, "shop.revision": 2
+		} },
+		{ "do": "ui", "action": { "energy_add": 1 } },
+		{ "do": "ui", "action": { "energy_add": 1 } },
+		{ "do": "ui", "action": { "energy_add": 1 } },
+		{ "do": "checkpoint", "name": "reactor-full", "expect": {
+			"loadout.slots.1.points": 3, "loadout.energy_used": 6, "loadout.unallocated": 0, "shop.revision": 5
+		} },
+		{ "do": "ui", "action": { "energy_add": 0 } },
+		{ "do": "checkpoint", "name": "seventh-point-rejected", "expect": {
+			"loadout.energy_used": 6, "shop.revision": 5, "loadout.slots.0.points": 3,
+			"ui.message": "The reactor allows six points and three per powered slot."
+		} },
+		{ "do": "ui", "action": { "energy_add": 2 } },
+		{ "do": "checkpoint", "name": "empty-slot-rejected", "expect": {
+			"loadout.energy_used": 6, "shop.revision": 5, "loadout.slots.2.points": 0
+		} },
+		{ "do": "ui", "action": { "energy_remove": 1 } },
+		{ "do": "ui", "action": { "energy_remove": 1 } },
+		{ "do": "ui", "action": { "energy_remove": 1 } },
+		{ "do": "ui", "action": { "energy_remove": 1 } },
+		{ "do": "checkpoint", "name": "below-zero-rejected", "expect": {
+			"loadout.slots.1.points": 0, "loadout.energy_used": 3, "loadout.unallocated": 3,
+			"shop.revision": 8, "loadout.powered": true
+		} },
+		{ "do": "ui", "action": { "energy_remove": 3 } },
+		{ "do": "checkpoint", "name": "remove-from-empty-slot-rejected", "expect": {
+			"loadout.energy_used": 3, "shop.revision": "@shop.revision"
+		} },
+		{ "do": "ui", "action": "start" },
+		{ "do": "checkpoint", "name": "unspent-points-do-not-block-start", "expect": {
+			"run.state": "wave", "loadout.unallocated": 3
+		} }
+	]
+}

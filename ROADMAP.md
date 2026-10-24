@@ -1,6 +1,6 @@
 # ROADMAP.md: development plan for Project Omega
 
-> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** QA-P2-002 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
+> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P3-006 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
 >
 > This is the onboarding file. It says where the project is, what the next task is and how to prove it is done. Every work session, human or AI agent, starts here.
 >
@@ -748,7 +748,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Asserts:** V07/V09/V11; PERF-02 prototype; observed playtest — plus `scripts/check.ps1` exit 0.
 
-#### QA-P2-002. Prototype phase-end QA: unit, integration, e2e and simulated human QA (M) — TODO
+#### QA-P2-002. Prototype phase-end QA: unit, integration, e2e and simulated human QA (M) — DONE
 
 **Depends on:** QA-P2-001, QA-P1-003, GAME-P2-013. **Read first:** rule 1.11; docs/validation/qa-checklist.md.
 
@@ -756,10 +756,10 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Add Prototype items to `docs/validation/qa-checklist.md` (shop exploits, double purchase, refresh spam, zero-energy start, death during shop transition)
-- [ ] Write e2e scripts for the full prototype loop and for each checklist item that a script can check
-- [ ] Run the QA bot: 3 profiles x 20 seeds; convert each failure into a bug task with a reproducing test, fix, re-run
-- [ ] Write `docs/validation/reports/<date>-prototype-qa.md`; owner-only items go to `questions-to-dev.md`
+- [x] Add Prototype items to `docs/validation/qa-checklist.md` (shop exploits, double purchase, refresh spam, zero-energy start, death during shop transition)
+- [x] Write e2e scripts for the full prototype loop and for each checklist item that a script can check
+- [x] Run the QA bot: 3 profiles x 20 seeds; convert each failure into a bug task with a reproducing test, fix, re-run
+- [x] Write `docs/validation/reports/<date>-prototype-qa.md`; owner-only items go to `questions-to-dev.md`
 
 **Asserts:** unit + integration + e2e + QA bot results in the report; `scripts/check.ps1` exit 0; CI green.
 
