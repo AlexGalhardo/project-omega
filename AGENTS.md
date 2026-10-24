@@ -9,7 +9,9 @@ This is a didactic learning project with exactly two primary objectives:
 1. **Re-create Brotato from study of the owner's purchased copy.** Use REA to inspect the owner's Steam installation (`C:\Program Files (x86)\Steam\steamapps\common\Brotato`) under the scope in [DEC-019](docs/decisions/decision-register.md#dec-019--scoped-rea-inspection-of-the-owners-brotato-copy), and progressively re-implement the game. Inspection produces original prose notes about behavior; extracted code, assets, scripts and data never enter this repository or implementation context ([IP policy](docs/legal/ip-policy.md)).
 2. **Build the project's own 2D-focused engine as a direct fork of Bevy.** The fork is vendored in [`engine/bevy/`](engine/README.md) (DEC-018, no GitHub fork). Develop it in parallel with the game: add engine code when the game needs it and fix engine bugs there, logging every change in the engine patch log. Reusable 2D facilities go in `crates/omega_2d`; game rules go in `crates/omega_game`.
 
-The GDD remains the game's canonical rules; inspection findings change it only through change requests.
+The GDD remains the game's canonical rules; inspection findings change it only through change requests. The REA study loop is mandatory per gameplay system: a RES task studies how Brotato implements the system, writes an original prose note, compares it with the GDD and files change requests for adopted behavior before the GAME tasks implement it (ROADMAP.md rule 1.10).
+
+Testing is layered: unit, integration, end-to-end on the native client and a simulated human QA bot, all green at every phase end, plus balance simulation with bot policies from the Prototype on (ROADMAP.md rules 1.11 and 1.12, docs/validation/balancing.md).
 
 ## Session start (Claude Code)
 

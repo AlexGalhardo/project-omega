@@ -133,10 +133,19 @@ Every task tests at the layers it touches; every phase ends with all four layers
 
 Phase-end QA task rules (QA-P2-002, QA-P3-002, QA-P4-004, QA-P5-003):
 
-1. Run the full unit and integration suites, every e2e script and the QA bot across all its profiles and at least 20 seeds per profile; record counts, durations and seeds.
+1. Run the full unit and integration suites, every e2e script and the QA bot across all its profiles and at least 20 seeds per profile; record counts, durations and seeds. Include the balance simulation report of rule 1.12 from GAME-P2-013 onward.
 2. Walk `docs/validation/qa-checklist.md` with the QA bot and with screenshot review; every failed item becomes a bug task with a reproducing test before it is fixed.
 3. Write `docs/validation/reports/<YYYY-MM-DD>-<phase>-qa.md`: version, commit, environment, results per layer, findings, open items. The phase closes only with no open high-priority finding.
 4. Items a bot cannot judge (fun, feel, readability, audio mix) go to `questions-to-dev.md` as owner checks; they do not block the phase in autonomous sessions (DEC-020) but stay listed in the report.
+
+### 1.12 Balance simulation: make it fun, then prove it
+
+Numbers in the GDD are provisional (P). Fun is judged by people, but obviously wrong numbers are caught earlier by simulation. [docs/validation/balancing.md](docs/validation/balancing.md) defines the simulator, bot policies, metrics and provisional target bands.
+
+1. From the Prototype on, `omega-sim --scenario balance` runs full runs headlessly with bot policies (`idle`, `kiter`, `greedy`, `defensive`, `random`, `human_like`) across characters and seeds.
+2. Every content or formula change that affects combat or economy re-runs the affected matrix and attaches before/after reports to its evidence.
+3. Each phase-end QA task (rule 1.11) includes a balance report; a missed target band is a finding with a proposed GDD/content change, re-run with the same seeds.
+4. Simulation never replaces playtests: feel, readability and fun questions go to `questions-to-dev.md`, and the owner's verdict can move a target band.
 
 ## 2. Overview
 
@@ -183,8 +192,9 @@ Engine work is limited to BUILD-001, the three 2D contracts (ENG-GEOM-001, ENG-C
 | GAME-P2-010 | Prototype Wave/Shop/Defeat lifecycle | TODO | GAME-P2-006, GAME-P2-008, GAME-P2-009 |
 | GAME-P2-011 | Minimal HUD, shop controls and pause | TODO | GAME-P2-010; ENG-P2-001 [ENG-VIS-001] |
 | GAME-P2-012 | Cleared placeholder event audio | TODO | GAME-P2-011; ENG-P1-005 [ENG-VIS-001 asset manifest] |
+| GAME-P2-013 | Balance simulator, bot policies and first prototype tuning | TODO | GAME-P2-010, QA-P1-003 |
 | QA-P2-001 | Prototype regressions and first playtest | TODO | GAME-P2-011, GAME-P2-012 |
-| QA-P2-002 | Prototype phase-end QA: unit, integration, e2e and simulated human QA | TODO | QA-P2-001, QA-P1-003 |
+| QA-P2-002 | Prototype phase-end QA: unit, integration, e2e and simulated human QA | TODO | QA-P2-001, QA-P1-003, GAME-P2-013 |
 | RES-P2-001 | REA study: player stats, weapons and combat | TODO | RES-P1-001 |
 | RES-P2-002 | REA study: shop, economy and run flow | TODO | RES-P1-001 |
 | ENG-P3-001 | Phase-driven warning/clip presentation | TODO | ENG-P2-001 |
@@ -209,7 +219,8 @@ Engine work is limited to BUILD-001, the three 2D contracts (ENG-GEOM-001, ENG-C
 | GAME-P3-014 | Accessible layouts, effects and onboarding | TODO | GAME-P3-013 |
 | GAME-P3-015 | Complete shop comparisons and confirmation UI | TODO | GAME-P3-012, GAME-P2-008 |
 | QA-P3-001 | Full-run and catalog integration qualification | TODO | GAME-P3-014, GAME-P3-015, GAME-P3-010, GAME-P3-007 |
-| QA-P3-002 | Alpha phase-end QA: unit, integration, e2e and simulated human QA | TODO | QA-P3-001, QA-P2-002 |
+| QA-P3-003 | Full-content balance simulation and tuning | TODO | QA-P3-001, GAME-P2-013 |
+| QA-P3-002 | Alpha phase-end QA: unit, integration, e2e and simulated human QA | TODO | QA-P3-001, QA-P2-002, QA-P3-003 |
 | RES-P3-001 | REA study: enemies, bosses, waves and spawning | TODO | RES-P2-001 |
 | RES-P3-002 | REA study: characters, unlocks, progression and saves | TODO | RES-P2-002 |
 | GAME-P4-001 | Four production character visuals | TODO | QA-P3-001; ENG-P3-001 [ENG-VIS-001] |
@@ -703,6 +714,22 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Asserts:** V15 AC1/2; native audition — plus `scripts/check.ps1` exit 0.
 
+#### GAME-P2-013. Balance simulator, bot policies and first prototype tuning (M) — TODO
+
+**Depends on:** GAME-P2-010, QA-P1-003. **Read first:** rule 1.12; docs/validation/balancing.md; SP-016; GDD §7–§8.
+
+**Done when:** `omega-sim --scenario balance` runs the prototype loop with all six bot policies, writes JSON plus a Markdown report, and the prototype numbers meet the Prototype bands of balancing.md or each miss has a recorded proposal.
+
+**Microtasks:**
+
+- [ ] Test first: balance scenario with a fixed seed is repeatable and the `idle` policy dies in waves 1–2
+- [ ] Implement bot policies as `TickInput` and shop/energy command producers (no access to hidden state the player cannot see)
+- [ ] Implement metric collection without touching RNG or authoritative state (diagnostics only observe)
+- [ ] Run 2 policies x 200 seeds quick matrix, then the full prototype matrix; write `docs/validation/reports/<date>-prototype-balance.md`
+- [ ] Propose and apply content changes for missed bands through the GDD (change request), re-run, keep before/after
+
+**Asserts:** `cargo test -p omega_game --no-default-features --locked --test balance_contract`; balance report committed; `scripts/check.ps1` exit 0.
+
 #### QA-P2-001. Prototype regressions and first playtest (M) — TODO
 
 **Depends on:** GAME-P2-011, GAME-P2-012. **Read first:** [SP-007](docs/specs/sp-007-combat.md) (GDD-005 (§6), §7.2–7.3, §9.2; DA-05/06/07/13); [SP-009](docs/specs/sp-009-shop.md) (GDD-008 (§8); DA-08/09/10); [SP-011](docs/specs/sp-011-run-states.md) (GDD-003 (§4); DA-03/11/13/16); [SP-016](docs/specs/sp-016-diagnostics.md) (performance plan; architecture §8).
@@ -720,7 +747,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 #### QA-P2-002. Prototype phase-end QA: unit, integration, e2e and simulated human QA (M) — TODO
 
-**Depends on:** QA-P2-001, QA-P1-003. **Read first:** rule 1.11; docs/validation/qa-checklist.md.
+**Depends on:** QA-P2-001, QA-P1-003, GAME-P2-013. **Read first:** rule 1.11; docs/validation/qa-checklist.md.
 
 **Done when:** All four test layers are green on the Prototype release commit; e2e scripts cover move, fight, shop, energy allocation and defeat; the QA bot completes 20 seeds per profile through three waves; the phase QA report exists with no open high-priority finding.
 
@@ -1081,9 +1108,24 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 **Asserts:** V10/V11/V18; seeded and native runs — plus `scripts/check.ps1` exit 0.
 
+#### QA-P3-003. Full-content balance simulation and tuning (M) — TODO
+
+**Depends on:** QA-P3-001, GAME-P2-013. **Read first:** rule 1.12; docs/validation/balancing.md; RES-P3-001 and RES-P4-001 notes when available.
+
+**Done when:** Full ten-wave matrix (4 characters x 6 policies x 200 seeds) meets the full-game bands of balancing.md or each miss has an applied, re-simulated proposal; report committed.
+
+**Microtasks:**
+
+- [ ] Run the full matrix on the Alpha content; report per wave, character, weapon, item and energy pattern
+- [ ] Compare with the REA balance notes when they exist (rule 1.10); differences become change requests
+- [ ] Tune through the GDD and content with before/after reports; regression tests for any formula fix
+- [ ] Owner-only judgments (difficulty feel) to `questions-to-dev.md`
+
+**Asserts:** balance report with before/after; `scripts/check.ps1` exit 0.
+
 #### QA-P3-002. Alpha phase-end QA: unit, integration, e2e and simulated human QA (M) — TODO
 
-**Depends on:** QA-P3-001, QA-P2-002. **Read first:** rule 1.11; docs/validation/qa-checklist.md.
+**Depends on:** QA-P3-001, QA-P2-002, QA-P3-003. **Read first:** rule 1.11; docs/validation/qa-checklist.md.
 
 **Done when:** All four layers green on the Alpha release commit; e2e covers every state of GDD-003, saves and recovery, controller navigation via injected input; the QA bot finishes full ten-wave runs for every character, 20 seeds per profile; report with no open high-priority finding.
 
@@ -1280,7 +1322,7 @@ Cancelled: Split into GAME-P4-010 to GAME-P4-013 (REV-010).
 
 **Depends on:** GAME-P4-005, QA-P3-001. **Read first:** [SP-016](docs/specs/sp-016-diagnostics.md) (performance plan; architecture §8); [SP-018](docs/specs/sp-018-production-content.md) (GDD §9–11, §13, §17; Art Bible §12).
 
-**Done when:** At least two observed runs per character across initial/full pools; log economy, survival, power allocations and targeted changes with canonical rule updates. Checklist includes Ram Cart trigger 220 LU versus 168 LU charge reach (REV-017; alternatives: trigger 180 LU or 30 charge ticks), Spark Hub boundary placement and 2/2/1/1 energy dominance (REV-021).
+**Done when:** At least two observed runs per character across initial/full pools; log economy, survival, power allocations and targeted changes with canonical rule updates. Uses the balance simulator (rule 1.12) with before/after reports for every change. Checklist includes Ram Cart trigger 220 LU versus 168 LU charge reach (REV-017; alternatives: trigger 180 LU or 30 charge ticks), Spark Hub boundary placement and 2/2/1/1 energy dominance (REV-021).
 
 **Microtasks:**
 

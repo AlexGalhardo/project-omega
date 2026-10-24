@@ -38,6 +38,10 @@ Client integration tests named in specs must run separately with client features
 | Regression | Every confirmed bug | A failing reproduction before fix where practical, then a persistent targeted test; visual-only bugs require a documented native regression procedure. |
 | Benchmark | Performance-plan scenarios | Separate reports and hardware; no ordinary CI time threshold until approved baseline budgets exist. |
 
+## Phase-end test layers and balance
+
+Every phase ends with four test layers green on the release commit, as defined in [ROADMAP.md rule 1.11](../../ROADMAP.md#111-test-layers-and-phase-end-qa): unit, integration (`SimHarness`), end-to-end on the real native client (`omega-game --e2e-script`) and simulated human QA (the seeded QA bot following [qa-checklist.md](qa-checklist.md)). From the Prototype on, each phase-end report also carries the balance simulation of [balancing.md](balancing.md) (ROADMAP rule 1.12). Phase reports live in `docs/validation/reports/`.
+
 ## Scope and stopping rule
 
 Run checks appropriate to changed paths plus the relevant integration contract. Shared schedule/dependency/content-schema changes require the affected consumers' checks. Broaden testing only when new failures, code changes or unresolved evidence justify it. Documentation-only work uses link/ID/dependency/arithmetic/status checks and `git diff --check`, not fictitious Cargo success. Balance/readability still needs human playtests even after all automated checks pass.
