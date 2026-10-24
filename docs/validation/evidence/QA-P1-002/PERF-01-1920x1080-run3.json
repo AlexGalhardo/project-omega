@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "scenario": "PERF-01",
+    "package_version": "0.3.0",
+    "build_profile": "release",
+    "target_os": "windows",
+    "target_arch": "x86_64",
+    "commit": "b553738806c97ccde6e999c83b3b09fca515ed51-dirty",
+    "cpu": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+    "seed_hex": "none",
+    "content_revision": null,
+    "settings": [
+      [
+        "resolution",
+        "1920x1080"
+      ],
+      [
+        "present_mode",
+        "AutoNoVsync"
+      ],
+      [
+        "warmup_seconds",
+        "2"
+      ],
+      [
+        "capture_seconds",
+        "20"
+      ],
+      [
+        "scene",
+        "Foundation proof preview (empty arena plus proof visuals)"
+      ]
+    ],
+    "percentile_method": "nearest-rank, index ceil(p*N)-1"
+  },
+  "metrics": [
+    {
+      "name": "cpu_frame_wall_time",
+      "unit": "ms",
+      "samples": 21058,
+      "percentiles": {
+        "p50": 0.9257,
+        "p95": 1.16,
+        "p99": 1.3112,
+        "max": 3.4486
+      }
+    }
+  ],
+  "unsupported": [
+    "gpu_frame_time",
+    "allocation_count",
+    "working_set",
+    "draw_calls",
+    "texture_memory"
+  ]
+}

@@ -1,9 +1,38 @@
 # Project Omega
 
-A planned original top-down arena-survival roguelite about scrap robots in an industrial arena, and a reusable 2D layer over Bevy. `Project Omega` is the repository name; the game's final name is undecided.
+[![CI](https://github.com/AlexGalhardo/project-omega/actions/workflows/ci.yml/badge.svg)](https://github.com/AlexGalhardo/project-omega/actions/workflows/ci.yml)
 
-Current checkpoint: **Stage 2 decision collection complete; owner approval of the consolidated summary is the remaining gate before Stage 3.** The register records the selected Bevy strategy, Windows-only release, compact content counts, scrap-robot industrial theme, automatic aim/fire with optional manual aim, four weapon slots with between-wave energy allocation, ten-wave runs, shops, weapon upgrades, character starts, challenge unlocks, art/audio defaults and deferred release decisions. Owner reports prior Rust and Bevy development experience and 20–40 available hours weekly. Start with the [decision register](docs/decisions/decision-register.md), the [research summary](docs/research/00-summary.md), then the [technical open questions](docs/research/open-questions.md). Sources, revisions and evidence limits are recorded in the [source ledger](docs/research/sources.md).
+A didactic Rust project with two goals (DEC-017): re-create an arena-survival roguelite in the style of Brotato from study of a purchased copy, with original code and art, and build a 2D-focused game engine as a fork of [Bevy](https://bevy.org/). `Project Omega` is a working title.
 
-This repository contains research, emerging decisions and the [IP policy](docs/legal/ip-policy.md). It has no game implementation, Rust workspace, runnable build or executed performance baseline. Bevy 0.20.0 is the researched baseline, not an installed dependency. Approved scope and exclusions are tracked in [scope and non-goals](docs/decisions/scope-and-non-goals.md).
+**Start here:** [ROADMAP.md](ROADMAP.md) names the current phase and the next task and holds the plan rules. Agents also read [AGENTS.md](AGENTS.md).
 
-All repository artifacts are written in English. Conversation with the owner is in Brazilian Portuguese. Product decisions and stage approvals must be recorded in the repository as planning progresses. Implementation begins only after the architecture/specification and roadmap gates are approved; earlier experiments require explicit authorization. See the research summary for the planning sequence and current limits.
+## Status
+
+Phase 1 (Foundation) is done: reproducible workspace, headless fixed-tick simulation, strict content validation for the full GDD catalog, geometry/camera/visual-catalog engine contracts, an offline SVG pipeline with original proof art, a native preview client and a first performance baseline. Phase 2 (Prototype: the first playable loop) is next. Evidence: [docs/validation/evidence/](docs/validation/evidence/README.md).
+
+## Layout
+
+| Path | Contents |
+| --- | --- |
+| `engine/bevy/` | Vendored Bevy 0.20.0 fork, patched in place ([engine/README.md](engine/README.md)) |
+| `crates/omega_2d/` | The project's 2D engine layer: geometry, logical camera, visual catalog |
+| `crates/omega_game/` | Game rules, content, simulation, diagnostics, native client; binaries `omega-game`, `omega-content`, `omega-sim` |
+| `assets/`, `art/source/` | Runtime assets and their SVG sources |
+| `docs/` | GDD, Art Bible, architecture and ADRs, specs, decisions, validation, research |
+| `scripts/` | Local gate, asset export/validation, measurement, release notes |
+
+## Requirements
+
+Windows 11 x64 with the MSVC build tools, [rustup](https://rustup.rs/) (the pinned Rust 1.99.1 installs from `rust-toolchain.toml`), `cargo install cargo-deny --version 0.20.2 --locked`, `cargo install resvg --version 0.48.1 --locked` (asset export only) and [Bun](https://bun.sh/) (Markdown lint only).
+
+```powershell
+powershell -NoProfile -File scripts/check.ps1           # every local gate
+cargo run -p omega_game --locked --bin omega-game        # native preview
+cargo test --workspace --no-default-features --locked    # headless tests
+```
+
+## Documents
+
+[GDD](docs/gdd.md) · [Art Bible](docs/art-bible.md) · [Architecture](docs/architecture/architecture.md) · [Specs](docs/specs/index.md) · [Decisions](docs/decisions/decision-register.md) · [Quality gates](docs/validation/quality-gates.md) · [Release process](docs/release.md) · [IP policy](docs/legal/ip-policy.md) · [Changelog](CHANGELOG.md)
+
+Repository artifacts are English; the owner's conversation is Brazilian Portuguese. Nothing extracted from Brotato is stored here; see the IP policy.

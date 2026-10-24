@@ -1,0 +1,24 @@
+{
+    "scenario":  "PERF-08",
+    "profile":  "dev (dependencies opt-level 2), MSVC default linker",
+    "target":  "omega_game --bin omega-game, client feature",
+    "commit":  "b553738806c97ccde6e999c83b3b09fca515ed51",
+    "dirty":  true,
+    "rustc":  "rustc 1.99.1 (58cf8f9c3 2026-10-13)",
+    "cpu":  "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+    "edited_file":  "crates/omega_game/src/sim/mod.rs",
+    "runs":  3,
+    "results":  {
+                    "no_change_seconds":  [
+                                              0.86,
+                                              0.79,
+                                              0.8
+                                          ],
+                    "single_module_edit_seconds":  [
+                                                       11.63,
+                                                       16.21,
+                                                       17.17
+                                                   ]
+                },
+    "not_measured":  "cold_seconds (run with -Cold)"
+}
