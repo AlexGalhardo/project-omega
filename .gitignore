@@ -1,0 +1,15 @@
+# Local tooling, never game content
+node_modules/
+.env
+run.log
+DONE.txt
+__pycache__/
+
+# Rust build output
+/target/
+
+# Measurement and scenario outputs (evidence is copied into docs/validation/evidence/)
+/artifacts/
+
+# graphify knowledge graph (rebuilt locally: graphify update .)
+/graphify-out/

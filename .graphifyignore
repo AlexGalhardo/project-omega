@@ -1,0 +1,12 @@
+# graphify corpus excludes (vendored, generated, tooling)
+engine/bevy/
+target/
+node_modules/
+assets/generated/
+art/source/
+.claude/skills/
+.claude/agents/
+graphify-out/
+Cargo.lock
+bun.lock
+*.png

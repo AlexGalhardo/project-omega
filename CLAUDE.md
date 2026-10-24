@@ -1,112 +1,34 @@
-# Project Instructions — Rust 2D Engine + Arena-Survival Roguelite
+# Claude adapter
 
-These rules apply to all work in this repository.
+Read [AGENTS.md](AGENTS.md) as the canonical project operating contract, then follow its minimal context-loading order. Start every session at [ROADMAP.md](ROADMAP.md): its header names the current phase and next task, section 1 holds the plan rules.
 
-## Session Start (Required)
+Primary objectives (DEC-017, details in AGENTS.md): (1) study the owner's purchased Brotato copy with REA under the DEC-019 scope and re-create the game with original code and art; (2) build the project's own 2D engine as the vendored Bevy fork in `engine/bevy/`, developed in parallel with the game.
 
-**Before starting any work, invoke karpathy-guidelines skill** from `.claude/skills/karpathy-guidelines/`. This ensures:
-- Clear learning objectives and structured problem-solving
-- Documented assumptions and evidence-based decisions
-- Iterative refinement and verification steps
-- Reproducible results and traceability
+Honor this client's actual permissions in .claude/settings.json. Do not assume availability of other agents, skills, models or native hardware. Repository artifacts are English; owner conversation is Brazilian Portuguese.
 
-Run at session start: `/karpathy-guidelines` or invoke the skill explicitly before any task.
+## Session start routine (mandatory, every session)
 
-## Model Selection for Parallel Work
+1. `/caveman` (level from `.caveman.json`). The SessionStart hook announces it; if no "CAVEMAN MODE ACTIVE" line appears, activate it manually. Chat style only: repository files, commits, specs, evidence and change requests stay plain English.
+2. Skill `karpathy-guidelines`.
+3. Skill `graphify`: `graphify update .` when `graphify-out/graph.json` is missing or stale, then `graphify query` before reading many files.
+4. Skill `project-omega` for the project map and rules. Rust work also uses `rust-skills`; Bevy ECS work uses `bevy-ecs` (read the vendored fork for exact 0.20 APIs).
 
-When spawning parallel worktrees or subagents, apply these model selection rules (documented in `.claude/projects/C--dev-project-omega/memory/model_selection_strategy.md`):
+## Optional token-saving helpers
 
-- **Opus 5.5:** High-complexity tasks with short ETA (< 2h). Architecture, large refactors, API design.
-- **Sonnet 5.5:** Medium complexity, any duration (default for code implementation, bug fixes, features).
-- **Haiku 5.5:** Low-complexity work. Light refactoring, documentation, web research, i18n.
+The caveman plugin (JuliusBrussee/caveman, project-scoped copy in `.claude/skills/`, agents in `.claude/agents/`, default mode in `.caveman.json`):
 
-Explicitly pass `model: "claude-opus-5-5"` in Agent() calls when needed.
+- Locate code or map a directory: `cavecrew-investigator`; broad cold-start exploration: `caveman-explore`.
+- Bounded 1-2 file edit inside an assigned task: `cavecrew-builder`; diff review: `cavecrew-reviewer` or `/caveman-review`.
+- Commit messages: `/caveman-commit` (Conventional Commits, English).
+- `/caveman-compress` may shrink this adapter only. Never run it on AGENTS.md, GDD, ADRs, specs, ROADMAP.md or PLAN.md.
 
-## Execution
+ai-memory (akitaonrails/ai-memory, native Windows install) provides cross-session memory through Claude Code hooks and MCP; see [docs/ai-memory.md](docs/ai-memory.md).
 
-- **Follow PROMPT.md strictly:** 6 stages in order, no skips. Approval gates are hard stops.
-- **Update PLAN.md at each checkpoint:** mark completed items, note blockers, commit after each stage.
-- **Commit frequently:** after each milestone, with message format: `docs(stage-X): [description]` or `feat: [feature]`.
-- **Traceability:** every GDD requirement → spec → roadmap task → test. No orphaned tasks or requirements.
+## Commands
 
-## Language
-
-- **Repository:** all code, comments, specs, ADRs, tests, commits in **English**.
-- **Communication with owner:** **Brazilian Portuguese** (`pt-BR`).
-- No Portuguese in code or repo artifacts.
-
-## Specs and Acceptance Criteria
-
-- Use **spec-kit** conventions (https://github.com/github/spec-kit) for SDD structure.
-- Acceptance criteria must be **testable**, never vague ("works correctly"). Use Given/When/Then format where applicable.
-- Link every spec to relevant GDD sections and ADRs.
-- Status lifecycle: `DRAFT → APPROVED → READY → IN_PROGRESS → IMPLEMENTED → VERIFIED → DONE` (or `BLOCKED / DEFERRED / SUPERSEDED`).
-
-## Overnight Execution
-
-When running unattended (via `run-overnight.ps1` or `/loop`):
-
-1. **Do not ask for approval** on decisions already made (check `docs/decisions/` first).
-2. **Escalate only for:** owner-level decisions (scope, name, budget, timeline), breaking changes to approved decisions, security/compliance concerns.
-3. **Commit small:** one task = one commit. If something fails 3 times, note it in PLAN.md and move to the next task.
-4. **Keep context:** after `/compact`, resume with `/loop` and the same pacing.
-5. **Mark DONE when:** acceptance criteria passed, test commands succeed, linked spec marked VERIFIED.
-6. **Permissions:** restricted to safe subsets in `.claude/settings.json` (no `git push`, `bun -e`, direct shell escapes). If task requires blocked command, escalate.
-
-## Code Style
-
-- Rust: follow official Rust guidelines. Use `cargo fmt` and `cargo clippy` before committing.
-- No comments stating the obvious. Comment only: edge cases, "why" decisions (not "what"), workarounds with issue references, non-trivial logic.
-- Strong typing: avoid `any`, use `unknown` with narrowing when genuinely unknown. Explicit return types for public functions.
-- Fix root causes, never silence errors. No `#[allow(...)]`, `@ts-ignore`, or skipped tests without escalation.
-
-## Dependencies
-
-- Always use **stable, production-ready versions.** No `latest`, `next`, `canary`, `rc`, `beta`, `alpha`.
-- Specify exact versions in `Cargo.toml` or `Cargo.lock` — no open ranges like `^` without justification.
-- Confirm in lockfile before committing.
-- Do not add new dependencies without asking the owner first.
-
-## Architecture Decisions
-
-- Record every substantial decision in `docs/architecture/adr/` with context, alternatives, evidence, consequences, and reversal cost.
-- If you hit a blocking flaw in an approved decision, file a **change request:** evidence, affected decision, alternatives, impact, and recommendation. Do not silently redesign.
-
-## Testing and Validation
-
-- Prefer typecheck, lint, and focused tests over full suite runs.
-- Before declaring a task complete, run: `cargo test`, `cargo clippy`, `cargo fmt --check`.
-- Benchmark results must include hardware, method, and date. No assumptions without baselines.
-
-## File Organization
-
-- Specs in `docs/specs/` with stable IDs and dependencies listed.
-- Research and findings in `docs/research/` with source ledger.
-- Decisions in `docs/decisions/` with ID, question, options, choice, rationale, status.
-- ADRs in `docs/architecture/adr/` for substantial decisions.
-- Game content and assets separate from engine (in subfolders, not mixed).
-
-## Documentation
-
-- **One canonical source per topic.** Link instead of duplicating.
-- GDD and art bible must not contradict (hitboxes, timing, UI alignment).
-- PLAN.md is the source of truth for task status.
-- Update `CHANGELOG.md` after each stage or feature set.
-
-## Escalation Checklist
-
-Stop and ask the owner if:
-
-- [ ] 1.0 scope or feature removals are needed
-- [ ] Budget or timeline constraints discovered
-- [ ] Fork strategy needs reconsideration (after Stage 1 research)
-- [ ] Rust/Bevy learning curve impacts schedule
-- [ ] Repository visibility or licensing changes
-- [ ] Breaking change to an approved decision
-- [ ] Security or compliance concerns
-
----
-
-**Repository State:** Ready for Stage 1 (Research)  
-**Created:** 2026-10-23  
-**Last Updated:** 2026-10-23
+```powershell
+powershell -NoProfile -File scripts/check.ps1        # all local gates (fmt, clippy, tests, client check, deny, markdown)
+cargo test --workspace --no-default-features --locked
+cargo run -p omega_game --locked --bin omega-game     # native client
+bun run lint                                          # markdownlint
+```

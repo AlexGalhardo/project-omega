@@ -1,0 +1,10 @@
+* text=auto eol=lf
+*.{ps1,psm1,bat,cmd} text eol=crlf
+*.png binary
+*.ico binary
+*.ogg binary
+*.wav binary
+Cargo.lock linguist-generated
+assets/generated/** linguist-generated
+engine/** linguist-vendored
+graphify-out/graph.json merge=graphify

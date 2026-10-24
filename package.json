@@ -1,0 +1,12 @@
+{
+  "name": "project-omega-tooling",
+  "private": true,
+  "description": "Repository tooling only (Markdown lint). Not a game dependency.",
+  "scripts": {
+    "lint": "markdownlint-cli2",
+    "lint:fix": "markdownlint-cli2 --fix"
+  },
+  "devDependencies": {
+    "markdownlint-cli2": "0.24.0"
+  }
+}

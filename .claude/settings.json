@@ -1,56 +1,26 @@
 {
-  "permissions": {
-    "allow": [
-      "PowerShell(bun test)",
-      "PowerShell(bun run build)",
-      "PowerShell(bun run test)",
-      "PowerShell(bun run check)",
-      "PowerShell(bun run lint)",
-      "PowerShell(bun run format)",
-      "PowerShell(bun install --frozen-lockfile)",
-      "PowerShell(cargo build)",
-      "PowerShell(cargo test)",
-      "PowerShell(cargo check)",
-      "PowerShell(cargo clippy)",
-      "PowerShell(cargo fmt)",
-      "PowerShell(git add *)",
-      "PowerShell(git commit *)",
-      "PowerShell(git status)",
-      "PowerShell(git diff *)",
-      "PowerShell(git branch *)",
-      "PowerShell(git log *)",
-      "Bash(git add *)",
-      "Bash(git commit *)",
-      "Bash(git status)",
-      "Bash(git diff *)",
-      "Bash(git branch *)",
-      "Bash(git log *)",
-      "Read(*)",
-      "Write(docs/*)",
-      "Write(*.md)",
-      "Edit(docs/*)",
-      "Edit(*.md)",
-      "Edit(.claude/*)",
-      "Edit(PLAN.md)",
-      "Edit(PROMPT.md)"
-    ],
-    "deny": [
-      "PowerShell(bun -e *)",
-      "PowerShell(bun x *)",
-      "PowerShell(bunx *)",
-      "PowerShell(rustc *)",
-      "PowerShell(git push *)",
-      "PowerShell(git reset --hard *)",
-      "PowerShell(git force-push *)",
-      "PowerShell(rm -r *)",
-      "PowerShell(Remove-Item -Recurse *)",
-      "Bash(git push *)",
-      "Bash(git reset --hard *)",
-      "Bash(git force-push *)",
-      "Bash(rm -rf *)"
-    ]
+  "extraKnownMarketplaces": {
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "caveman@caveman": true
   },
   "hooks": {
-    "prompt.submit": "echo CAVEMAN MODE ACTIVE — starting task"
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"CAVEMAN MODE ACTIVE - level: full. Rules: .claude/skills/caveman/SKILL.md. Delegate code location to cavecrew-investigator, diff review to cavecrew-reviewer. Repository files stay plain English. SESSION START ROUTINE (AGENTS.md): load skills karpathy-guidelines, graphify (run 'graphify update .' if graphify-out/graph.json is missing or stale) and project-omega before the first task.\""
+          }
+        ]
+      }
+    ]
   }
 }
