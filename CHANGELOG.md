@@ -9,10 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **research:** Record the RES-P4-001 Brotato study note (original prose, REA limits recorded, all differences kept as GDD) (SHA_PLACEHOLDER)
-- **research:** Record the RES-P3-002 Brotato study note (original prose, REA limits recorded, all differences kept as GDD) (SHA_PLACEHOLDER)
-- **research:** Record the RES-P3-001 Brotato study note (original prose, REA limits recorded, all differences kept as GDD) (SHA_PLACEHOLDER)
-- **qa:** Add the PERF-02 prototype workload scenario (omega-sim --scenario perf02) and record three release-build runs of the three-wave loop (SHA_PLACEHOLDER)
+- **research:** Record the RES-P4-001 Brotato study note (original prose, REA limits recorded, all differences kept as GDD) ([5651e70](https://github.com/AlexGalhardo/project-omega/commit/5651e704ef5443360afe7642603de7cda13a3060))
+- **research:** Record the RES-P3-002 Brotato study note (original prose, REA limits recorded, all differences kept as GDD) ([5651e70](https://github.com/AlexGalhardo/project-omega/commit/5651e704ef5443360afe7642603de7cda13a3060))
+- **research:** Record the RES-P3-001 Brotato study note (original prose, REA limits recorded, all differences kept as GDD) ([5651e70](https://github.com/AlexGalhardo/project-omega/commit/5651e704ef5443360afe7642603de7cda13a3060))
+- **qa:** Add the PERF-02 prototype workload scenario (omega-sim --scenario perf02) and record three release-build runs of the three-wave loop ([5651e70](https://github.com/AlexGalhardo/project-omega/commit/5651e704ef5443360afe7642603de7cda13a3060))
 - **qa:** Add the e2e script runner (headless and windowed), the seeded QA bot with cautious, aggressive and chaotic profiles, the QA checklist and the CI/check.ps1 e2e steps ([7c323b3](https://github.com/AlexGalhardo/project-omega/commit/7c323b303d3812101f69569999692e7bacc6f55b))
 - **audio:** Add 13 original synthesized placeholder cues with provenance, event-to-cue mapping with grouping and once-only result latch, mix settings and the Bevy cue player (M mutes) ([5bd7a18](https://github.com/AlexGalhardo/project-omega/commit/5bd7a18be2a0e8f5cffa84f6ce8992c7e14a61f6))
 - **ui:** Add the prototype HUD, shop, replacement prompt, pause, abandon and result screens as view models with keyboard and mouse widgets, plus --fast-forward-ticks for evidence captures ([8477a0a](https://github.com/AlexGalhardo/project-omega/commit/8477a0a77ddf46548e342d165e35c9f70e9885ec))
