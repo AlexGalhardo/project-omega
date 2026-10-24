@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **ui:** Add shop comparisons (damage by tier, actual rates, rates per point count for empty slots, item modifiers) and replacement details (SHA_PLACEHOLDER)
+- **ui:** Add shop comparisons (damage by tier, actual rates, rates per point count for empty slots, item modifiers) and replacement details ([6e7040c](https://github.com/AlexGalhardo/project-omega/commit/6e7040c8b706c4fcf077c6cc8bfeaddae6003932))
 - **input:** Add controller dead zones, aim stick, button edges, UI focus navigation with repeat, disconnect pause and the remappable bindings model ([641b864](https://github.com/AlexGalhardo/project-omega/commit/641b864e763044babb63e197536513d41b9f93cb))
 - **encounters:** Verify The Foreman schedule and keep-distance recovery movement ([8736bae](https://github.com/AlexGalhardo/project-omega/commit/8736bae4dea2463ad882ed6aa2be6653abc078ad))
 - **encounters:** Add boss encounters (fixed warning with uncapped postponement, The Press stamp and ram, The Foreman volley and discharge, completion blocking) ([8736bae](https://github.com/AlexGalhardo/project-omega/commit/8736bae4dea2463ad882ed6aa2be6653abc078ad))
