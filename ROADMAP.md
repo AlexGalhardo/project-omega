@@ -1,6 +1,6 @@
 # ROADMAP.md: development plan for Project Omega
 
-> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-005 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
+> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-006 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
 >
 > This is the onboarding file. It says where the project is, what the next task is and how to prove it is done. Every work session, human or AI agent, starts here.
 >
@@ -569,10 +569,10 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Test first: DA-05 (26 damage, one hit per attack ID), DA-06 invulnerability 100–135, DA-13 simultaneous lethal
-- [ ] Damage resolution in `TickSet::Resolve` in attack-ID then target-ID order; crit draw from `RngStreams::crit` once per eligible hit
-- [ ] Death marks immediately; one scrap pickup per death; pickup collection and regen accumulator in `TickSet::CollectHeal`
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
+- [x] Test first: DA-05 (26 damage, one hit per attack ID), DA-06 invulnerability 100–135, DA-13 simultaneous lethal
+- [x] Damage resolution in `TickSet::Resolve` in attack-ID then target-ID order; crit draw from `RngStreams::crit` once per eligible hit
+- [x] Death marks immediately; one scrap pickup per death; pickup collection and regen accumulator in `TickSet::CollectHeal`
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
 
 **Asserts:** V07 AC3–5; DA-06/13 — plus `scripts/check.ps1` exit 0.
 

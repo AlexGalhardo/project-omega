@@ -25,6 +25,11 @@ impl Plugin for CombatPlugin {
 			.add_systems(
 				GameTick,
 				weapons::collide_player_attacks.in_set(TickSet::Collide),
+			)
+			.add_systems(GameTick, damage::resolve_damage.in_set(TickSet::Resolve))
+			.add_systems(
+				GameTick,
+				damage::collect_and_heal.in_set(TickSet::CollectHeal),
 			);
 	}
 }

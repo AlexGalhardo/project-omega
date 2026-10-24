@@ -354,3 +354,169 @@ fn a_dead_attacker_cancels_pending_attacks() {
 	assert!(attacks(&records).is_empty());
 	assert!(h.app().world().resource::<HitCandidates>().0.is_empty());
 }
+
+fn damage_records(records: &[PresentationRecord]) -> Vec<(u64, u32, bool)> {
+	records
+		.iter()
+		.filter_map(|r| match r.kind {
+			PresentationKind::HitAccepted { damage, crit, .. } => Some((r.tick, damage, crit)),
+			_ => None,
+		})
+		.collect()
+}
+
+fn player_entity(h: &mut SimHarness) -> bevy::prelude::Entity {
+	let world = h.app_mut().world_mut();
+	world
+		.query_filtered::<bevy::prelude::Entity, bevy::prelude::With<Player>>()
+		.single(world)
+		.unwrap()
+}
+
+#[test]
+fn da05_forced_crit_damage_matches_the_formula_once_per_attack() {
+	use omega_game::combat::stats::player_damage;
+	assert_eq!(player_damage(12, 2, 25, true, 20), Ok(26));
+	let mut h = harness();
+	let p = spawn_player(h.app_mut().world_mut(), "char_patch", DVec2::ZERO).unwrap();
+	h.app_mut().world_mut().get_mut::<Loadout>(p).unwrap().slots[0]
+		.as_mut()
+		.unwrap()
+		.tier = 2;
+	{
+		let mut stats = h.app_mut().world_mut().get_mut::<PlayerStats>(p).unwrap();
+		stats.0.damage_pct = 25;
+		stats.0.crit_pct = 100;
+	}
+	enemy(&mut h, 100.0, 0.0);
+	let mut hits = Vec::new();
+	for _ in 0..30 {
+		h.step(TickInput::default());
+		hits.extend(damage_records(&h.drain_presentation()));
+	}
+	// Plate Hauler armor 25: floor(12 * 1.4 * 1.25 * 1.5 * 100 / 125) = 25.
+	let first_attack_hits: Vec<_> = hits.iter().take(1).collect();
+	assert_eq!(first_attack_hits[0].1, 25);
+	assert!(first_attack_hits[0].2);
+	// One projectile, one attack: the same target cannot be hit twice by it.
+	assert_eq!(hits[0].0, 9);
+	assert_ne!(hits.get(1).map(|x| x.0), Some(9));
+}
+
+#[test]
+fn da06_contact_damage_is_accepted_every_36_ticks() {
+	let mut h = harness();
+	spawn_player(h.app_mut().world_mut(), "char_patch", DVec2::ZERO).unwrap();
+	enemy(&mut h, 20.0, 0.0);
+	let mut ticks = Vec::new();
+	for _ in 0..80 {
+		h.step(TickInput::default());
+		let t = h.tick();
+		ticks.extend(
+			h.drain_presentation()
+				.into_iter()
+				.filter(|r| matches!(r.kind, PresentationKind::PlayerDamaged { .. }))
+				.map(|_| t),
+		);
+	}
+	assert_eq!(ticks, vec![1, 37, 73]);
+}
+
+#[test]
+fn da13_simultaneous_lethal_hits_kill_both_and_pay_once() {
+	let mut h = harness();
+	let p = spawn_player(h.app_mut().world_mut(), "char_patch", DVec2::ZERO).unwrap();
+	h.app_mut()
+		.world_mut()
+		.get_mut::<Health>(p)
+		.unwrap()
+		.current = 1;
+	let target = spawn_enemy(
+		h.app_mut().world_mut(),
+		"enemy_chaser",
+		DVec2::new(20.0, 0.0),
+		1,
+		5,
+	)
+	.unwrap();
+	let mut died = Vec::new();
+	let mut hurt = Vec::new();
+	for _ in 0..10 {
+		h.step(TickInput::default());
+		let t = h.tick();
+		for r in h.drain_presentation() {
+			match r.kind {
+				PresentationKind::EnemyDied { scrap, .. } => died.push((t, scrap)),
+				PresentationKind::PlayerDamaged { hp_after, .. } => hurt.push((t, hp_after)),
+				_ => {}
+			}
+		}
+	}
+	assert!(h.app().world().get_entity(target).is_err());
+	assert_eq!(h.app().world().get::<Health>(p).unwrap().current, 0);
+	assert_eq!(died.len(), 1, "one reward per death: {died:?}");
+	assert_eq!(hurt.len(), 1);
+	assert_eq!(died[0].0, hurt[0].0, "same tick");
+	assert_eq!(hurt[0].1, 0);
+	let world = h.app_mut().world_mut();
+	assert_eq!(world.query::<&Pickup>().iter(world).count(), 1);
+}
+
+#[test]
+fn pickup_in_radius_is_collected_whole_and_a_dead_player_collects_nothing() {
+	let mut h = harness();
+	let p = spawn_player(h.app_mut().world_mut(), "char_patch", DVec2::ZERO).unwrap();
+	let near = spawn_enemy(
+		h.app_mut().world_mut(),
+		"enemy_chaser",
+		DVec2::new(40.0, 0.0),
+		1,
+		1,
+	)
+	.unwrap();
+	let _ = near;
+	for _ in 0..30 {
+		h.step(TickInput::default());
+	}
+	// Chaser scrap is 2; it dies at 40 LU, inside the 60 LU pickup radius.
+	assert_eq!(*h.app().world().resource::<Scrap>(), Scrap(2));
+	let mut h = harness();
+	let p2 = spawn_player(h.app_mut().world_mut(), "char_patch", DVec2::ZERO).unwrap();
+	let _ = p;
+	h.app_mut().world_mut().spawn((
+		SimId(900),
+		Pickup { value: 5 },
+		Pose2(DVec2::new(10.0, 0.0)),
+	));
+	h.app_mut()
+		.world_mut()
+		.get_mut::<Health>(p2)
+		.unwrap()
+		.current = 0;
+	h.step(TickInput::default());
+	assert_eq!(*h.app().world().resource::<Scrap>(), Scrap(0));
+}
+
+#[test]
+fn regeneration_heals_one_hp_after_120_ticks_at_half_hp_per_second() {
+	let mut h = harness();
+	let p = spawn_player(h.app_mut().world_mut(), "char_patch", DVec2::ZERO).unwrap();
+	h.app_mut()
+		.world_mut()
+		.get_mut::<Health>(p)
+		.unwrap()
+		.current = 100;
+	h.app_mut()
+		.world_mut()
+		.get_mut::<PlayerStats>(p)
+		.unwrap()
+		.0
+		.regen_tenths = 5;
+	for _ in 0..119 {
+		h.step(TickInput::default());
+	}
+	assert_eq!(h.app().world().get::<Health>(p).unwrap().current, 100);
+	h.step(TickInput::default());
+	assert_eq!(h.app().world().get::<Health>(p).unwrap().current, 101);
+	let _ = player_entity(&mut h);
+}
