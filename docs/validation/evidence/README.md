@@ -33,7 +33,7 @@ Environment: Windows 11 Pro 10.0.26300, Ryzen 7 5700X3D, RTX 4060, 32 GiB (perfo
 | --- | --- | --- |
 | ENG-P1-001 | SP-001-AC1 | Locked core tests and client check above, Rust 1.99.1, Bevy 0.20.0 |
 | ENG-P1-001 | SP-001-AC2 | `omega_2d/tests/bootstrap_contract.rs::headless_engine_app_has_no_device_resources`, `omega_game/tests/bootstrap_contract.rs::headless_core_has_expected_plugins_and_no_devices` |
-| QA-P1-001 | SP-001-AC3 | `.github/workflows/ci.yml` (windows-2022 Rust job, cargo-deny job, Markdown job), actions pinned by reviewed SHA; hosted run URL recorded below after the push |
+| QA-P1-001 | SP-001-AC3 | `.github/workflows/ci.yml` (windows-2022 Rust job, cargo-deny job, Markdown job), actions pinned by reviewed SHA; [hosted run 40075863365](https://github.com/AlexGalhardo/project-omega/actions/runs/40075863365) green |
 | QA-P1-001 | SP-001-AC4 | Stage-grouped commits with explicit paths (git history of release 0.2.0 and 0.3.0) |
 | GAME-P1-001 | SP-002-AC1 | `sim_contract.rs::ac1_identical_seed_and_input_give_identical_traces` |
 | GAME-P1-001 | SP-002-AC2 | `sim_contract.rs::ac2_six_hundred_manual_ticks_without_a_window` |
@@ -57,6 +57,6 @@ Environment: Windows 11 Pro 10.0.26300, Ryzen 7 5700X3D, RTX 4060, 32 GiB (perfo
 
 ### Limits
 
-- The hosted CI run is the only check not executed locally; its URL is added to this index once it completes.
+- Hosted CI on commit `ea2a238`: [run 40075863365](https://github.com/AlexGalhardo/project-omega/actions/runs/40075863365), all three jobs green (Rust on windows-2022, cargo-deny, Markdown).
 - Visual fidelity and readability need the owner's native review (GAME-P1-004, QA-P1-002 stay IN_REVIEW).
 - SP-016 is not complete: combat stress scenarios (PERF-02–07) arrive with SP-007/SP-008.
