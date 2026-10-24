@@ -1,6 +1,6 @@
 # ROADMAP.md: development plan for Project Omega
 
-> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P3-006 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
+> **Current phase:** ALPHA (Phase 3) · **Next task:** QA-P3-003 (full-content balance), then QA-P3-001 and QA-P3-002. Foundation (Phase 1) closed with release `v0.3.0`; Prototype (Phase 2) closed on 2026-10-24 with release `v0.5.0` (P2-M1 and P2-M2 shipped together, so `0.4.0` was never cut); GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
 >
 > This is the onboarding file. It says where the project is, what the next task is and how to prove it is done. Every work session, human or AI agent, starts here.
 >
@@ -62,7 +62,7 @@ Simulation code never reads wall time, renderer state or ECS iteration order; it
 | --- | --- | --- |
 | Planning (stages 1–6) | `0.1.0`, `0.1.1`, `0.2.0` | Retroactive releases, already published |
 | Foundation | `0.3.0` | Published |
-| Prototype | `0.4.0` (P2-M1), `0.5.0` (P2-M2, phase exit) | One minor per milestone; urgent fixes bump the patch |
+| Prototype | `0.4.0` (P2-M1, folded into `0.5.0`), `0.5.0` (P2-M2, phase exit, published) | One minor per milestone; urgent fixes bump the patch |
 | Alpha | `0.6.0`, `0.7.0` | One minor per milestone |
 | Beta | `0.8.0`, `0.9.0` | One minor per milestone |
 | RC → 1.0 | `1.0.0-rc.N`, then `1.0.0` | Release candidates are GitHub prereleases; only REL-P5-004 publishes `1.0.0` |
