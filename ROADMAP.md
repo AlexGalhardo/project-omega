@@ -785,7 +785,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Asserts:** note exists and passes markdownlint; `git grep` finds no pasted code or data blocks from the game; every difference has a CR or a recorded decision.
 
-#### ENG-P3-001. Phase-driven warning/clip presentation (M) — TODO
+#### ENG-P3-001. Phase-driven warning/clip presentation (M) — DONE
 
 **Depends on:** ENG-P2-001. **Read first:** [SP-012](docs/specs/sp-012-camera-visuals.md) (Art Bible §4–7, §9–10; architecture §3 (ENG-CAM-001, ENG-VIS-001)).
 
@@ -793,14 +793,14 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
-- [ ] Write the failing acceptance tests first
-- [ ] Implement within the spec allowed paths
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence
+- [x] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
+- [x] Write the failing acceptance tests first
+- [x] Implement within the spec allowed paths
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence
 
 **Asserts:** V12 AC4; AA-03/04 — plus `scripts/check.ps1` exit 0.
 
-#### GAME-P3-001. Remaining projectile/area payloads (M) — TODO
+#### GAME-P3-001. Remaining projectile/area payloads (M) — DONE
 
 **Depends on:** GAME-P2-005. **Read first:** [SP-007](docs/specs/sp-007-combat.md) (GDD-005 (§6), §7.2–7.3, §9.2; DA-05/06/07/13).
 
@@ -808,10 +808,10 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
-- [ ] Write the failing acceptance tests first
-- [ ] Implement within the spec allowed paths
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence
+- [x] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
+- [x] Write the failing acceptance tests first
+- [x] Implement within the spec allowed paths
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence
 
 **Asserts:** V07 AC1/2/4 — plus `scripts/check.ps1` exit 0.
 

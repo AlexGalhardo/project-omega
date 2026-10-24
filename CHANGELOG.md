@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **combat:** Add payload fixture coverage for all twelve authored weapons, offset and centered circles (SHA_PLACEHOLDER)
+- **engine:** Add phase-driven cue model (locked versus following anchors, cancellation, reduced effects) with contract tests (SHA_PLACEHOLDER)
 - **research:** Record the RES-P4-001 Brotato study note (original prose, REA limits recorded, all differences kept as GDD) ([5651e70](https://github.com/AlexGalhardo/project-omega/commit/5651e704ef5443360afe7642603de7cda13a3060))
 - **research:** Record the RES-P3-002 Brotato study note (original prose, REA limits recorded, all differences kept as GDD) ([5651e70](https://github.com/AlexGalhardo/project-omega/commit/5651e704ef5443360afe7642603de7cda13a3060))
 - **research:** Record the RES-P3-001 Brotato study note (original prose, REA limits recorded, all differences kept as GDD) ([5651e70](https://github.com/AlexGalhardo/project-omega/commit/5651e704ef5443360afe7642603de7cda13a3060))

@@ -13,6 +13,8 @@ mod client;
 #[cfg(feature = "client")]
 pub use client::{SpriteParts, pose_transform, sprite_parts};
 
+pub mod cues;
+
 pub const CATALOG_SCHEMA_VERSION: u32 = 1;
 
 /// Stable presentation ID, lowercase ASCII `[a-z][a-z0-9_]*`, independent of file paths.
