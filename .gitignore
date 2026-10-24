@@ -13,3 +13,7 @@ __pycache__/
 
 # graphify knowledge graph (rebuilt locally: graphify update .)
 /graphify-out/
+
+# Owner-local session files (DEC-020)
+start-work-for-sleep.md
+questions-to-dev.md

@@ -264,3 +264,15 @@ Stage 2 was approved by the owner on 2026-10-23. On 2026-10-24 the owner directe
 | Rationale | Fulfils objective (1) while keeping the repository free of proprietary material. |
 | Consequences | REA is not yet installed (verified 2026-10-24: no `rea` on PATH). Setup follows [Track B](../research/02-rea.md) as task RES-P1-001. REA output may travel to a remote model provider; the inspecting session must know that before running it. |
 | Revisit condition | Any need to copy material instead of describing it; any distribution plan. |
+
+## DEC-020 — Autonomous implementation sessions
+
+| Field | Record |
+| --- | --- |
+| Question | What may an unattended agent session do while the owner is away for many hours? |
+| Choice | A session started from the owner's local `start-work-for-sleep.md` prompt works through ROADMAP.md Phase 2 to Phase 5 without stopping, under these rules: **(1)** parallel agents and git worktrees are pre-authorized for any task or batch with an ETA of 30 minutes or more, with disjoint file ownership and serial edits of shared files (AGENTS.md); **(2)** after `scripts/check.ps1` passes, commits may be pushed to `main`, and milestone releases follow ROADMAP.md 1.4/1.5; **(3)** a check that needs the owner (native playtest, visual/audio/controller review, hardware or business decision) is recorded IN_REVIEW or BLOCKED with the exact question in the local `questions-to-dev.md`, and dependents may proceed on the code-complete result as a provisional acceptance the owner revisits; **(4)** BLOCKED owner decisions (QA-P4-003, REL-P5-001) are skipped, not guessed; **(5)** the final `1.0.0` release (REL-P5-004) and any store publication are never performed autonomously. |
+| Status | Approved |
+| Approval evidence | Verified owner instruction, 2026-10-24: implement Phase 2 through Phase 5 without interruptions while away, use worktrees/parallel agents when the ETA is at least 30 minutes, and collect questions in `questions-to-dev.md`. |
+| Rationale | Lets work continue for many hours without manual steps, while keeping owner-only judgments explicit and reversible. |
+| Consequences | Provisional acceptances are listed in `questions-to-dev.md` and in the evidence of each affected task; the owner's later review can reopen tasks. A red CI run or a failing gate stops pushing and releasing until fixed. |
+| Revisit condition | Any provisional acceptance the owner rejects; any destructive or outward action outside these rules. |

@@ -76,7 +76,7 @@ Tags are `vX.Y.Z`. The workspace version in the root `Cargo.toml` must equal the
 3. Never commit `.env`, `target/`, `graphify-out/`, raw REA output or any extracted Brotato material (the repository is public).
 4. Closing a task: asserts, `scripts/check.ps1`, `CHANGELOG.md` `[Unreleased]` entry `- **scope:** Message ([sha](url))`, this file, commit, push to `main`.
 5. Closing a milestone: release by [docs/release.md](docs/release.md): bump the workspace version, move `[Unreleased]` into the new version section, commit `chore(release): X.Y.Z`, tag, push the tag alone. The release workflow builds the Windows archive, SBOM, checksums, cosign bundle and provenance, and publishes notes from CHANGELOG.md.
-6. Remote `https://github.com/AlexGalhardo/project-omega.git`, branch `main`. `git reset --hard`, force push, deleting branches or tags: only on the owner's explicit request. Unattended runs (`run-overnight.ps1`) commit but never push, tag or publish.
+6. Remote `https://github.com/AlexGalhardo/project-omega.git`, branch `main`. `git reset --hard`, force push, deleting branches or tags: only on the owner's explicit request. `run-overnight.ps1` runs commit but never push, tag or publish. Autonomous sessions under [DEC-020](docs/decisions/decision-register.md#dec-020--autonomous-implementation-sessions) may push after a green gate and publish milestone releases, never `1.0.0`.
 
 ### 1.6 Local gate and CI
 
@@ -91,13 +91,13 @@ GitHub Actions (`.github/workflows/ci.yml`) runs the same gates on every push to
 
 ### 1.7 Parallel work and worktrees
 
-One active integration task at a time. Parallel agents or worktrees need the owner's explicit yes for that task (global rule) and disjoint file ownership (AGENTS.md). Root manifests, `Cargo.lock`, content catalogs, this file and contracts are edited serially.
+One active integration task at a time. Parallel agents or worktrees need the owner's explicit yes for that task (global rule), or the DEC-020 pre-authorization in an autonomous session (ETA of 30 minutes or more), and always disjoint file ownership (AGENTS.md). Root manifests, `Cargo.lock`, content catalogs, this file and contracts are edited serially.
 
 ### 1.8 When stuck
 
 1. A contract flaw (spec, GDD, ADR): write a change request, set the task BLOCKED with the CR ID, continue the next independent task.
 2. An engine limitation: fix it in `engine/bevy/` with a patch-log entry and a regression test (DEC-018), or add it to `omega_2d` if it is a reusable 2D facility.
-3. A missing owner decision or native check: set BLOCKED or IN_REVIEW with the exact question, never guess.
+3. A missing owner decision or native check: set BLOCKED or IN_REVIEW with the exact question, never guess. In autonomous sessions also append the question to the local `questions-to-dev.md` and continue with the next independent task (DEC-020).
 4. A flaky test is never retried until green; find the nondeterminism.
 
 ### 1.9 Minimal vocabulary
@@ -137,7 +137,7 @@ Engine work is limited to BUILD-001, the three 2D contracts (ENG-GEOM-001, ENG-C
 | GAME-P1-004 | Original proof assets and raster substitution | IN_REVIEW | ENG-P1-005 [ENG-VIS-001]; GAME-P1-001 |
 | QA-P1-002 | Empty-scene and build baseline | IN_REVIEW | ENG-P1-004, GAME-P1-001, GAME-P1-004 |
 | ENG-P1-006 | Vendored Bevy fork wiring (DEC-018) | DONE | ENG-P1-001 |
-| RES-P1-001 | REA setup and Brotato inventory under DEC-019 | TODO | Owner installs REA and its backend (docs/research/02-rea.md) |
+| RES-P1-001 | REA setup and Brotato inventory under DEC-019 | TODO | REA and Ghidra installed 2026-10-24 |
 | GAME-P2-001 | Stats, energy and exact numeric rules | TODO | GAME-P1-003 |
 | GAME-P2-002 | Keyboard/mouse action buffer and aim | TODO | GAME-P1-001; ENG-P1-003 [ENG-CAM-001] |
 | GAME-P2-003 | Player movement and actor state | TODO | GAME-P2-001, GAME-P2-002; ENG-P1-002 [ENG-GEOM-001] |
@@ -387,16 +387,17 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 #### RES-P1-001. REA setup and Brotato inventory under DEC-019 (S) — TODO
 
-**Depends on:** Owner installs REA and its backend (docs/research/02-rea.md). **Read first:** docs/research/02-rea.md; DEC-019.
+**Depends on:** REA and Ghidra installed 2026-10-24. **Read first:** docs/research/02-rea.md; DEC-019.
 
 **Done when:** REA readiness check on a synthetic fixture, then a read-only inventory of the owner copy; only prose notes in docs/research/brotato-notes/, raw output outside the repository.
 
 **Microtasks:**
 
-- [ ] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
-- [ ] Write the failing acceptance tests first
-- [ ] Implement within the spec allowed paths
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence
+- [x] Install REA: `rea-agents@6.7.0` registered as a Claude Code MCP server at local scope for this project only (`claude mcp add --scope local rea -e GHIDRA_INSTALL_DIR=... -e JAVA_HOME=... -- cmd.exe /d /c npx -y rea-agents@6.7.0 mcp`), status Connected (2026-10-24)
+- [x] Install the Ghidra backend: Ghidra 12.1.4 (SHA-256 `ddac49f9...d4db` matched the release) in `%LOCALAPPDATA%\Programs\ghidra_12.1.4_PUBLIC`, Temurin JDK 21.0.12; user variables `GHIDRA_INSTALL_DIR` and `JAVA_HOME`
+- [ ] Readiness check on a synthetic target: `rea analyze target/release/omega-content.exe` started Ghidra analysis but hit `provider_timeout`; raise the timeout or use a small synthetic PE, and record tool versions
+- [ ] Brotato is a Godot game: game logic lives in `Brotato.pck`, which REA 6.7.0 does not list as a supported format. Record which questions REA can answer (native `Brotato.exe` is the Godot engine) and ask the owner in `questions-to-dev.md` before adding any other PCK tool
+- [ ] First prose note in `docs/research/brotato-notes/` following its README rules; raw output stays in `%LOCALAPPDATA%\ProjectOmega\rea\`
 
 **Asserts:** Notes file plus recorded tool versions; no extracted material committed — plus `scripts/check.ps1` exit 0.
 
