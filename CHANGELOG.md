@@ -7,8 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-10-24
+
 ### Added
 
+- **client:** Launch into Boot and the menu by default, ship the full ten-wave catalog in `assets/content` (the three-wave subset moves to `assets/content-prototype`; `--preview` keeps the static scene and `--play` the sandbox) ([0aec863](https://github.com/AlexGalhardo/project-omega/commit/0aec8639d5897b6320aedca62d90ca02f656bae1))
+- **ui:** Add the Boot, Menu, character selection, Unlocks, Settings, Credits and Reset Profile screens with Unsaved and Retry text, rebinding and typed actions ([161ac36](https://github.com/AlexGalhardo/project-omega/commit/161ac365e6522fe9ae98e9de0f2562fee35fd1a9))
 - **qa:** Merge the prototype-loop e2e scripts, typed UI actions and the bot's shop play (11 scripts, 3 profiles x 20 seeds with no findings), fix a Confirm leak into the shop and an energy button that could only be rejected, and write the prototype QA report ([07d9f50](https://github.com/AlexGalhardo/project-omega/commit/07d9f509efd77c1af9c89ca18e64097b3ec6a82a))
 - **balance:** Add the balance simulator (six bot policies, metrics, JSON and Markdown reports, omega-sim --scenario balance) and the CR-004 prototype pressure calibration with before and after reports ([c6b154a](https://github.com/AlexGalhardo/project-omega/commit/c6b154a5f803ec04e0b07bb6451a1631de71eaf6))
 - **ui:** Add UI scale, first-run hints that pause combat, reduced-effects mapping, a two-column panel layout verified at 1280x720 and 1920x1080, and client profile and settings loading and saving ([38372a7](https://github.com/AlexGalhardo/project-omega/commit/38372a7cff766c6dc5b8e75c1bd213b519d88217))
@@ -103,7 +107,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **decisions:** Approve the scrap robot industrial theme ([f3f020b](https://github.com/AlexGalhardo/project-omega/commit/f3f020b43fda6906ef571635f844693ad6b449aa))
 - **decisions:** Complete the brainstorming defaults ([6396617](https://github.com/AlexGalhardo/project-omega/commit/6396617954e927fa8d9190043d1d478769d68b99))
 
-[Unreleased]: https://github.com/AlexGalhardo/project-omega/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/AlexGalhardo/project-omega/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/AlexGalhardo/project-omega/compare/v0.3.0...v0.5.0
 [0.3.0]: https://github.com/AlexGalhardo/project-omega/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/AlexGalhardo/project-omega/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/AlexGalhardo/project-omega/compare/v0.1.0...v0.1.1
