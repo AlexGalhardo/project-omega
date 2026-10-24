@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **combat:** Add exact stat, fire-rate, damage, energy and regeneration evaluators with SP-006 contract tests ([29badf4](https://github.com/AlexGalhardo/project-omega/commit/29badf496b2ef21eceffe675343d51c38ddd5e62))
+
 ## [0.3.0] - 2026-10-24
 
 ### Added

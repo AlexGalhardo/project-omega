@@ -1,6 +1,6 @@
 # ROADMAP.md: development plan for Project Omega
 
-> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-002 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
+> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-003 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
 >
 > This is the onboarding file. It says where the project is, what the next task is and how to prove it is done. Every work session, human or AI agent, starts here.
 >
@@ -139,7 +139,7 @@ Engine work is limited to BUILD-001, the three 2D contracts (ENG-GEOM-001, ENG-C
 | ENG-P1-006 | Vendored Bevy fork wiring (DEC-018) | DONE | ENG-P1-001 |
 | RES-P1-001 | REA setup and Brotato inventory under DEC-019 | TODO | REA and Ghidra installed 2026-10-24 |
 | GAME-P2-001 | Stats, energy and exact numeric rules | DONE | GAME-P1-003 |
-| GAME-P2-002 | Keyboard/mouse action buffer and aim | TODO | GAME-P1-001; ENG-P1-003 [ENG-CAM-001] |
+| GAME-P2-002 | Keyboard/mouse action buffer and aim | DONE | GAME-P1-001; ENG-P1-003 [ENG-CAM-001] |
 | GAME-P2-003 | Player movement and actor state | TODO | GAME-P2-001, GAME-P2-002; ENG-P1-002 [ENG-GEOM-001] |
 | GAME-P2-004 | Bolt and saw attack emission | TODO | GAME-P2-003 |
 | GAME-P2-005 | Damage, death, healing and scrap | TODO | GAME-P2-004 |
@@ -426,7 +426,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Asserts:** V06 AC1–4 — plus `scripts/check.ps1` exit 0.
 
-#### GAME-P2-002. Keyboard/mouse action buffer and aim (M) — TODO
+#### GAME-P2-002. Keyboard/mouse action buffer and aim (M) — DONE
 
 **Depends on:** GAME-P1-001; ENG-P1-003 [ENG-CAM-001]. **Read first:** [SP-005](docs/specs/sp-005-input.md) (GDD-004 (§5) input table; ADR-008; `omega_2d::camera`).
 
@@ -434,12 +434,12 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Promote: files `crates/omega_game/src/input/`, `tests/input_contract.rs`
-- [ ] Test first: a frame with zero fixed ticks and one with several ticks keep held state and consume digital edges once
-- [ ] Implement action buffer and `TickInput` sampling before the fixed loop (client system behind `client`)
-- [ ] Manual aim through `CurrentViewport::screen_to_world`; letterbox points ignored; vector under 1 LU keeps the last direction (default +X)
-- [ ] Focus loss sets `SimPaused` before another tick; resume discards stale edges
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
+- [x] Promote: files `crates/omega_game/src/input/`, `tests/input_contract.rs`
+- [x] Test first: a frame with zero fixed ticks and one with several ticks keep held state and consume digital edges once
+- [x] Implement action buffer and `TickInput` sampling before the fixed loop (client system behind `client`)
+- [x] Manual aim through `CurrentViewport::screen_to_world`; letterbox points ignored; vector under 1 LU keeps the last direction (default +X)
+- [x] Focus loss sets `SimPaused` before another tick; resume discards stale edges
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
 
 **Asserts:** V05 AC1–4 (controller device evidence later) — plus `scripts/check.ps1` exit 0.
 

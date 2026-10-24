@@ -115,7 +115,7 @@ pub fn run(options: ClientOptions) -> AppExit {
 				..default()
 			}),
 	)
-	.add_plugins(GameCorePlugin)
+	.add_plugins((GameCorePlugin, crate::input::InputClientPlugin))
 	.insert_resource(ClearColor(Color::BLACK))
 	.insert_resource(ActiveSkin(skin))
 	.insert_resource(Options(options))

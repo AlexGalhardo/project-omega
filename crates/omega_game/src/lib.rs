@@ -4,6 +4,7 @@
 pub mod combat;
 pub mod content;
 pub mod diagnostics;
+pub mod input;
 pub mod sim;
 
 #[cfg(feature = "client")]
