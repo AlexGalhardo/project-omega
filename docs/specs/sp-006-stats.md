@@ -49,4 +49,4 @@ Stat accumulation/formulas; reactor invariants; healing/cooldown edge cases. The
 
 Apply [Definition of Done](../validation/definition-of-done.md). All criteria need evidence, tests must cover confirmed bugs, and no critical decision may remain open. Dependencies must provide their tested contracts; source existence alone is not dependency completion.
 
-**Completion evidence: NOT IMPLEMENTED.** No commands above have run, no tests/results/benchmarks are claimed, and no task is READY. The implementation report must record commit, environment, criterion-to-test mapping, exact commands/results, native evidence where needed, limitations and reviewer outcome. This section is filled with actual evidence as the lifecycle advances.
+**Completion evidence:** see [evidence GAME-P2-001](../validation/evidence/GAME-P2-001/README.md) (status DONE).

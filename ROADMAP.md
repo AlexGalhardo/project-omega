@@ -1,6 +1,6 @@
 # ROADMAP.md: development plan for Project Omega
 
-> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-001 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
+> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-002 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
 >
 > This is the onboarding file. It says where the project is, what the next task is and how to prove it is done. Every work session, human or AI agent, starts here.
 >
@@ -138,7 +138,7 @@ Engine work is limited to BUILD-001, the three 2D contracts (ENG-GEOM-001, ENG-C
 | QA-P1-002 | Empty-scene and build baseline | IN_REVIEW | ENG-P1-004, GAME-P1-001, GAME-P1-004 |
 | ENG-P1-006 | Vendored Bevy fork wiring (DEC-018) | DONE | ENG-P1-001 |
 | RES-P1-001 | REA setup and Brotato inventory under DEC-019 | TODO | REA and Ghidra installed 2026-10-24 |
-| GAME-P2-001 | Stats, energy and exact numeric rules | TODO | GAME-P1-003 |
+| GAME-P2-001 | Stats, energy and exact numeric rules | DONE | GAME-P1-003 |
 | GAME-P2-002 | Keyboard/mouse action buffer and aim | TODO | GAME-P1-001; ENG-P1-003 [ENG-CAM-001] |
 | GAME-P2-003 | Player movement and actor state | TODO | GAME-P2-001, GAME-P2-002; ENG-P1-002 [ENG-GEOM-001] |
 | GAME-P2-004 | Bolt and saw attack emission | TODO | GAME-P2-003 |
@@ -409,7 +409,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 ### P2-M1: Playable combat slice
 
-#### GAME-P2-001. Stats, energy and exact numeric rules (M) — TODO
+#### GAME-P2-001. Stats, energy and exact numeric rules (M) — DONE
 
 **Depends on:** GAME-P1-003. **Read first:** [SP-006](docs/specs/sp-006-stats.md) (GDD-006/007 (§7, §7.1 exact rule from CR-002); DA-04).
 
@@ -417,12 +417,12 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Promote: files `crates/omega_game/src/stats/`, `tests/stats_contract.rs`; name one test per SP-006 criterion
-- [ ] Test first: GDD §7.1 worked examples (15, 15, 27 ticks; 24-tick hammer floor) from the full fixture, integer expectations
-- [ ] Implement `EffectiveStats` (sum base + character + items, clamp once, checked arithmetic) and the CR-002 interval rule
-- [ ] Test item-order independence over generated orders and the six-point energy invariant
-- [ ] Damage formula (§7.2) with tier percentages and forced crit: 21 and 26 examples, armor clamp at 80
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
+- [x] Promote: files `crates/omega_game/src/combat/{stats,energy}.rs`, `tests/stats_contract.rs`; name one test per SP-006 criterion
+- [x] Test first: GDD §7.1 worked examples (15, 15, 27 ticks; 24-tick hammer floor) from the full fixture, integer expectations
+- [x] Implement `EffectiveStats` (sum base + character + items, clamp once, checked arithmetic) and the CR-002 interval rule
+- [x] Test item-order independence over generated orders and the six-point energy invariant
+- [x] Damage formula (§7.2) with tier percentages and forced crit: 21 and 26 examples, armor clamp at 80
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
 
 **Asserts:** V06 AC1–4 — plus `scripts/check.ps1` exit 0.
 
