@@ -156,6 +156,19 @@ pub enum PresentationKind {
 		damage: u32,
 		hp_after: u32,
 	},
+	SpawnWarned {
+		sim_id: u64,
+		position: [f64; 2],
+		ticks: u32,
+	},
+	SpawnCancelled {
+		sim_id: u64,
+	},
+	EnemySpawned {
+		sim_id: u64,
+		warning: u64,
+		position: [f64; 2],
+	},
 	PickupCollected {
 		value: u32,
 	},
@@ -203,7 +216,7 @@ impl PresentationQueue {
 	}
 }
 
-fn advance_tick(mut tick: ResMut<SimTick>) {
+pub(crate) fn advance_tick(mut tick: ResMut<SimTick>) {
 	tick.0 += 1;
 }
 

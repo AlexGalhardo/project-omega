@@ -4,6 +4,7 @@
 pub mod combat;
 pub mod content;
 pub mod diagnostics;
+pub mod encounters;
 pub mod input;
 pub mod sim;
 
@@ -21,6 +22,7 @@ impl Plugin for GameCorePlugin {
 			omega_2d::Omega2dPlugin,
 			sim::GameSimPlugin,
 			combat::CombatPlugin,
+			encounters::EncounterPlugin,
 		));
 	}
 }

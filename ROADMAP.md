@@ -1,6 +1,6 @@
 # ROADMAP.md: development plan for Project Omega
 
-> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-006 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
+> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** ENG-P2-001 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
 >
 > This is the onboarding file. It says where the project is, what the next task is and how to prove it is done. Every work session, human or AI agent, starts here.
 >
@@ -576,7 +576,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Asserts:** V07 AC3–5; DA-06/13 — plus `scripts/check.ps1` exit 0.
 
-#### GAME-P2-006. Chaser/runner and three-wave scheduling (M) — TODO
+#### GAME-P2-006. Chaser/runner and three-wave scheduling (M) — DONE
 
 **Depends on:** GAME-P2-005. **Read first:** [SP-008](docs/specs/sp-008-encounters.md) (GDD-010/011 (§10–11); CR-001; DA-11/12/17/18).
 
@@ -584,10 +584,10 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Test first: DA-11 (live enemy at tick 3600 removed without scrap), DA-18 spawn postponement and cancel cap
-- [ ] Chaser/runner chase behavior; common scaling formulas (§10.1) with `ceil`
-- [ ] Batch scheduling at authored ticks, 45-tick warnings, eight boundary anchors with `RngStreams::spawn_anchors`, type draw with `spawn_types`
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
+- [x] Test first: DA-11 (live enemy at tick 3600 removed without scrap), DA-18 spawn postponement and cancel cap
+- [x] Chaser/runner chase behavior; common scaling formulas (§10.1) with `ceil`
+- [x] Batch scheduling at authored ticks, 45-tick warnings, eight boundary anchors with `RngStreams::spawn_anchors`, type draw with `spawn_types`
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
 
 **Asserts:** V08 common-profile subset; DA-11/18 — plus `scripts/check.ps1` exit 0.
 
