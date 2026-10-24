@@ -1,0 +1,80 @@
+{
+    "schema_version":  1,
+    "generated_by":  "scripts/export-assets.ps1",
+    "exporter":  {
+                     "name":  "resvg",
+                     "version":  "0.48.1"
+                 },
+    "assets":  [
+                   {
+                       "visual_id":  "visual_char_patch",
+                       "source":  "art/source/svg/proof/char_patch/idle_00.svg",
+                       "output":  "assets/generated/sprites/proof/visual_char_patch/idle_00.png",
+                       "width":  160,
+                       "height":  160,
+                       "source_sha256":  "051f43fdbcf970d9b6a62b8b90dbc0392743af5712da18e56f35a27fdf31eeb6",
+                       "output_sha256":  "42710db5e241099a5ad6783edf01202b1d56e77330d17461857ebbff37914cf6",
+                       "command":  "resvg --skip-system-fonts --width 160 --height 160 \u003csource\u003e \u003coutput\u003e"
+                   },
+                   {
+                       "visual_id":  "visual_char_patch",
+                       "source":  "art/source/svg/proof/char_patch/idle_00.svg",
+                       "output":  "assets/generated/sprites/proof/pixel/visual_char_patch/idle_00.png",
+                       "width":  40,
+                       "height":  40,
+                       "source_sha256":  "051f43fdbcf970d9b6a62b8b90dbc0392743af5712da18e56f35a27fdf31eeb6",
+                       "output_sha256":  "215f452f914a8ff28207a62a6b283988f10f4e17487e6f6e32d9f565ceb20363",
+                       "command":  "resvg --skip-system-fonts --width 40 --height 40 \u003csource\u003e \u003coutput\u003e"
+                   },
+                   {
+                       "visual_id":  "visual_projectile_friendly_round",
+                       "source":  "art/source/svg/proof/projectile_friendly_round/core_00.svg",
+                       "output":  "assets/generated/sprites/proof/visual_projectile_friendly_round/core_00.png",
+                       "width":  32,
+                       "height":  32,
+                       "source_sha256":  "a414de7f19f225a2a8b2dfba6f0f3230c98533afca47e15f8f57108fd3824374",
+                       "output_sha256":  "24bd97d20ecea61bb8a0d8d52a4bba7e3108f306a03a9806886c9bd88a0fb189",
+                       "command":  "resvg --skip-system-fonts --width 32 --height 32 \u003csource\u003e \u003coutput\u003e"
+                   },
+                   {
+                       "visual_id":  "visual_projectile_hostile_pointed",
+                       "source":  "art/source/svg/proof/projectile_hostile_pointed/core_00.svg",
+                       "output":  "assets/generated/sprites/proof/visual_projectile_hostile_pointed/core_00.png",
+                       "width":  57,
+                       "height":  57,
+                       "source_sha256":  "e7bbb853a6a48ed1d07727558fa0fed837193e7db019d6eaf6c560690629969f",
+                       "output_sha256":  "7fa32d215cf8574b9c4d68b3cda7bafd2bdc189ac44cd6229ab1cbbcbfa709a6",
+                       "command":  "resvg --skip-system-fonts --width 57 --height 57 \u003csource\u003e \u003coutput\u003e"
+                   },
+                   {
+                       "visual_id":  "visual_warning_ground_circle",
+                       "source":  "art/source/svg/proof/warning_ground_circle/pending_00.svg",
+                       "output":  "assets/generated/sprites/proof/visual_warning_ground_circle/pending_00.png",
+                       "width":  400,
+                       "height":  400,
+                       "source_sha256":  "5e15ab4bccc36789a642e4f3650baa22209b26054a32d09d1d85a8b388fc45c5",
+                       "output_sha256":  "e9d59c215741f5a0e0253ec7b9fbb704741f2be8db21cff102b643651fd1af96",
+                       "command":  "resvg --skip-system-fonts --width 400 --height 400 \u003csource\u003e \u003coutput\u003e"
+                   },
+                   {
+                       "visual_id":  "visual_fallback_enemy",
+                       "source":  "art/source/svg/proof/fallback_enemy/idle_00.svg",
+                       "output":  "assets/generated/sprites/proof/visual_fallback_enemy/idle_00.png",
+                       "width":  152,
+                       "height":  152,
+                       "source_sha256":  "3616522fbcd0900d09e1a5905c690a60c438f7479cdc05415e2f735de101b1df",
+                       "output_sha256":  "9e35b51c713f1b4b6c0cbb2113ea322f11811e9279b3484db70a20d27995473c",
+                       "command":  "resvg --skip-system-fonts --width 152 --height 152 \u003csource\u003e \u003coutput\u003e"
+                   },
+                   {
+                       "visual_id":  "visual_item_plating",
+                       "source":  "art/source/svg/proof/item_plating/icon_00.svg",
+                       "output":  "assets/generated/sprites/proof/visual_item_plating/icon_00.png",
+                       "width":  192,
+                       "height":  192,
+                       "source_sha256":  "9372a2ea4ad19a01a3b66549f0b9de641178bfd937b818d6e66ba79f9c925de4",
+                       "output_sha256":  "0ea73da24d9ae593d8d8bbab5cc6d6fda578df7e15ac719de25d6154637101c6",
+                       "command":  "resvg --skip-system-fonts --width 192 --height 192 \u003csource\u003e \u003coutput\u003e"
+                   }
+               ]
+}

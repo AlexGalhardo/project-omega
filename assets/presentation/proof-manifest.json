@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "exporter": { "name": "resvg", "version": "0.48.1" },
+  "texels_per_lu": 4,
+  "assets": [
+    {
+      "visual_id": "visual_char_patch",
+      "source": "art/source/svg/proof/char_patch/idle_00.svg",
+      "output": "assets/generated/sprites/proof/visual_char_patch/idle_00.png",
+      "logical_extent_lu": [40, 40],
+      "pivot_normalized": [0.5, 0.5],
+      "provenance_id": "prov_proof_2026_10_24"
+    },
+    {
+      "visual_id": "visual_char_patch",
+      "source": "art/source/svg/proof/char_patch/idle_00.svg",
+      "output": "assets/generated/sprites/proof/pixel/visual_char_patch/idle_00.png",
+      "logical_extent_lu": [40, 40],
+      "pivot_normalized": [0.5, 0.5],
+      "texels_per_lu": 1,
+      "provenance_id": "prov_proof_2026_10_24",
+      "notes": "Low-resolution raster substitute for the skin-swap proof (ART-010 step 1)."
+    },
+    {
+      "visual_id": "visual_projectile_friendly_round",
+      "source": "art/source/svg/proof/projectile_friendly_round/core_00.svg",
+      "output": "assets/generated/sprites/proof/visual_projectile_friendly_round/core_00.png",
+      "logical_extent_lu": [8, 8],
+      "pivot_normalized": [0.5, 0.5],
+      "provenance_id": "prov_proof_2026_10_24"
+    },
+    {
+      "visual_id": "visual_projectile_hostile_pointed",
+      "source": "art/source/svg/proof/projectile_hostile_pointed/core_00.svg",
+      "output": "assets/generated/sprites/proof/visual_projectile_hostile_pointed/core_00.png",
+      "logical_extent_lu": [14.142, 14.142],
+      "pivot_normalized": [0.5, 0.5],
+      "provenance_id": "prov_proof_2026_10_24",
+      "notes": "Diamond circumscribes a 5 LU collision circle (Coil Skater shot, smallest hostile core)."
+    },
+    {
+      "visual_id": "visual_warning_ground_circle",
+      "source": "art/source/svg/proof/warning_ground_circle/pending_00.svg",
+      "output": "assets/generated/sprites/proof/visual_warning_ground_circle/pending_00.png",
+      "logical_extent_lu": [100, 100],
+      "pivot_normalized": [0.5, 0.5],
+      "provenance_id": "prov_proof_2026_10_24",
+      "notes": "Clamp Walker ground strike, radius 50 LU."
+    },
+    {
+      "visual_id": "visual_fallback_enemy",
+      "source": "art/source/svg/proof/fallback_enemy/idle_00.svg",
+      "output": "assets/generated/sprites/proof/visual_fallback_enemy/idle_00.png",
+      "logical_extent_lu": [38, 38],
+      "pivot_normalized": [0.5, 0.5],
+      "provenance_id": "prov_proof_2026_10_24"
+    },
+    {
+      "visual_id": "visual_item_plating",
+      "source": "art/source/svg/proof/item_plating/icon_00.svg",
+      "output": "assets/generated/sprites/proof/visual_item_plating/icon_00.png",
+      "ui_size_px": [192, 192],
+      "pivot_normalized": [0.5, 0.5],
+      "provenance_id": "prov_proof_2026_10_24"
+    }
+  ]
+}

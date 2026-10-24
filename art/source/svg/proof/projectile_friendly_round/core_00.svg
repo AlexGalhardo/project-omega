@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Friendly round core: the whole frame is the collision circle (extent = 2 x radius). -->
+  <circle cx="16" cy="16" r="14.5" fill="#62DFD0" stroke="#151D27" stroke-width="3"/>
+  <circle cx="16" cy="16" r="5" fill="#F2F5F7"/>
+</svg>

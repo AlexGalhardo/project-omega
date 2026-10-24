@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "skin_id": "proof_pixel",
+  "category_fallbacks": {
+    "enemy": "visual_fallback_enemy"
+  },
+  "records": [
+    {
+      "visual_id": "visual_char_patch",
+      "category": "player",
+      "source_asset_id": "svg_proof_char_patch_idle_00_1tpl",
+      "provenance_id": "prov_proof_2026_10_24",
+      "extent": {
+        "world_lu": [
+          40,
+          40
+        ]
+      },
+      "pivot_normalized": [
+        0.5,
+        0.5
+      ],
+      "sampling": "nearest",
+      "draw_layer": "actor",
+      "essential": true,
+      "frames": [
+        "generated/sprites/proof/pixel/visual_char_patch/idle_00.png"
+      ]
+    },
+    {
+      "visual_id": "visual_projectile_friendly_round",
+      "category": "projectile",
+      "source_asset_id": "svg_proof_projectile_friendly_round",
+      "provenance_id": "prov_proof_2026_10_24",
+      "extent": {
+        "world_lu": [
+          8,
+          8
+        ]
+      },
+      "pivot_normalized": [
+        0.5,
+        0.5
+      ],
+      "sampling": "linear",
+      "draw_layer": "projectile",
+      "essential": true,
+      "frames": [
+        "generated/sprites/proof/visual_projectile_friendly_round/core_00.png"
+      ]
+    },
+    {
+      "visual_id": "visual_projectile_hostile_pointed",
+      "category": "projectile",
+      "source_asset_id": "svg_proof_projectile_hostile_pointed",
+      "provenance_id": "prov_proof_2026_10_24",
+      "extent": {
+        "world_lu": [
+          14.142,
+          14.142
+        ]
+      },
+      "pivot_normalized": [
+        0.5,
+        0.5
+      ],
+      "sampling": "linear",
+      "draw_layer": "projectile",
+      "essential": true,
+      "frames": [
+        "generated/sprites/proof/visual_projectile_hostile_pointed/core_00.png"
+      ]
+    },
+    {
+      "visual_id": "visual_warning_ground_circle",
+      "category": "warning",
+      "source_asset_id": "svg_proof_warning_ground_circle",
+      "provenance_id": "prov_proof_2026_10_24",
+      "extent": {
+        "world_lu": [
+          100,
+          100
+        ]
+      },
+      "pivot_normalized": [
+        0.5,
+        0.5
+      ],
+      "sampling": "linear",
+      "draw_layer": "ground_warning",
+      "essential": true,
+      "frames": [
+        "generated/sprites/proof/visual_warning_ground_circle/pending_00.png"
+      ]
+    },
+    {
+      "visual_id": "visual_fallback_enemy",
+      "category": "enemy",
+      "source_asset_id": "svg_proof_fallback_enemy",
+      "provenance_id": "prov_proof_2026_10_24",
+      "extent": {
+        "world_lu": [
+          38,
+          38
+        ]
+      },
+      "pivot_normalized": [
+        0.5,
+        0.5
+      ],
+      "sampling": "linear",
+      "draw_layer": "actor",
+      "essential": false,
+      "frames": [
+        "generated/sprites/proof/visual_fallback_enemy/idle_00.png"
+      ]
+    },
+    {
+      "visual_id": "visual_item_plating",
+      "category": "item",
+      "source_asset_id": "svg_proof_item_plating",
+      "provenance_id": "prov_proof_2026_10_24",
+      "extent": "ui",
+      "pivot_normalized": [
+        0.5,
+        0.5
+      ],
+      "sampling": "linear",
+      "draw_layer": "hud",
+      "essential": false,
+      "frames": [
+        "generated/sprites/proof/visual_item_plating/icon_00.png"
+      ]
+    }
+  ]
+}

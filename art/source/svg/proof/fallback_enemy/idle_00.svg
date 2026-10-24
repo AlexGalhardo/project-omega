@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Visible category fallback for a missing cosmetic enemy visual. -->
+  <circle cx="32" cy="32" r="28" fill="#3A2A2E" stroke="#FF6B5E" stroke-width="3" stroke-dasharray="8 5"/>
+  <path d="M24 24 Q32 14 40 24 Q42 30 32 34 L32 40 M32 46 L32 48" stroke="#F2F5F7" stroke-width="4" stroke-linecap="round" fill="none"/>
+</svg>

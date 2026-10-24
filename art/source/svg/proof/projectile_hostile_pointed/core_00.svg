@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- Hostile pointed core: the diamond circumscribes the collision circle (r = 16/sqrt(2) units). -->
+  <path d="M16 1 L31 16 L16 31 L1 16 Z" fill="#FF6B5E" stroke="#151D27" stroke-width="2" stroke-linejoin="round"/>
+  <path d="M16 9 L23 16 L16 23 L9 16 Z" fill="#FFE2DE"/>
+</svg>
