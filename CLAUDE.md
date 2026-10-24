@@ -2,6 +2,26 @@
 
 These rules apply to all work in this repository.
 
+## Session Start (Required)
+
+**Before starting any work, invoke karpathy-guidelines skill** from `.claude/skills/karpathy-guidelines/`. This ensures:
+- Clear learning objectives and structured problem-solving
+- Documented assumptions and evidence-based decisions
+- Iterative refinement and verification steps
+- Reproducible results and traceability
+
+Run at session start: `/karpathy-guidelines` or invoke the skill explicitly before any task.
+
+## Model Selection for Parallel Work
+
+When spawning parallel worktrees or subagents, apply these model selection rules (documented in `.claude/projects/C--dev-project-omega/memory/model_selection_strategy.md`):
+
+- **Opus 5.5:** High-complexity tasks with short ETA (< 2h). Architecture, large refactors, API design.
+- **Sonnet 5.5:** Medium complexity, any duration (default for code implementation, bug fixes, features).
+- **Haiku 5.5:** Low-complexity work. Light refactoring, documentation, web research, i18n.
+
+Explicitly pass `model: "claude-opus-5-5"` in Agent() calls when needed.
+
 ## Execution
 
 - **Follow PROMPT.md strictly:** 6 stages in order, no skips. Approval gates are hard stops.
