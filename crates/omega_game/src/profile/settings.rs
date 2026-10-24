@@ -62,6 +62,15 @@ impl Default for Settings {
 }
 
 impl Settings {
+	/// Reduced effects drop decorations only; warnings, cores and HP cues stay (Art Bible 6).
+	pub fn effects(&self) -> omega_2d::visuals::cues::EffectsLevel {
+		if self.reduced_effects {
+			omega_2d::visuals::cues::EffectsLevel::Reduced
+		} else {
+			omega_2d::visuals::cues::EffectsLevel::Full
+		}
+	}
+
 	pub fn audio(&self) -> AudioSettings {
 		AudioSettings {
 			master: self.master,

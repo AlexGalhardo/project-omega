@@ -2,13 +2,15 @@
 //! Widgets only render `ScreenView`/`HudView` data and queue typed `UiAction` requests.
 
 use super::{
-	ScreenView, UiAction, UiFocus, UiMode, apply_action, back_action, hud_text, hud_view,
+	ScreenView, UiAction, UiFocus, UiMode, apply_action, back_action, hints, hud_text, hud_view,
 	screen_view,
 };
+use crate::encounters::WaveRuntime;
 use crate::input::gamepad::{InputSource, NavDirection, NavRepeat};
 use crate::input::{ActiveSource, InputBuffer, PadNav};
-use crate::sim::SimPaused;
+use crate::profile::Settings;
 use crate::sim::run::{Run, RunState};
+use crate::sim::{SimPaused, SimTick};
 use bevy::prelude::*;
 use bevy::ui::InteractionDisabled;
 use bevy::ui_widgets::{Activate, Button};
@@ -52,8 +54,49 @@ impl Plugin for UiClientPlugin {
 			.add_systems(Startup, spawn_roots)
 			.add_systems(
 				Update,
-				(keyboard_actions, run_actions, refresh_screen, refresh_hud).chain(),
+				(
+					hint_trigger,
+					apply_ui_scale,
+					keyboard_actions,
+					run_actions,
+					refresh_screen,
+					refresh_hud,
+				)
+					.chain(),
 			);
+	}
+}
+
+/// Opens the first-run note that matches the screen, pausing combat until it is dismissed.
+fn hint_trigger(
+	settings: Option<Res<Settings>>,
+	run: Option<Res<Run>>,
+	runtime: Option<Res<WaveRuntime>>,
+	tick: Res<SimTick>,
+	mut mode: ResMut<UiMode>,
+	mut paused: ResMut<SimPaused>,
+) {
+	let (Some(settings), Some(run)) = (settings, run) else {
+		return;
+	};
+	if *mode != UiMode::Normal {
+		return;
+	}
+	let first_wave = run.wave == 1
+		&& runtime
+			.as_ref()
+			.is_some_and(|w| tick.0.saturating_sub(w.tick0) <= 2);
+	if let Some(hint) = hints::pending(&settings, run.state, first_wave) {
+		*mode = UiMode::Hint(hint);
+		paused.0 = true;
+	}
+}
+
+fn apply_ui_scale(settings: Option<Res<Settings>>, mut scale: ResMut<UiScale>) {
+	if let Some(settings) = settings
+		&& settings.is_changed()
+	{
+		scale.0 = hints::ui_scale(&settings);
 	}
 }
 
@@ -90,12 +133,12 @@ fn spawn_roots(mut commands: Commands) {
 		ScreenRoot,
 		Node {
 			position_type: PositionType::Absolute,
-			left: percent(18),
-			right: percent(18),
-			top: percent(8),
-			flex_direction: FlexDirection::Column,
-			row_gap: px(6),
-			padding: UiRect::all(px(14)),
+			left: percent(3),
+			right: percent(3),
+			top: percent(3),
+			flex_direction: FlexDirection::Row,
+			column_gap: px(16),
+			padding: UiRect::all(px(12)),
 			display: Display::None,
 			..default()
 		},
@@ -261,14 +304,24 @@ fn refresh_screen(world: &mut World) {
 		return;
 	};
 	world.get_mut::<Node>(root).expect("root node").display = Display::Flex;
-	let mut children = vec![
-		world
-			.spawn(text_node(view.title.clone(), 26.0, TEXT_COLOR))
-			.id(),
-	];
+	let column = |gap: f32| Node {
+		flex_direction: FlexDirection::Column,
+		flex_basis: px(0),
+		flex_grow: 1.0,
+		row_gap: px(gap),
+		..default()
+	};
+	let info = world.spawn(column(3.0)).id();
+	let title = world
+		.spawn(text_node(view.title.clone(), 24.0, TEXT_COLOR))
+		.id();
+	world.entity_mut(info).add_child(title);
 	for line in &view.lines {
-		children.push(world.spawn(text_node(line.clone(), 15.0, MUTED_COLOR)).id());
+		let text = world.spawn(text_node(line.clone(), 14.0, MUTED_COLOR)).id();
+		world.entity_mut(info).add_child(text);
 	}
+	let actions = world.spawn(column(5.0)).id();
+	let mut row: Option<Entity> = None;
 	for (i, button) in view.buttons.iter().enumerate() {
 		let color = if focused == Some(i) {
 			FOCUS_COLOR
@@ -286,11 +339,12 @@ fn refresh_screen(world: &mut World) {
 			Button,
 			BackgroundColor(color),
 			Node {
-				padding: UiRect::axes(px(10), px(5)),
+				padding: UiRect::axes(px(10), px(4)),
+				flex_grow: 1.0,
 				..default()
 			},
 		));
-		entity.with_child(text_node(button.label.clone(), 16.0, text));
+		entity.with_child(text_node(button.label.clone(), 15.0, text));
 		if button.enabled {
 			let action = button.action;
 			entity.observe(move |_: On<Activate>, mut queue: ResMut<ActionQueue>| {
@@ -300,19 +354,42 @@ fn refresh_screen(world: &mut World) {
 			entity.insert(InteractionDisabled);
 		}
 		let entity = entity.id();
-		children.push(entity);
+		let parent = match row {
+			Some(existing) => existing,
+			None => world
+				.spawn(Node {
+					flex_direction: FlexDirection::Row,
+					column_gap: px(5),
+					..default()
+				})
+				.id(),
+		};
+		world.entity_mut(parent).add_child(entity);
+		if button.same_row_as_next {
+			row = Some(parent);
+		} else {
+			world.entity_mut(actions).add_child(parent);
+			row = None;
+		}
 	}
-	world.entity_mut(root).add_children(&children);
+	world.entity_mut(root).add_children(&[info, actions]);
 }
 
 fn refresh_hud(world: &mut World) {
 	let hud = hud_view(world).map(|h| hud_text(&h)).unwrap_or_default();
 	let message = world.resource::<UiMessage>().0.clone();
-	let mut hud_query = world.query_filtered::<&mut Text, (With<HudText>, Without<MessageText>)>();
-	if let Some(mut text) = hud_query.iter_mut(world).next()
-		&& text.0 != hud
-	{
-		text.0 = hud;
+	let panel_open = world.resource::<LastScreen>().0.is_some();
+	let mut hud_query =
+		world.query_filtered::<(&mut Text, &mut Node), (With<HudText>, Without<MessageText>)>();
+	if let Some((mut text, mut node)) = hud_query.iter_mut(world).next() {
+		if text.0 != hud {
+			text.0 = hud;
+		}
+		node.display = if panel_open {
+			Display::None
+		} else {
+			Display::Flex
+		};
 	}
 	let mut msg_query = world.query_filtered::<&mut Text, (With<MessageText>, Without<HudText>)>();
 	if let Some(mut text) = msg_query.iter_mut(world).next()

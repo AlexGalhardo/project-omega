@@ -3,6 +3,7 @@
 //! screenshots for readability review, and the PERF-01 empty-scene benchmark.
 
 pub mod e2e;
+pub mod persistence;
 pub mod presentation;
 
 use crate::GameCorePlugin;
@@ -44,6 +45,10 @@ pub struct ClientOptions {
 	pub play: bool,
 	/// With `play`: run this many simulation ticks before the first frame (evidence captures).
 	pub fast_forward_ticks: u32,
+	/// Evidence captures: override the saved UI scale (100, 125 or 150) for this run only.
+	pub ui_scale_pct: Option<u16>,
+	/// Evidence captures: treat every first-run hint as acknowledged for this run only.
+	pub skip_hints: bool,
 	/// Scripted e2e or QA-bot session driven through the real input buffer; implies `play`.
 	pub qa: Option<crate::qa::QaRun>,
 }
@@ -58,6 +63,8 @@ impl Default for ClientOptions {
 			benchmark: None,
 			play: false,
 			fast_forward_ticks: 0,
+			ui_scale_pct: None,
+			skip_hints: false,
 			qa: None,
 		}
 	}
@@ -148,6 +155,21 @@ pub fn run(mut options: ClientOptions) -> AppExit {
 	.init_resource::<BenchSamples>()
 	.add_systems(Startup, spawn_preview)
 	.add_systems(Update, (screenshot_and_exit, benchmark));
+	if app.world().resource::<Options>().0.play && app.world().resource::<Options>().0.qa.is_none()
+	{
+		app.add_plugins(persistence::PersistencePlugin);
+		let (scale, skip) = {
+			let o = &app.world().resource::<Options>().0;
+			(o.ui_scale_pct, o.skip_hints)
+		};
+		let mut settings = app.world_mut().resource_mut::<crate::profile::Settings>();
+		if let Some(pct) = scale {
+			settings.ui_scale_pct = pct;
+		}
+		if skip {
+			crate::ui::hints::skip_all(&mut settings);
+		}
+	}
 	if app.world().resource::<Options>().0.play {
 		app.add_plugins((
 			LivePresentationPlugin,
@@ -181,7 +203,11 @@ fn start_play(world: &mut World) {
 	let bounds = content.catalogs.arenas["arena_foundry"].bounds;
 	world.insert_resource(ContentRes(std::sync::Arc::new(content)));
 	world.insert_resource(ArenaRes(bounds));
-	if let Err(e) = crate::sim::run::begin_run(world, "char_patch", Default::default()) {
+	let unlocked = world
+		.get_resource::<crate::profile::Profile>()
+		.map(crate::profile::Profile::unlock_snapshot)
+		.unwrap_or_default();
+	if let Err(e) = crate::sim::run::begin_run(world, "char_patch", unlocked) {
 		error!("cannot begin run: {e:?}");
 	}
 	let ticks = world.resource::<Options>().0.fast_forward_ticks;

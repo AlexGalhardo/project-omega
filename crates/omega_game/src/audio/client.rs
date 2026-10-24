@@ -3,7 +3,9 @@
 
 use super::{AudioSettings, Cue, CueTracker, cue_for_message, cues_for_records};
 use crate::client::presentation::FrameRecords;
+use crate::profile::Settings;
 use crate::sim::run::Run;
+use crate::ui::SettingsDirty;
 use crate::ui::client::UiMessage;
 use bevy::audio::{AudioPlayer, AudioSource, PlaybackSettings, Volume};
 use bevy::prelude::*;
@@ -36,9 +38,23 @@ fn load_cues(assets: Res<AssetServer>, mut catalog: ResMut<CueCatalog>) {
 	}
 }
 
-fn toggle_mute(keys: Res<ButtonInput<KeyCode>>, mut settings: ResMut<AudioSettings>) {
-	if keys.just_pressed(KeyCode::KeyM) {
-		settings.muted = !settings.muted;
+/// Settings drive the mix; the mute key flips it and records the choice for saving.
+fn toggle_mute(
+	mut commands: Commands,
+	keys: Res<ButtonInput<KeyCode>>,
+	mut audio: ResMut<AudioSettings>,
+	stored: Option<ResMut<Settings>>,
+) {
+	if let Some(mut stored) = stored {
+		if keys.just_pressed(KeyCode::KeyM) {
+			stored.muted = !stored.muted;
+			commands.insert_resource(SettingsDirty);
+		}
+		if stored.is_changed() {
+			*audio = stored.audio();
+		}
+	} else if keys.just_pressed(KeyCode::KeyM) {
+		audio.muted = !audio.muted;
 	}
 }
 

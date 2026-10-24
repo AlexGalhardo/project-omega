@@ -209,6 +209,7 @@ fn view() -> ScreenView {
 		label: label.into(),
 		action,
 		enabled,
+		same_row_as_next: false,
 	};
 	ScreenView {
 		title: "Shop".into(),

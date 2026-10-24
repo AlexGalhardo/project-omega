@@ -2,6 +2,7 @@
 //! values and send typed commands back; nothing here mutates rules state.
 
 pub mod compare;
+pub mod hints;
 
 #[cfg(feature = "client")]
 pub mod client;
@@ -10,6 +11,7 @@ use crate::combat::actor::{ContentRes, Health, Loadout, Player, PlayerStats, Scr
 use crate::combat::energy::TOTAL_POINTS;
 use crate::combat::stats::fire_interval_ticks;
 use crate::encounters::WaveRuntime;
+use crate::profile::Settings;
 use crate::shop::{Offer, ShopCommand, ShopOutcome, ShopReject, ShopVisit, apply, refresh_cost};
 use crate::sim::run::{
 	Outcome, Run, RunState, StartError, abandon, continue_to_summary, start_next_wave,
@@ -258,6 +260,8 @@ pub enum UiMode {
 	/// Choosing which slot a new weapon replaces.
 	Replace(usize),
 	ConfirmAbandon,
+	/// A first-run note is open; combat stays paused until it is dismissed.
+	Hint(hints::Hint),
 }
 
 /// Typed requests widgets send to the rules modules.
@@ -274,6 +278,9 @@ pub enum UiAction {
 	ConfirmAbandon,
 	CancelAbandon,
 	Continue,
+	DismissHint,
+	SkipAllHints,
+	ResetTutorials,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -281,6 +288,8 @@ pub struct Button {
 	pub label: String,
 	pub action: UiAction,
 	pub enabled: bool,
+	/// Draw the next button on the same row (the energy minus beside its plus).
+	pub same_row_as_next: bool,
 }
 
 /// The full-screen panel for every non-combat state, as plain data.
@@ -296,6 +305,7 @@ fn button(label: impl Into<String>, action: UiAction, enabled: bool) -> Button {
 		label: label.into(),
 		action,
 		enabled,
+		same_row_as_next: false,
 	}
 }
 
@@ -326,6 +336,7 @@ fn pause_screen(world: &mut World) -> Option<ScreenView> {
 		buttons: vec![
 			button("Resume", UiAction::Resume, true),
 			button("Abandon", UiAction::AskAbandon, true),
+			button("Reset tutorials", UiAction::ResetTutorials, true),
 		],
 	})
 }
@@ -408,11 +419,13 @@ fn shop_screen(shop: &ShopView) -> ScreenView {
 			slot.pips(),
 			rate
 		));
-		buttons.push(button(
+		let mut plus = button(
 			format!("Slot {} energy +", i + 1),
 			UiAction::Energy { slot: i, add: true },
 			true,
-		));
+		);
+		plus.same_row_as_next = true;
+		buttons.push(plus);
 		buttons.push(button(
 			format!("Slot {} energy -", i + 1),
 			UiAction::Energy {
@@ -465,6 +478,16 @@ fn result_screen(run: &Run, state: RunState) -> Option<ScreenView> {
 /// The panel to show for the current run state, mode and pause flag; `None` during live combat.
 pub fn screen_view(world: &mut World, mode: UiMode, paused: bool) -> Option<ScreenView> {
 	let run = world.get_resource::<Run>()?.clone();
+	if let UiMode::Hint(hint) = mode {
+		return Some(ScreenView {
+			title: hint.title().into(),
+			lines: hint.lines(),
+			buttons: vec![
+				button("Got it", UiAction::DismissHint, true),
+				button("Skip all hints", UiAction::SkipAllHints, true),
+			],
+		});
+	}
 	if mode == UiMode::ConfirmAbandon {
 		return Some(ScreenView {
 			title: "Abandon run?".into(),
@@ -552,6 +575,7 @@ fn shop_message(world: &mut World, command: ShopCommand) -> String {
 
 /// Runs one widget request against the rules modules and describes the outcome in words.
 pub fn apply_action(world: &mut World, action: UiAction) -> String {
+	let world_mode = world.get_resource::<UiMode>().copied().unwrap_or_default();
 	let revision = world.get_resource::<ShopVisit>().map_or(0, |v| v.revision);
 	match action {
 		UiAction::Buy(offer) => {
@@ -612,6 +636,22 @@ pub fn apply_action(world: &mut World, action: UiAction) -> String {
 			let _ = abandon(world);
 			String::new()
 		}
+		UiAction::DismissHint | UiAction::SkipAllHints | UiAction::ResetTutorials => {
+			if let Some(mut settings) = world.get_resource_mut::<Settings>() {
+				match (action, mode_hint(&world_mode)) {
+					(UiAction::DismissHint, Some(hint)) => hints::acknowledge(&mut settings, hint),
+					(UiAction::SkipAllHints, _) => hints::skip_all(&mut settings),
+					(UiAction::ResetTutorials, _) => hints::reset_tutorials(&mut settings),
+					_ => {}
+				}
+				world.insert_resource(SettingsDirty);
+			}
+			if action != UiAction::ResetTutorials {
+				world.insert_resource(UiMode::Normal);
+				world.resource_mut::<SimPaused>().0 = false;
+			}
+			String::new()
+		}
 		UiAction::Continue => {
 			let _ = continue_to_summary(world);
 			String::new()
@@ -667,6 +707,17 @@ impl UiFocus {
 	}
 }
 
+fn mode_hint(mode: &UiMode) -> Option<hints::Hint> {
+	match mode {
+		UiMode::Hint(hint) => Some(*hint),
+		_ => None,
+	}
+}
+
+/// Set whenever settings changed and a save is owed.
+#[derive(Resource, Debug, Default, Clone, Copy, PartialEq, Eq)]
+pub struct SettingsDirty;
+
 /// What Back does on the current screen (never buys or starts anything).
 pub fn back_action(view: &ScreenView) -> Option<UiAction> {
 	view.buttons
@@ -674,7 +725,10 @@ pub fn back_action(view: &ScreenView) -> Option<UiAction> {
 		.find(|b| {
 			matches!(
 				b.action,
-				UiAction::CancelReplace | UiAction::CancelAbandon | UiAction::Resume
+				UiAction::CancelReplace
+					| UiAction::CancelAbandon
+					| UiAction::Resume
+					| UiAction::DismissHint
 			)
 		})
 		.map(|b| b.action)
