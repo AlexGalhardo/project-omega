@@ -1,0 +1,35 @@
+[package]
+name = "omega_game"
+description = "Project Omega game rules, content, headless simulation and native client."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[features]
+default = ["client"]
+client = ["bevy/2d", "bevy/ui", "bevy/audio", "omega_2d/client"]
+
+[dependencies]
+bevy.workspace = true
+omega_2d.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+rand_chacha.workspace = true
+sha2.workspace = true
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "omega-game"
+path = "src/bin/omega-game.rs"
+required-features = ["client"]
+
+[[bin]]
+name = "omega-content"
+path = "src/bin/omega-content.rs"
+
+[[bin]]
+name = "omega-sim"
+path = "src/bin/omega-sim.rs"
