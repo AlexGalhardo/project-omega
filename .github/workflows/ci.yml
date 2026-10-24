@@ -17,6 +17,7 @@ concurrency:
 
 env:
   CARGO_TERM_COLOR: always
+  QA_SEED: "5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a"
   ZERO_SEED: "0000000000000000000000000000000000000000000000000000000000000000"
 
 jobs:
@@ -53,6 +54,12 @@ jobs:
         run: cargo clippy -p omega_game -p omega_2d --features client --all-targets --locked -- -D warnings
       - name: Test client contracts
         run: cargo test -p omega_2d --features client --locked --test visual_contract --test asset_contract
+      - name: Client contract tests (e2e, presentation)
+        run: cargo test -p omega_game --features client --locked --test e2e_contract --test presentation_contract
+      - name: Headless e2e and QA bot
+        run: |
+          cargo run -q -p omega_game --features client --locked --bin omega-game -- --headless --e2e-script tests/e2e/foundation.json --out-dir artifacts/e2e
+          cargo run -q -p omega_game --features client --locked --bin omega-game -- --headless --qa-bot cautious --seed $env:QA_SEED --frames 1800 --out-dir artifacts/e2e
       - name: Validate exported assets
         shell: powershell
         run: ./scripts/validate-assets.ps1 -Manifest assets/presentation/proof-manifest.json

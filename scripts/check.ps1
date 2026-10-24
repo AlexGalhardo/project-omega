@@ -22,7 +22,10 @@ if (-not $SkipClient) {
 	$steps += @(
 		@{ Name = 'check client'; Cmd = { cargo check -p omega_game --features client --locked } },
 		@{ Name = 'clippy client'; Cmd = { cargo clippy -p omega_game -p omega_2d --features client --all-targets --locked -- -D warnings } },
-		@{ Name = 'test client contracts'; Cmd = { cargo test -p omega_2d --features client --locked --test visual_contract --test asset_contract } }
+		@{ Name = 'test client contracts'; Cmd = { cargo test -p omega_2d --features client --locked --test visual_contract --test asset_contract } },
+		@{ Name = 'test game client contracts'; Cmd = { cargo test -p omega_game --features client --locked --test e2e_contract --test presentation_contract } },
+		@{ Name = 'e2e foundation'; Cmd = { cargo run -q -p omega_game --features client --locked --bin omega-game -- --headless --e2e-script tests/e2e/foundation.json --out-dir artifacts/e2e } },
+		@{ Name = 'qa bot smoke'; Cmd = { cargo run -q -p omega_game --features client --locked --bin omega-game -- --headless --qa-bot cautious --seed ('5a' * 32) --frames 1800 --out-dir artifacts/e2e } }
 	)
 }
 if (-not $SkipDeny) { $steps += @{ Name = 'cargo deny'; Cmd = { cargo deny check } } }

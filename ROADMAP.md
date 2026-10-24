@@ -457,7 +457,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Phase closing:** release `v0.3.0` ([CHANGELOG.md](CHANGELOG.md), [evidence index](docs/validation/evidence/README.md)). Remaining owner actions: visual review of the GAME-P1-004 screenshots; REA install for RES-P1-001.
 
-#### QA-P1-003. End-to-end and simulated-QA harness (M) — TODO
+#### QA-P1-003. End-to-end and simulated-QA harness (M) — DONE
 
 **Depends on:** ENG-P1-004, GAME-P1-001. **Read first:** rule 1.11; SP-016; SP-017; `crates/omega_game/src/client/`.
 
@@ -465,11 +465,11 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Test first: an e2e script that launches the preview, waits for assets, checks the camera/letterbox checkpoint and exits 0; a broken checkpoint exits 1
-- [ ] Implement the e2e runner in the client: timeline of actions (key, mouse, wait ticks, resize, focus loss), checkpoints that export the authoritative snapshot and a screenshot to `artifacts/e2e/`
-- [ ] Implement the QA bot input source behind the same action buffer the player uses (seeded reaction delay, aim error, hesitation, random menu exploration, mistaken inputs); profiles `cautious`, `aggressive`, `chaotic`
-- [ ] Write `docs/validation/qa-checklist.md` (launch, resize, focus loss, pause spam, invalid input, catalog fallback); later phases append their items
-- [ ] Add the headless-capable e2e step to `.github/workflows/ci.yml` and `scripts/check.ps1`; record evidence
+- [x] Test first: an e2e script that launches the preview, waits for assets, checks the camera/letterbox checkpoint and exits 0; a broken checkpoint exits 1
+- [x] Implement the e2e runner in the client: timeline of actions (key, mouse, wait ticks, resize, focus loss), checkpoints that export the authoritative snapshot and a screenshot to `artifacts/e2e/`
+- [x] Implement the QA bot input source behind the same action buffer the player uses (seeded reaction delay, aim error, hesitation, random menu exploration, mistaken inputs); profiles `cautious`, `aggressive`, `chaotic`
+- [x] Write `docs/validation/qa-checklist.md` (launch, resize, focus loss, pause spam, invalid input, catalog fallback); later phases append their items
+- [x] Add the headless-capable e2e step to `.github/workflows/ci.yml` and `scripts/check.ps1`; record evidence
 
 **Asserts:** `cargo test -p omega_game --features client --locked --test e2e_contract`; `omega-game --e2e-script tests/e2e/foundation.json` exit 0; QA bot report for 3 profiles x 5 seeds — plus `scripts/check.ps1` exit 0.
 

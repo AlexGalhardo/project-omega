@@ -1,0 +1,53 @@
+{
+  "kind": "qa-bot",
+  "profile": "chaotic",
+  "seed": "5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a",
+  "frames": 3601,
+  "ticks": 2553,
+  "counts": {
+    "frames": 3600,
+    "decisions": 62,
+    "hesitations": 21,
+    "mistakes": 222,
+    "manual_aim_frames": 1106,
+    "menu_actions": 0,
+    "pause_presses": 63,
+    "focus_losses": 17,
+    "resizes": 10
+  },
+  "findings": [],
+  "panics": 0,
+  "passed": true,
+  "final_snapshot": {
+    "tick": 2553,
+    "paused": false,
+    "window": [
+      800,
+      600
+    ],
+    "player": {
+      "x": 125.54772721475254,
+      "y": 39.562445840513746,
+      "hp": 120,
+      "hp_max": 120
+    },
+    "enemy_count": 4,
+    "scrap": 6,
+    "camera": {
+      "content_x": 0.0,
+      "content_y": 75.0,
+      "content_w": 800.0,
+      "content_h": 450.0,
+      "pixels_per_lu": 0.6666666666666666,
+      "letterbox": true
+    },
+    "nearest_enemy": [
+      534.4461966209922,
+      290.3246202471737
+    ],
+    "aim_origin": [
+      125.54772721475254,
+      39.562445840513746
+    ]
+  }
+}

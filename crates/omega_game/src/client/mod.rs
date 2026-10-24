@@ -2,6 +2,7 @@
 //! a static preview of the proof visual catalog (ENG-P1-004, GAME-P1-004), native
 //! screenshots for readability review, and the PERF-01 empty-scene benchmark.
 
+pub mod e2e;
 pub mod presentation;
 
 use crate::GameCorePlugin;
@@ -43,6 +44,8 @@ pub struct ClientOptions {
 	pub play: bool,
 	/// With `play`: run this many simulation ticks before the first frame (evidence captures).
 	pub fast_forward_ticks: u32,
+	/// Scripted e2e or QA-bot session driven through the real input buffer; implies `play`.
+	pub qa: Option<crate::qa::QaRun>,
 }
 
 impl Default for ClientOptions {
@@ -55,6 +58,7 @@ impl Default for ClientOptions {
 			benchmark: None,
 			play: false,
 			fast_forward_ticks: 0,
+			qa: None,
 		}
 	}
 }
@@ -83,7 +87,19 @@ struct BenchSamples {
 
 /// Runs the native client until the window closes, the screenshot is written or the
 /// benchmark finishes.
-pub fn run(options: ClientOptions) -> AppExit {
+pub fn run(mut options: ClientOptions) -> AppExit {
+	let session = match options.qa.as_ref().map(crate::qa::Session::from_run) {
+		Some(Ok(session)) => {
+			[options.width, options.height] = session.resolution;
+			options.play = true;
+			Some(session)
+		}
+		Some(Err(e)) => {
+			eprintln!("{e}");
+			return AppExit::from_code(2);
+		}
+		None => None,
+	};
 	let root = asset_root();
 	let catalog_path = root.join("presentation").join(&options.catalog);
 	let skin = match std::fs::read(&catalog_path)
@@ -139,6 +155,9 @@ pub fn run(options: ClientOptions) -> AppExit {
 			crate::audio::client::AudioCuePlugin,
 		))
 		.add_systems(Startup, start_play.after(spawn_preview));
+	}
+	if let Some(session) = session {
+		e2e::install(&mut app, session);
 	}
 	app.run()
 }

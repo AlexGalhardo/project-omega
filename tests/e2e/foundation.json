@@ -1,0 +1,69 @@
+{
+	"name": "foundation",
+	"resolution": [1280, 720],
+	"steps": [
+		{ "do": "checkpoint", "name": "launch", "expect": {
+			"tick": 0, "paused": false, "player.hp": { "min": 1 },
+			"camera.letterbox": false, "camera.content_w": 1280, "camera.content_h": 720
+		} },
+		{ "do": "wait", "ticks": 30 },
+		{ "do": "checkpoint", "name": "assets-ready", "expect": { "tick": 30 } },
+		{ "do": "key_down", "key": "d" },
+		{ "do": "wait", "ticks": 60 },
+		{ "do": "key_up", "key": "d" },
+		{ "do": "checkpoint", "name": "moved", "expect": { "tick": 90 } },
+
+		{ "do": "resize", "width": 1920, "height": 1080 },
+		{ "do": "checkpoint", "name": "resize-16-9", "expect": {
+			"camera.letterbox": false, "camera.content_w": 1920, "camera.content_h": 1080
+		} },
+		{ "do": "resize", "width": 2560, "height": 1080 },
+		{ "do": "checkpoint", "name": "resize-21-9", "expect": {
+			"camera.letterbox": true, "camera.content_h": 1080,
+			"camera.content_w": 1920, "camera.content_x": 320
+		} },
+		{ "do": "resize", "width": 1280, "height": 1024 },
+		{ "do": "checkpoint", "name": "resize-5-4", "expect": {
+			"camera.letterbox": true, "camera.content_w": 1280,
+			"camera.content_h": 720, "camera.content_y": 152
+		} },
+		{ "do": "mouse_move", "x": 640, "y": 20 },
+		{ "do": "mouse_click", "button": "right", "x": 640, "y": 20 },
+		{ "do": "frames", "count": 2 },
+		{ "do": "checkpoint", "name": "bar-click-ignored", "expect": { "tick": { "min": 90 }, "paused": false } },
+		{ "do": "resize", "width": 1280, "height": 720 },
+
+		{ "do": "focus_lost" },
+		{ "do": "frames", "count": 10 },
+		{ "do": "checkpoint", "name": "unfocused-a", "expect": { "paused": true } },
+		{ "do": "frames", "count": 10 },
+		{ "do": "checkpoint", "name": "unfocused-b", "expect": { "paused": true } },
+		{ "do": "focus_gained" },
+		{ "do": "resume" },
+		{ "do": "wait", "ticks": 10 },
+		{ "do": "checkpoint", "name": "refocused", "expect": { "paused": false } },
+
+		{ "do": "pause" },
+		{ "do": "pause" },
+		{ "do": "pause" },
+		{ "do": "pause" },
+		{ "do": "checkpoint", "name": "pause-spam", "expect": { "paused": true } },
+		{ "do": "resume" },
+		{ "do": "wait", "ticks": 5 },
+
+		{ "do": "key_tap", "key": "enter" },
+		{ "do": "key_tap", "key": "e" },
+		{ "do": "key_tap", "key": "space" },
+		{ "do": "key_down", "key": "w" },
+		{ "do": "key_down", "key": "s" },
+		{ "do": "wait", "ticks": 10 },
+		{ "do": "key_up", "key": "w" },
+		{ "do": "key_up", "key": "s" },
+		{ "do": "checkpoint", "name": "invalid-input", "expect": {
+			"paused": false, "player.hp": { "min": 0 }, "enemy_count": { "min": 0 }
+		} },
+		{ "do": "checkpoint", "name": "final", "screenshot": true, "expect": {
+			"camera.letterbox": false, "tick": { "min": 120 }
+		} }
+	]
+}
