@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "records": [
+    {
+      "id": "shop_rules",
+      "offer_count": 4,
+      "weapon_quota": 2,
+      "item_quota": 2,
+      "refresh_limit": 1,
+      "refresh_cost_formula_id": "refresh_8_plus_2_per_wave",
+      "price_formula_id": "inflation_8_pct_per_wave_ceil",
+      "selection_policy_id": "uniform_without_replacement_fill_other"
+    }
+  ]
+}

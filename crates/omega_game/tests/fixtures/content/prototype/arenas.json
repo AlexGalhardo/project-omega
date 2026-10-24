@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "records": [
+    {
+      "id": "arena_foundry",
+      "display_name": "Foundry Test Floor",
+      "visual_id": "visual_arena_foundry",
+      "bounds_lu": {
+        "min_x": -600,
+        "max_x": 600,
+        "min_y": -337.5,
+        "max_y": 337.5
+      },
+      "player_spawn": [
+        0,
+        0
+      ],
+      "camera_aspect": {
+        "width": 16,
+        "height": 9
+      },
+      "common_spawn_anchor_policy": "boundary_eight_clockwise"
+    }
+  ]
+}

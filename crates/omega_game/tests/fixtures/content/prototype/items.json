@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "records": [
+    {
+      "id": "item_plating",
+      "display_name": "Spare Plating",
+      "icon_visual_id": "visual_item_plating",
+      "modifiers": [
+        {
+          "stat": "max_hp",
+          "value": 12
+        }
+      ],
+      "base_price": 14,
+      "initial": true
+    },
+    {
+      "id": "item_brace",
+      "display_name": "Cross Brace",
+      "icon_visual_id": "visual_item_brace",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "value": 6
+        }
+      ],
+      "base_price": 16,
+      "initial": true
+    },
+    {
+      "id": "item_coupler",
+      "display_name": "Power Coupler",
+      "icon_visual_id": "visual_item_coupler",
+      "modifiers": [
+        {
+          "stat": "damage_pct",
+          "value": 8
+        }
+      ],
+      "base_price": 16,
+      "initial": true
+    },
+    {
+      "id": "item_ratchet",
+      "display_name": "Quick Ratchet",
+      "icon_visual_id": "visual_item_ratchet",
+      "modifiers": [
+        {
+          "stat": "attack_speed_pct",
+          "value": 8
+        }
+      ],
+      "base_price": 16,
+      "initial": true
+    },
+    {
+      "id": "item_bearings",
+      "display_name": "Fresh Bearings",
+      "icon_visual_id": "visual_item_bearings",
+      "modifiers": [
+        {
+          "stat": "move_speed_pct",
+          "value": 6
+        }
+      ],
+      "base_price": 14,
+      "initial": true
+    },
+    {
+      "id": "item_sight",
+      "display_name": "Salvaged Sight",
+      "icon_visual_id": "visual_item_sight",
+      "modifiers": [
+        {
+          "stat": "crit_pct",
+          "value": 5
+        }
+      ],
+      "base_price": 16,
+      "initial": true
+    },
+    {
+      "id": "item_sealant",
+      "display_name": "Sealant Pump",
+      "icon_visual_id": "visual_item_sealant",
+      "modifiers": [
+        {
+          "stat": "regen_tenths",
+          "value": 3
+        }
+      ],
+      "base_price": 18,
+      "initial": true
+    },
+    {
+      "id": "item_magnet",
+      "display_name": "Pocket Magnet",
+      "icon_visual_id": "visual_item_magnet",
+      "modifiers": [
+        {
+          "stat": "pickup_radius",
+          "value": 20
+        }
+      ],
+      "base_price": 12,
+      "initial": true
+    }
+  ]
+}

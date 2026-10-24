@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "records": [
+    {
+      "id": "char_patch",
+      "display_name": "Patch",
+      "visual_id": "visual_char_patch",
+      "starting_weapon_id": "wpn_bolt",
+      "modifier": {
+        "stat": "max_hp",
+        "value": 20
+      },
+      "initial": true
+    },
+    {
+      "id": "char_coil",
+      "display_name": "Coil",
+      "visual_id": "visual_char_coil",
+      "starting_weapon_id": "wpn_arc",
+      "modifier": {
+        "stat": "attack_speed_pct",
+        "value": 15
+      },
+      "unlock_id": "unlock_first_shift"
+    },
+    {
+      "id": "char_rivet",
+      "display_name": "Rivet",
+      "visual_id": "visual_char_rivet",
+      "starting_weapon_id": "wpn_saw",
+      "modifier": {
+        "stat": "armor",
+        "value": 12
+      },
+      "unlock_id": "unlock_press_operator"
+    },
+    {
+      "id": "char_skid",
+      "display_name": "Skid",
+      "visual_id": "visual_char_skid",
+      "starting_weapon_id": "wpn_needle",
+      "modifier": {
+        "stat": "move_speed_pct",
+        "value": 15
+      },
+      "unlock_id": "unlock_overtime"
+    }
+  ]
+}

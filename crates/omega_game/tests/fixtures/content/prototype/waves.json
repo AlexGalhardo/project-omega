@@ -1,0 +1,257 @@
+{
+  "schema_version": 1,
+  "records": [
+    {
+      "id": "wave_01",
+      "number": 1,
+      "arena_id": "arena_foundry",
+      "duration_ticks": 3600,
+      "batches": [
+        {
+          "request_tick": 60,
+          "count": 4,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "request_tick": 660,
+          "count": 4,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "request_tick": 1260,
+          "count": 4,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "request_tick": 1860,
+          "count": 4,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "request_tick": 2460,
+          "count": 4,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "request_tick": 3060,
+          "count": 4,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wave_02",
+      "number": 2,
+      "arena_id": "arena_foundry",
+      "duration_ticks": 3600,
+      "batches": [
+        {
+          "request_tick": 60,
+          "count": 5,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            },
+            {
+              "id": "enemy_runner",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "request_tick": 660,
+          "count": 5,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            },
+            {
+              "id": "enemy_runner",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "request_tick": 1260,
+          "count": 5,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            },
+            {
+              "id": "enemy_runner",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "request_tick": 1860,
+          "count": 5,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            },
+            {
+              "id": "enemy_runner",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "request_tick": 2460,
+          "count": 5,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            },
+            {
+              "id": "enemy_runner",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "request_tick": 3060,
+          "count": 5,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            },
+            {
+              "id": "enemy_runner",
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wave_03",
+      "number": 3,
+      "arena_id": "arena_foundry",
+      "duration_ticks": 3600,
+      "batches": [
+        {
+          "request_tick": 60,
+          "count": 6,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            },
+            {
+              "id": "enemy_runner",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "request_tick": 660,
+          "count": 6,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            },
+            {
+              "id": "enemy_runner",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "request_tick": 1260,
+          "count": 6,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            },
+            {
+              "id": "enemy_runner",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "request_tick": 1860,
+          "count": 6,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            },
+            {
+              "id": "enemy_runner",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "request_tick": 2460,
+          "count": 6,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            },
+            {
+              "id": "enemy_runner",
+              "weight": 1
+            }
+          ]
+        },
+        {
+          "request_tick": 3060,
+          "count": 6,
+          "enemies": [
+            {
+              "id": "enemy_chaser",
+              "weight": 1
+            },
+            {
+              "id": "enemy_runner",
+              "weight": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

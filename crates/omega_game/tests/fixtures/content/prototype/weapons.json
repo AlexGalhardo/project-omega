@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "records": [
+    {
+      "id": "wpn_bolt",
+      "display_name": "Bolt Driver",
+      "visual_id": "visual_wpn_bolt",
+      "base_damage": 12,
+      "base_rate_centi": 200,
+      "range_lu": 300,
+      "windup_ticks": 0,
+      "recovery_ticks": 0,
+      "payload": {
+        "kind": "projectile",
+        "speed_lu_s": 500,
+        "radius_lu": 4,
+        "pierce": 0,
+        "angles_degrees": [
+          0
+        ]
+      },
+      "knockback_lu": 6,
+      "base_price": 20,
+      "initial": true
+    },
+    {
+      "id": "wpn_saw",
+      "display_name": "Chain Saw",
+      "visual_id": "visual_wpn_saw",
+      "base_damage": 20,
+      "base_rate_centi": 150,
+      "range_lu": 80,
+      "windup_ticks": 6,
+      "recovery_ticks": 6,
+      "payload": {
+        "kind": "capsule",
+        "reach_lu": 80,
+        "radius_lu": 18
+      },
+      "knockback_lu": 10,
+      "base_price": 22,
+      "initial": true
+    }
+  ]
+}

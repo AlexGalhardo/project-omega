@@ -1,0 +1,621 @@
+{
+  "schema_version": 1,
+  "records": [
+    {
+      "id": "item_plating",
+      "display_name": "Spare Plating",
+      "icon_visual_id": "visual_item_plating",
+      "modifiers": [
+        {
+          "stat": "max_hp",
+          "value": 12
+        }
+      ],
+      "base_price": 14,
+      "initial": true
+    },
+    {
+      "id": "item_brace",
+      "display_name": "Cross Brace",
+      "icon_visual_id": "visual_item_brace",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "value": 6
+        }
+      ],
+      "base_price": 16,
+      "initial": true
+    },
+    {
+      "id": "item_coupler",
+      "display_name": "Power Coupler",
+      "icon_visual_id": "visual_item_coupler",
+      "modifiers": [
+        {
+          "stat": "damage_pct",
+          "value": 8
+        }
+      ],
+      "base_price": 16,
+      "initial": true
+    },
+    {
+      "id": "item_ratchet",
+      "display_name": "Quick Ratchet",
+      "icon_visual_id": "visual_item_ratchet",
+      "modifiers": [
+        {
+          "stat": "attack_speed_pct",
+          "value": 8
+        }
+      ],
+      "base_price": 16,
+      "initial": true
+    },
+    {
+      "id": "item_bearings",
+      "display_name": "Fresh Bearings",
+      "icon_visual_id": "visual_item_bearings",
+      "modifiers": [
+        {
+          "stat": "move_speed_pct",
+          "value": 6
+        }
+      ],
+      "base_price": 14,
+      "initial": true
+    },
+    {
+      "id": "item_sight",
+      "display_name": "Salvaged Sight",
+      "icon_visual_id": "visual_item_sight",
+      "modifiers": [
+        {
+          "stat": "crit_pct",
+          "value": 5
+        }
+      ],
+      "base_price": 16,
+      "initial": true
+    },
+    {
+      "id": "item_sealant",
+      "display_name": "Sealant Pump",
+      "icon_visual_id": "visual_item_sealant",
+      "modifiers": [
+        {
+          "stat": "regen_tenths",
+          "value": 3
+        }
+      ],
+      "base_price": 18,
+      "initial": true
+    },
+    {
+      "id": "item_magnet",
+      "display_name": "Pocket Magnet",
+      "icon_visual_id": "visual_item_magnet",
+      "modifiers": [
+        {
+          "stat": "pickup_radius",
+          "value": 20
+        }
+      ],
+      "base_price": 12,
+      "initial": true
+    },
+    {
+      "id": "item_bulkhead",
+      "display_name": "Bulkhead Plate",
+      "icon_visual_id": "visual_item_bulkhead",
+      "modifiers": [
+        {
+          "stat": "max_hp",
+          "value": 20
+        },
+        {
+          "stat": "move_speed_pct",
+          "value": -4
+        }
+      ],
+      "base_price": 18,
+      "initial": true
+    },
+    {
+      "id": "item_mesh",
+      "display_name": "Reinforced Mesh",
+      "icon_visual_id": "visual_item_mesh",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "value": 10
+        },
+        {
+          "stat": "move_speed_pct",
+          "value": -4
+        }
+      ],
+      "base_price": 18,
+      "initial": true
+    },
+    {
+      "id": "item_capacitor",
+      "display_name": "Hot Capacitor",
+      "icon_visual_id": "visual_item_capacitor",
+      "modifiers": [
+        {
+          "stat": "damage_pct",
+          "value": 14
+        },
+        {
+          "stat": "max_hp",
+          "value": -8
+        }
+      ],
+      "base_price": 18,
+      "initial": true
+    },
+    {
+      "id": "item_feed",
+      "display_name": "Rapid Feed",
+      "icon_visual_id": "visual_item_feed",
+      "modifiers": [
+        {
+          "stat": "attack_speed_pct",
+          "value": 14
+        },
+        {
+          "stat": "damage_pct",
+          "value": -5
+        }
+      ],
+      "base_price": 18,
+      "initial": true
+    },
+    {
+      "id": "item_treads",
+      "display_name": "Light Treads",
+      "icon_visual_id": "visual_item_treads",
+      "modifiers": [
+        {
+          "stat": "move_speed_pct",
+          "value": 10
+        },
+        {
+          "stat": "armor",
+          "value": -3
+        }
+      ],
+      "base_price": 16,
+      "initial": true
+    },
+    {
+      "id": "item_lens",
+      "display_name": "Narrow Lens",
+      "icon_visual_id": "visual_item_lens",
+      "modifiers": [
+        {
+          "stat": "crit_pct",
+          "value": 8
+        },
+        {
+          "stat": "pickup_radius",
+          "value": -10
+        }
+      ],
+      "base_price": 18,
+      "initial": true
+    },
+    {
+      "id": "item_resin",
+      "display_name": "Repair Resin",
+      "icon_visual_id": "visual_item_resin",
+      "modifiers": [
+        {
+          "stat": "regen_tenths",
+          "value": 5
+        },
+        {
+          "stat": "attack_speed_pct",
+          "value": -4
+        }
+      ],
+      "base_price": 20,
+      "initial": true
+    },
+    {
+      "id": "item_collector",
+      "display_name": "Wide Collector",
+      "icon_visual_id": "visual_item_collector",
+      "modifiers": [
+        {
+          "stat": "pickup_radius",
+          "value": 35
+        },
+        {
+          "stat": "move_speed_pct",
+          "value": -3
+        }
+      ],
+      "base_price": 16,
+      "initial": true
+    },
+    {
+      "id": "item_frame",
+      "display_name": "Spare Frame",
+      "icon_visual_id": "visual_item_frame",
+      "modifiers": [
+        {
+          "stat": "max_hp",
+          "value": 8
+        },
+        {
+          "stat": "armor",
+          "value": 3
+        }
+      ],
+      "base_price": 18,
+      "initial": true
+    },
+    {
+      "id": "item_driver",
+      "display_name": "Torque Driver",
+      "icon_visual_id": "visual_item_driver",
+      "modifiers": [
+        {
+          "stat": "damage_pct",
+          "value": 6
+        },
+        {
+          "stat": "attack_speed_pct",
+          "value": 4
+        }
+      ],
+      "base_price": 20,
+      "initial": true
+    },
+    {
+      "id": "item_rollers",
+      "display_name": "Smooth Rollers",
+      "icon_visual_id": "visual_item_rollers",
+      "modifiers": [
+        {
+          "stat": "move_speed_pct",
+          "value": 4
+        },
+        {
+          "stat": "pickup_radius",
+          "value": 15
+        }
+      ],
+      "base_price": 18,
+      "initial": true
+    },
+    {
+      "id": "item_optics",
+      "display_name": "Clean Optics",
+      "icon_visual_id": "visual_item_optics",
+      "modifiers": [
+        {
+          "stat": "crit_pct",
+          "value": 3
+        },
+        {
+          "stat": "damage_pct",
+          "value": 4
+        }
+      ],
+      "base_price": 20,
+      "initial": true
+    },
+    {
+      "id": "item_ribbing",
+      "display_name": "Frame Ribbing",
+      "icon_visual_id": "visual_item_ribbing",
+      "modifiers": [
+        {
+          "stat": "max_hp",
+          "value": 25
+        }
+      ],
+      "base_price": 26,
+      "unlock_id": "unlock_first_shift"
+    },
+    {
+      "id": "item_ceramic",
+      "display_name": "Ceramic Panel",
+      "icon_visual_id": "visual_item_ceramic",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "value": 12
+        }
+      ],
+      "base_price": 26,
+      "unlock_id": "unlock_first_shift"
+    },
+    {
+      "id": "item_winding",
+      "display_name": "Copper Winding",
+      "icon_visual_id": "visual_item_winding",
+      "modifiers": [
+        {
+          "stat": "damage_pct",
+          "value": 14
+        }
+      ],
+      "base_price": 26,
+      "unlock_id": "unlock_first_shift"
+    },
+    {
+      "id": "item_gearbox",
+      "display_name": "Fast Gearbox",
+      "icon_visual_id": "visual_item_gearbox",
+      "modifiers": [
+        {
+          "stat": "attack_speed_pct",
+          "value": 14
+        }
+      ],
+      "base_price": 26,
+      "unlock_id": "unlock_first_shift"
+    },
+    {
+      "id": "item_casters",
+      "display_name": "Free Casters",
+      "icon_visual_id": "visual_item_casters",
+      "modifiers": [
+        {
+          "stat": "move_speed_pct",
+          "value": 10
+        }
+      ],
+      "base_price": 22,
+      "unlock_id": "unlock_first_shift"
+    },
+    {
+      "id": "item_scope",
+      "display_name": "Survey Scope",
+      "icon_visual_id": "visual_item_scope",
+      "modifiers": [
+        {
+          "stat": "crit_pct",
+          "value": 8
+        }
+      ],
+      "base_price": 26,
+      "unlock_id": "unlock_press_operator"
+    },
+    {
+      "id": "item_welder",
+      "display_name": "Repair Welder",
+      "icon_visual_id": "visual_item_welder",
+      "modifiers": [
+        {
+          "stat": "regen_tenths",
+          "value": 7
+        }
+      ],
+      "base_price": 28,
+      "unlock_id": "unlock_press_operator"
+    },
+    {
+      "id": "item_coil",
+      "display_name": "Collector Coil",
+      "icon_visual_id": "visual_item_coil",
+      "modifiers": [
+        {
+          "stat": "pickup_radius",
+          "value": 45
+        }
+      ],
+      "base_price": 22,
+      "unlock_id": "unlock_press_operator"
+    },
+    {
+      "id": "item_ballast",
+      "display_name": "Scrap Ballast",
+      "icon_visual_id": "visual_item_ballast",
+      "modifiers": [
+        {
+          "stat": "max_hp",
+          "value": 35
+        },
+        {
+          "stat": "move_speed_pct",
+          "value": -8
+        }
+      ],
+      "base_price": 28,
+      "unlock_id": "unlock_press_operator"
+    },
+    {
+      "id": "item_casing",
+      "display_name": "Dense Casing",
+      "icon_visual_id": "visual_item_casing",
+      "modifiers": [
+        {
+          "stat": "armor",
+          "value": 18
+        },
+        {
+          "stat": "attack_speed_pct",
+          "value": -6
+        }
+      ],
+      "base_price": 28,
+      "unlock_id": "unlock_press_operator"
+    },
+    {
+      "id": "item_transformer",
+      "display_name": "Overwound Transformer",
+      "icon_visual_id": "visual_item_transformer",
+      "modifiers": [
+        {
+          "stat": "damage_pct",
+          "value": 24
+        },
+        {
+          "stat": "max_hp",
+          "value": -15
+        }
+      ],
+      "base_price": 30,
+      "unlock_id": "unlock_overtime"
+    },
+    {
+      "id": "item_feeder",
+      "display_name": "Twin Feeder",
+      "icon_visual_id": "visual_item_feeder",
+      "modifiers": [
+        {
+          "stat": "attack_speed_pct",
+          "value": 24
+        },
+        {
+          "stat": "damage_pct",
+          "value": -8
+        }
+      ],
+      "base_price": 30,
+      "unlock_id": "unlock_overtime"
+    },
+    {
+      "id": "item_skates",
+      "display_name": "Rail Skates",
+      "icon_visual_id": "visual_item_skates",
+      "modifiers": [
+        {
+          "stat": "move_speed_pct",
+          "value": 16
+        },
+        {
+          "stat": "max_hp",
+          "value": -10
+        }
+      ],
+      "base_price": 26,
+      "unlock_id": "unlock_overtime"
+    },
+    {
+      "id": "item_reticle",
+      "display_name": "Fine Reticle",
+      "icon_visual_id": "visual_item_reticle",
+      "modifiers": [
+        {
+          "stat": "crit_pct",
+          "value": 14
+        },
+        {
+          "stat": "attack_speed_pct",
+          "value": -6
+        }
+      ],
+      "base_price": 30,
+      "unlock_id": "unlock_overtime"
+    },
+    {
+      "id": "item_patchkit",
+      "display_name": "Heavy Patch Kit",
+      "icon_visual_id": "visual_item_patchkit",
+      "modifiers": [
+        {
+          "stat": "regen_tenths",
+          "value": 10
+        },
+        {
+          "stat": "move_speed_pct",
+          "value": -6
+        }
+      ],
+      "base_price": 30,
+      "unlock_id": "unlock_overtime"
+    },
+    {
+      "id": "item_antenna",
+      "display_name": "Collector Antenna",
+      "icon_visual_id": "visual_item_antenna",
+      "modifiers": [
+        {
+          "stat": "pickup_radius",
+          "value": 60
+        },
+        {
+          "stat": "armor",
+          "value": -6
+        }
+      ],
+      "base_price": 26,
+      "unlock_id": "unlock_shutdown"
+    },
+    {
+      "id": "item_chassis",
+      "display_name": "Reinforced Chassis",
+      "icon_visual_id": "visual_item_chassis",
+      "modifiers": [
+        {
+          "stat": "max_hp",
+          "value": 20
+        },
+        {
+          "stat": "armor",
+          "value": 10
+        }
+      ],
+      "base_price": 34,
+      "unlock_id": "unlock_shutdown"
+    },
+    {
+      "id": "item_synchronizer",
+      "display_name": "Drive Synchronizer",
+      "icon_visual_id": "visual_item_synchronizer",
+      "modifiers": [
+        {
+          "stat": "damage_pct",
+          "value": 12
+        },
+        {
+          "stat": "attack_speed_pct",
+          "value": 10
+        }
+      ],
+      "base_price": 34,
+      "unlock_id": "unlock_shutdown"
+    },
+    {
+      "id": "item_balancer",
+      "display_name": "Gyro Balancer",
+      "icon_visual_id": "visual_item_balancer",
+      "modifiers": [
+        {
+          "stat": "move_speed_pct",
+          "value": 8
+        },
+        {
+          "stat": "crit_pct",
+          "value": 7
+        }
+      ],
+      "base_price": 32,
+      "unlock_id": "unlock_shutdown"
+    },
+    {
+      "id": "item_servicepack",
+      "display_name": "Service Pack",
+      "icon_visual_id": "visual_item_servicepack",
+      "modifiers": [
+        {
+          "stat": "regen_tenths",
+          "value": 6
+        },
+        {
+          "stat": "max_hp",
+          "value": 15
+        }
+      ],
+      "base_price": 34,
+      "unlock_id": "unlock_shutdown"
+    }
+  ]
+}
