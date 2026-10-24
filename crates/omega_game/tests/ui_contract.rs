@@ -14,7 +14,7 @@ use std::path::PathBuf;
 use std::sync::Arc;
 
 fn run_in_shop() -> SimHarness {
-	let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets/content");
+	let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets/content-prototype");
 	let content = load_dir(&dir, Profile::Prototype).expect("prototype content");
 	let arena = content.catalogs.arenas["arena_foundry"].bounds;
 	let mut app = App::new();
@@ -50,7 +50,7 @@ fn screen(h: &mut SimHarness) -> ScreenView {
 
 #[test]
 fn hud_shows_hp_wave_timer_scrap_and_slots() {
-	let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets/content");
+	let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets/content-prototype");
 	let content = load_dir(&dir, Profile::Prototype).unwrap();
 	let mut app = App::new();
 	app.add_plugins(omega_game::GameCorePlugin);

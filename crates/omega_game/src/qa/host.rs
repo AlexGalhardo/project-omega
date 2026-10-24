@@ -50,7 +50,7 @@ impl HeadlessHost {
 	/// The shipped prototype content through `begin_run`: Wave, Shop, Victory/Defeat and
 	/// Summary as in the native client, with the same Confirm/Back edge routing.
 	pub fn prototype(seed: RunSeed, window: [u32; 2]) -> Result<Self, String> {
-		let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets/content");
+		let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets/content-prototype");
 		let content = load_dir(&dir, Profile::Prototype).map_err(|e| format!("content: {e:?}"))?;
 		let arena = content.catalogs.arenas["arena_foundry"].bounds;
 		let mut app = App::new();

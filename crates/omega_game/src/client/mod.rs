@@ -41,6 +41,8 @@ pub struct ClientOptions {
 	pub catalog: String,
 	pub screenshot: Option<PathBuf>,
 	pub benchmark: Option<BenchmarkOptions>,
+	/// Static proof-asset scene (Foundation preview) instead of the game.
+	pub preview: bool,
 	/// Prototype sandbox: spawn the player and run wave 1 live instead of the static preview.
 	pub play: bool,
 	/// With `play`: run this many simulation ticks before the first frame (evidence captures).
@@ -53,6 +55,13 @@ pub struct ClientOptions {
 	pub qa: Option<crate::qa::QaRun>,
 }
 
+impl ClientOptions {
+	/// Everything except the static preview and benchmarks runs the live game.
+	pub fn live(&self) -> bool {
+		self.play || (!self.preview && self.benchmark.is_none())
+	}
+}
+
 impl Default for ClientOptions {
 	fn default() -> Self {
 		Self {
@@ -61,6 +70,7 @@ impl Default for ClientOptions {
 			catalog: "proof-catalog.json".into(),
 			screenshot: None,
 			benchmark: None,
+			preview: false,
 			play: false,
 			fast_forward_ticks: 0,
 			ui_scale_pct: None,
@@ -157,8 +167,8 @@ pub fn run(mut options: ClientOptions) -> AppExit {
 	.init_resource::<BenchSamples>()
 	.add_systems(Startup, spawn_preview)
 	.add_systems(Update, (screenshot_and_exit, benchmark));
-	if app.world().resource::<Options>().0.play && app.world().resource::<Options>().0.qa.is_none()
-	{
+	let live = app.world().resource::<Options>().0.live();
+	if live && app.world().resource::<Options>().0.qa.is_none() {
 		app.add_plugins(persistence::PersistencePlugin);
 		let (scale, skip) = {
 			let o = &app.world().resource::<Options>().0;
@@ -172,13 +182,17 @@ pub fn run(mut options: ClientOptions) -> AppExit {
 			crate::ui::hints::skip_all(&mut settings);
 		}
 	}
-	if app.world().resource::<Options>().0.play {
+	if live {
 		app.add_plugins((
 			LivePresentationPlugin,
 			crate::ui::client::UiClientPlugin,
 			crate::audio::client::AudioCuePlugin,
-		))
-		.add_systems(Startup, start_play.after(spawn_preview));
+		));
+		if app.world().resource::<Options>().0.play {
+			app.add_systems(Startup, start_play.after(spawn_preview));
+		} else {
+			app.add_systems(Startup, boot_game.after(spawn_preview));
+		}
 	}
 	if let Some(session) = session {
 		e2e::install(&mut app, session);
@@ -186,16 +200,25 @@ pub fn run(mut options: ClientOptions) -> AppExit {
 	app.run()
 }
 
+/// Normal launch: validate the shipped game data and show the menu.
+fn boot_game(world: &mut World) {
+	world.insert_resource(crate::ui::menus::ContentSource {
+		dir: asset_root().join("content"),
+		profile: crate::content::Profile::Full,
+	});
+	crate::ui::menus::boot(world);
+}
+
 /// Fixed seed until the run lifecycle (GAME-P2-010) derives one per run.
 fn dev_seed() -> RunSeed {
 	RunSeed::from_hex(&"5a".repeat(32)).expect("static seed")
 }
 
-/// Development sandbox on the shipped prototype content until GAME-P2-010 adds the lifecycle.
+/// Development sandbox on the shipped game data: wave 1 of a Patch run, no menus.
 fn start_play(world: &mut World) {
 	use crate::combat::actor::{ArenaRes, ContentRes};
 	use crate::content::{Profile, load_dir};
-	let content = match load_dir(&asset_root().join("content"), Profile::Prototype) {
+	let content = match load_dir(&asset_root().join("content"), Profile::Full) {
 		Ok(c) => c,
 		Err(e) => {
 			error!("cannot load play content: {e:?}");
@@ -266,7 +289,7 @@ fn spawn_preview(
 		Sprite::from_color(FLOOR_DEEP, (ARENA_MAX - ARENA_MIN).as_vec2()),
 		Transform::from_xyz(0.0, 0.0, omega_2d::visuals::DrawLayer::ArenaFloor.z()),
 	));
-	if options.0.play {
+	if options.0.live() {
 		return;
 	}
 	let s = &skin.0;

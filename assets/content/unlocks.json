@@ -1,4 +1,74 @@
 {
   "schema_version": 1,
-  "records": []
+  "records": [
+    {
+      "id": "unlock_first_shift",
+      "display_name": "First Shift",
+      "condition": {
+        "kind": "complete_wave",
+        "wave": 3
+      },
+      "reward_ids": [
+        "char_coil",
+        "wpn_arc",
+        "wpn_nail",
+        "item_ribbing",
+        "item_ceramic",
+        "item_winding",
+        "item_gearbox",
+        "item_casters"
+      ]
+    },
+    {
+      "id": "unlock_press_operator",
+      "display_name": "Press Operator",
+      "condition": {
+        "kind": "complete_wave",
+        "wave": 5
+      },
+      "reward_ids": [
+        "char_rivet",
+        "wpn_rocket",
+        "wpn_pulse",
+        "item_scope",
+        "item_welder",
+        "item_coil",
+        "item_ballast",
+        "item_casing"
+      ]
+    },
+    {
+      "id": "unlock_overtime",
+      "display_name": "Overtime",
+      "condition": {
+        "kind": "complete_wave",
+        "wave": 8
+      },
+      "reward_ids": [
+        "char_skid",
+        "wpn_mortar",
+        "item_transformer",
+        "item_feeder",
+        "item_skates",
+        "item_reticle",
+        "item_patchkit"
+      ]
+    },
+    {
+      "id": "unlock_shutdown",
+      "display_name": "Shutdown",
+      "condition": {
+        "kind": "complete_wave",
+        "wave": 10
+      },
+      "reward_ids": [
+        "wpn_disk",
+        "item_antenna",
+        "item_chassis",
+        "item_synchronizer",
+        "item_balancer",
+        "item_servicepack"
+      ]
+    }
+  ]
 }

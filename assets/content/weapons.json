@@ -24,6 +24,50 @@
       "initial": true
     },
     {
+      "id": "wpn_slug",
+      "display_name": "Slug Press",
+      "visual_id": "visual_wpn_slug",
+      "base_damage": 26,
+      "base_rate_centi": 80,
+      "range_lu": 360,
+      "windup_ticks": 0,
+      "recovery_ticks": 0,
+      "payload": {
+        "kind": "projectile",
+        "speed_lu_s": 420,
+        "radius_lu": 7,
+        "pierce": 1,
+        "angles_degrees": [
+          0
+        ]
+      },
+      "knockback_lu": 14,
+      "base_price": 24,
+      "initial": true
+    },
+    {
+      "id": "wpn_needle",
+      "display_name": "Needle Spitter",
+      "visual_id": "visual_wpn_needle",
+      "base_damage": 6,
+      "base_rate_centi": 400,
+      "range_lu": 260,
+      "windup_ticks": 0,
+      "recovery_ticks": 0,
+      "payload": {
+        "kind": "projectile",
+        "speed_lu_s": 650,
+        "radius_lu": 3,
+        "pierce": 0,
+        "angles_degrees": [
+          0
+        ]
+      },
+      "knockback_lu": 2,
+      "base_price": 20,
+      "initial": true
+    },
+    {
       "id": "wpn_saw",
       "display_name": "Chain Saw",
       "visual_id": "visual_wpn_saw",
@@ -40,6 +84,172 @@
       "knockback_lu": 10,
       "base_price": 22,
       "initial": true
+    },
+    {
+      "id": "wpn_hammer",
+      "display_name": "Drop Hammer",
+      "visual_id": "visual_wpn_hammer",
+      "base_damage": 36,
+      "base_rate_centi": 80,
+      "range_lu": 85,
+      "windup_ticks": 12,
+      "recovery_ticks": 12,
+      "payload": {
+        "kind": "circle",
+        "offset_lu": 50,
+        "radius_lu": 40
+      },
+      "knockback_lu": 22,
+      "base_price": 26,
+      "initial": true
+    },
+    {
+      "id": "wpn_fan",
+      "display_name": "Rivet Fan",
+      "visual_id": "visual_wpn_fan",
+      "base_damage": 10,
+      "base_rate_centi": 140,
+      "range_lu": 240,
+      "windup_ticks": 0,
+      "recovery_ticks": 0,
+      "payload": {
+        "kind": "projectile",
+        "speed_lu_s": 480,
+        "radius_lu": 4,
+        "pierce": 0,
+        "angles_degrees": [
+          -12,
+          0,
+          12
+        ]
+      },
+      "knockback_lu": 5,
+      "base_price": 24,
+      "initial": true
+    },
+    {
+      "id": "wpn_arc",
+      "display_name": "Arc Rail",
+      "visual_id": "visual_wpn_arc",
+      "base_damage": 16,
+      "base_rate_centi": 140,
+      "range_lu": 180,
+      "windup_ticks": 6,
+      "recovery_ticks": 6,
+      "payload": {
+        "kind": "capsule",
+        "reach_lu": 180,
+        "radius_lu": 8
+      },
+      "knockback_lu": 4,
+      "base_price": 26,
+      "unlock_id": "unlock_first_shift"
+    },
+    {
+      "id": "wpn_nail",
+      "display_name": "Nail Lance",
+      "visual_id": "visual_wpn_nail",
+      "base_damage": 18,
+      "base_rate_centi": 120,
+      "range_lu": 420,
+      "windup_ticks": 0,
+      "recovery_ticks": 0,
+      "payload": {
+        "kind": "projectile",
+        "speed_lu_s": 600,
+        "radius_lu": 4,
+        "pierce": 2,
+        "angles_degrees": [
+          0
+        ]
+      },
+      "knockback_lu": 8,
+      "base_price": 26,
+      "unlock_id": "unlock_first_shift"
+    },
+    {
+      "id": "wpn_rocket",
+      "display_name": "Scrap Rocket",
+      "visual_id": "visual_wpn_rocket",
+      "base_damage": 32,
+      "base_rate_centi": 65,
+      "range_lu": 320,
+      "windup_ticks": 0,
+      "recovery_ticks": 0,
+      "payload": {
+        "kind": "explosive_projectile",
+        "speed_lu_s": 300,
+        "radius_lu": 6,
+        "explosion_radius_lu": 55,
+        "angles_degrees": [
+          0
+        ]
+      },
+      "knockback_lu": 14,
+      "base_price": 30,
+      "unlock_id": "unlock_press_operator"
+    },
+    {
+      "id": "wpn_pulse",
+      "display_name": "Pulse Drum",
+      "visual_id": "visual_wpn_pulse",
+      "base_damage": 22,
+      "base_rate_centi": 80,
+      "range_lu": 100,
+      "windup_ticks": 9,
+      "recovery_ticks": 9,
+      "payload": {
+        "kind": "circle",
+        "offset_lu": 0,
+        "radius_lu": 100
+      },
+      "knockback_lu": 16,
+      "base_price": 28,
+      "unlock_id": "unlock_press_operator"
+    },
+    {
+      "id": "wpn_mortar",
+      "display_name": "Slag Lobber",
+      "visual_id": "visual_wpn_mortar",
+      "base_damage": 45,
+      "base_rate_centi": 50,
+      "range_lu": 280,
+      "windup_ticks": 0,
+      "recovery_ticks": 0,
+      "payload": {
+        "kind": "explosive_projectile",
+        "speed_lu_s": 250,
+        "radius_lu": 7,
+        "explosion_radius_lu": 75,
+        "angles_degrees": [
+          0
+        ]
+      },
+      "knockback_lu": 18,
+      "base_price": 32,
+      "unlock_id": "unlock_overtime"
+    },
+    {
+      "id": "wpn_disk",
+      "display_name": "Rotor Disk",
+      "visual_id": "visual_wpn_disk",
+      "base_damage": 14,
+      "base_rate_centi": 160,
+      "range_lu": 340,
+      "windup_ticks": 0,
+      "recovery_ticks": 0,
+      "payload": {
+        "kind": "projectile",
+        "speed_lu_s": 340,
+        "radius_lu": 12,
+        "pierce": 3,
+        "angles_degrees": [
+          0
+        ]
+      },
+      "knockback_lu": 8,
+      "base_price": 28,
+      "unlock_id": "unlock_shutdown"
     }
   ]
 }

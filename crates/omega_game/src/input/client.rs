@@ -1,7 +1,9 @@
 //! Bevy device sampling for the native client: keyboard, mouse and window focus.
 
+use super::bindings::{Action, Bindings};
 use super::gamepad::{InputSource, NavDirection, PadFrame};
 use super::{AimOrigin, Edge, FrameInput, InputBuffer};
+use crate::profile::Settings;
 use crate::sim::{SimPaused, TickInput};
 use bevy::input::gamepad::{Gamepad, GamepadButton, GamepadConnection, GamepadConnectionEvent};
 use bevy::math::DVec2;
@@ -97,34 +99,106 @@ fn handle_disconnect(
 	}
 }
 
+/// Keys a binding can name; the name is the `KeyCode` variant, as stored in settings.
+const KEY_NAMES: &[(&str, KeyCode)] = &[
+	("KeyA", KeyCode::KeyA),
+	("KeyB", KeyCode::KeyB),
+	("KeyC", KeyCode::KeyC),
+	("KeyD", KeyCode::KeyD),
+	("KeyE", KeyCode::KeyE),
+	("KeyF", KeyCode::KeyF),
+	("KeyG", KeyCode::KeyG),
+	("KeyH", KeyCode::KeyH),
+	("KeyI", KeyCode::KeyI),
+	("KeyJ", KeyCode::KeyJ),
+	("KeyK", KeyCode::KeyK),
+	("KeyL", KeyCode::KeyL),
+	("KeyM", KeyCode::KeyM),
+	("KeyN", KeyCode::KeyN),
+	("KeyO", KeyCode::KeyO),
+	("KeyP", KeyCode::KeyP),
+	("KeyQ", KeyCode::KeyQ),
+	("KeyR", KeyCode::KeyR),
+	("KeyS", KeyCode::KeyS),
+	("KeyT", KeyCode::KeyT),
+	("KeyU", KeyCode::KeyU),
+	("KeyV", KeyCode::KeyV),
+	("KeyW", KeyCode::KeyW),
+	("KeyX", KeyCode::KeyX),
+	("KeyY", KeyCode::KeyY),
+	("KeyZ", KeyCode::KeyZ),
+	("Digit0", KeyCode::Digit0),
+	("Digit1", KeyCode::Digit1),
+	("Digit2", KeyCode::Digit2),
+	("Digit3", KeyCode::Digit3),
+	("Digit4", KeyCode::Digit4),
+	("Digit5", KeyCode::Digit5),
+	("Digit6", KeyCode::Digit6),
+	("Digit7", KeyCode::Digit7),
+	("Digit8", KeyCode::Digit8),
+	("Digit9", KeyCode::Digit9),
+	("ArrowUp", KeyCode::ArrowUp),
+	("ArrowDown", KeyCode::ArrowDown),
+	("ArrowLeft", KeyCode::ArrowLeft),
+	("ArrowRight", KeyCode::ArrowRight),
+	("Enter", KeyCode::Enter),
+	("Space", KeyCode::Space),
+	("Escape", KeyCode::Escape),
+	("Tab", KeyCode::Tab),
+];
+
+fn key_from_name(name: &str) -> Option<KeyCode> {
+	KEY_NAMES.iter().find(|(n, _)| *n == name).map(|(_, k)| *k)
+}
+
+/// True when any key bound to `action` satisfies `test`.
+fn bound(bindings: &Bindings, action: Action, test: impl Fn(KeyCode) -> bool) -> bool {
+	bindings
+		.inputs(action)
+		.iter()
+		.filter_map(|n| key_from_name(n))
+		.any(test)
+}
+
 fn sample_devices(
 	keys: Res<ButtonInput<KeyCode>>,
 	mouse: Res<ButtonInput<MouseButton>>,
 	window: Single<&Window, With<PrimaryWindow>>,
 	viewport: Option<Res<CurrentViewport>>,
+	settings: Option<Res<Settings>>,
 	mut buffer: ResMut<InputBuffer>,
 ) {
-	let held = |codes: &[KeyCode]| codes.iter().any(|&k| keys.pressed(k));
+	let (bindings, _) = settings.as_ref().map_or_else(
+		|| (Bindings::default(), Vec::new()),
+		|s| Bindings::from_settings(&s.bindings),
+	);
+	let held = |action: Action| bound(&bindings, action, |k| keys.pressed(k));
+	let pressed = |action: Action| bound(&bindings, action, |k| keys.just_pressed(k));
 	let cursor_world = viewport.and_then(|v| {
 		let cursor = window.physical_cursor_position()?;
 		v.0.screen_to_world(DVec2::new(f64::from(cursor.x), f64::from(cursor.y)))
 	});
 	let mut edges = Vec::new();
-	if keys.just_pressed(KeyCode::Escape) {
+	if pressed(Action::Back) {
 		edges.push(Edge::Cancel);
 	}
-	if keys.just_pressed(KeyCode::Enter) || keys.just_pressed(KeyCode::Space) {
+	if pressed(Action::Confirm) {
 		edges.push(Edge::Confirm);
 	}
-	if keys.just_pressed(KeyCode::KeyE) {
+	if pressed(Action::OpenEnergy) {
 		edges.push(Edge::OpenEnergy);
 	}
+	let mouse_aim = bindings
+		.inputs(Action::ManualAim)
+		.iter()
+		.any(|n| n == "MouseRight")
+		&& mouse.pressed(MouseButton::Right);
 	buffer.begin_frame(FrameInput {
-		up: held(&[KeyCode::KeyW, KeyCode::ArrowUp]),
-		down: held(&[KeyCode::KeyS, KeyCode::ArrowDown]),
-		left: held(&[KeyCode::KeyA, KeyCode::ArrowLeft]),
-		right: held(&[KeyCode::KeyD, KeyCode::ArrowRight]),
-		manual_aim_held: mouse.pressed(MouseButton::Right),
+		up: held(Action::MoveUp),
+		down: held(Action::MoveDown),
+		left: held(Action::MoveLeft),
+		right: held(Action::MoveRight),
+		manual_aim_held: mouse_aim || held(Action::ManualAim),
 		cursor_world,
 		edges,
 	});

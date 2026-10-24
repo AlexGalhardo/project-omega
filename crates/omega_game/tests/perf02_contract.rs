@@ -5,7 +5,7 @@ use omega_game::sim::RunSeed;
 use std::path::PathBuf;
 
 fn content() -> PathBuf {
-	PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets/content")
+	PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets/content-prototype")
 }
 
 fn setting<'a>(report: &'a omega_game::diagnostics::Report, key: &str) -> &'a str {

@@ -1,6 +1,7 @@
 //! Bevy UI widgets for the HUD, shop, pause, abandon and result screens (SP-014).
 //! Widgets only render `ScreenView`/`HudView` data and queue typed `UiAction` requests.
 
+use super::menus::{QuitRequested, RebindCapture, apply_rebind};
 use super::{
 	ScreenView, UiAction, UiFocus, UiMode, apply_action, back_action, edge_action, hints, hud_text,
 	hud_view, screen_view, take_screen_edges,
@@ -59,6 +60,8 @@ impl Plugin for UiClientPlugin {
 			.add_systems(
 				Update,
 				(
+					rebind_capture,
+					quit_when_requested,
 					hint_trigger,
 					apply_ui_scale,
 					keyboard_actions,
@@ -101,6 +104,34 @@ fn apply_ui_scale(settings: Option<Res<Settings>>, mut scale: ResMut<UiScale>) {
 		&& settings.is_changed()
 	{
 		scale.0 = hints::ui_scale(&settings);
+	}
+}
+
+/// While a rebind is pending the next key press becomes the binding; Escape cancels.
+fn rebind_capture(world: &mut World) {
+	let Some(capture) = world.get_resource::<RebindCapture>().copied() else {
+		return;
+	};
+	let key = world
+		.resource::<ButtonInput<KeyCode>>()
+		.get_just_pressed()
+		.next()
+		.copied();
+	let Some(key) = key else {
+		return;
+	};
+	let message = if key == KeyCode::Escape {
+		world.remove_resource::<RebindCapture>();
+		"Rebind cancelled.".to_string()
+	} else {
+		apply_rebind(world, capture.0, &format!("{key:?}"))
+	};
+	world.resource_mut::<UiMessage>().0 = message;
+}
+
+fn quit_when_requested(requested: Option<Res<QuitRequested>>, mut exit: MessageWriter<AppExit>) {
+	if requested.is_some() {
+		exit.write(AppExit::Success);
 	}
 }
 
@@ -165,20 +196,37 @@ fn keyboard_actions(
 	mut focus: ResMut<UiFocus>,
 	mut repeat: Local<NavRepeat>,
 	mut was_open: ResMut<ScreenWasOpen>,
+	rebind: Option<Res<RebindCapture>>,
 ) {
-	let Some(run) = run else {
+	if rebind.is_some() {
+		buffer.take_ui_edges();
 		return;
-	};
-	let screen_open = run.state != RunState::Wave || paused.0;
+	}
+	let state = run.as_ref().map(|r| r.state);
+	let menu_like = state.is_none() || matches!(*mode, UiMode::Hint(_));
+	let screen_open = state != Some(RunState::Wave) || paused.0;
 	let edges = take_screen_edges(&mut buffer, &mut was_open.0, screen_open);
 	if !screen_open {
 		return;
 	}
-	if active.0 == InputSource::Controller
+	let controller = active.0 == InputSource::Controller;
+	if (controller || menu_like)
 		&& let Some(view) = &last.0
 	{
 		focus.clamp(view);
-		match repeat.update(nav.0, time.elapsed_secs_f64()) {
+		let dir = if controller {
+			repeat.update(nav.0, time.elapsed_secs_f64())
+		} else if keys.just_pressed(KeyCode::ArrowUp) || keys.just_pressed(KeyCode::KeyW) {
+			Some(NavDirection::Up)
+		} else if keys.just_pressed(KeyCode::ArrowDown)
+			|| keys.just_pressed(KeyCode::KeyS)
+			|| keys.just_pressed(KeyCode::Tab)
+		{
+			Some(NavDirection::Down)
+		} else {
+			None
+		};
+		match dir {
 			Some(NavDirection::Up | NavDirection::Left) => focus.step(view, false),
 			Some(NavDirection::Down | NavDirection::Right) => focus.step(view, true),
 			None => {}
@@ -195,6 +243,9 @@ fn keyboard_actions(
 		}
 		return;
 	}
+	let Some(run) = run else {
+		return;
+	};
 	let digit = [
 		KeyCode::Digit1,
 		KeyCode::Digit2,

@@ -1,4 +1,118 @@
 {
   "schema_version": 1,
-  "records": []
+  "records": [
+    {
+      "id": "boss_press",
+      "display_name": "The Press",
+      "visual_id": "visual_boss_press",
+      "hp": 1200,
+      "armor": 10,
+      "radius_lu": 42,
+      "contact_damage": 18,
+      "scrap": 25,
+      "spawn_position": [
+        0,
+        250
+      ],
+      "warning_ticks": 120,
+      "initial_recovery_ticks": 60,
+      "recovery_movement": {
+        "kind": "chase",
+        "speed_lu_s": 35
+      },
+      "attacks": [
+        {
+          "id": "press_stamp",
+          "windup_ticks": 72,
+          "recovery_ticks": 60,
+          "payload": {
+            "kind": "ground_circle",
+            "radius_lu": 90,
+            "damage": 32
+          }
+        },
+        {
+          "id": "press_ram",
+          "windup_ticks": 60,
+          "recovery_ticks": 72,
+          "payload": {
+            "kind": "charge",
+            "speed_lu_s": 500,
+            "ticks": 30,
+            "contact_damage": 30
+          }
+        }
+      ]
+    },
+    {
+      "id": "boss_foreman",
+      "display_name": "The Foreman",
+      "visual_id": "visual_boss_foreman",
+      "hp": 2400,
+      "armor": 10,
+      "radius_lu": 38,
+      "contact_damage": 20,
+      "scrap": 50,
+      "spawn_position": [
+        0,
+        250
+      ],
+      "warning_ticks": 120,
+      "initial_recovery_ticks": 90,
+      "recovery_movement": {
+        "kind": "keep_distance",
+        "speed_lu_s": 30,
+        "desired_distance_lu": 260
+      },
+      "attacks": [
+        {
+          "id": "foreman_volley",
+          "windup_ticks": 60,
+          "recovery_ticks": 60,
+          "payload": {
+            "kind": "projectiles",
+            "aim": "locked",
+            "angles_degrees": [
+              -40,
+              -20,
+              0,
+              20,
+              40
+            ],
+            "speed_lu_s": 190,
+            "radius_lu": 8,
+            "range_lu": 1000,
+            "damage": 18
+          }
+        },
+        {
+          "id": "foreman_discharge",
+          "windup_ticks": 90,
+          "recovery_ticks": 90,
+          "payload": {
+            "kind": "projectiles",
+            "aim": "world",
+            "angles_degrees": [
+              0,
+              30,
+              60,
+              90,
+              120,
+              150,
+              180,
+              210,
+              240,
+              270,
+              300,
+              330
+            ],
+            "speed_lu_s": 150,
+            "radius_lu": 7,
+            "range_lu": 1000,
+            "damage": 16
+          }
+        }
+      ]
+    }
+  ]
 }

@@ -303,6 +303,7 @@ pub fn take_screen_edges(buffer: &mut InputBuffer, was_open: &mut bool, open: bo
 /// harness both use it so keyboard edges behave the same everywhere.
 pub fn edge_action(state: RunState, mode: UiMode, edges: UiEdges) -> Option<UiAction> {
 	match (state, mode) {
+		(_, UiMode::Hint(_)) => (edges.confirm || edges.back).then_some(UiAction::DismissHint),
 		(_, UiMode::ConfirmAbandon) => {
 			if edges.confirm {
 				Some(UiAction::ConfirmAbandon)

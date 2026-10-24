@@ -5,11 +5,11 @@
       "id": "enemy_chaser",
       "display_name": "Scrapper",
       "visual_id": "visual_enemy_chaser",
-      "base_hp": 36,
+      "base_hp": 24,
       "armor": 0,
       "radius_lu": 13,
-      "speed_lu_s": 78,
-      "contact_damage": 10,
+      "speed_lu_s": 70,
+      "contact_damage": 8,
       "scrap": 2,
       "knockback_multiplier": 1.0,
       "behavior": {
@@ -20,15 +20,248 @@
       "id": "enemy_runner",
       "display_name": "Wire Rat",
       "visual_id": "visual_enemy_runner",
-      "base_hp": 18,
+      "base_hp": 14,
       "armor": 0,
       "radius_lu": 10,
-      "speed_lu_s": 170,
-      "contact_damage": 8,
+      "speed_lu_s": 125,
+      "contact_damage": 6,
       "scrap": 2,
       "knockback_multiplier": 1.0,
       "behavior": {
         "profile": "chase"
+      }
+    },
+    {
+      "id": "enemy_bulwark",
+      "display_name": "Plate Hauler",
+      "visual_id": "visual_enemy_bulwark",
+      "base_hp": 80,
+      "armor": 25,
+      "radius_lu": 23,
+      "speed_lu_s": 42,
+      "contact_damage": 12,
+      "scrap": 4,
+      "knockback_multiplier": 0.25,
+      "behavior": {
+        "profile": "chase"
+      }
+    },
+    {
+      "id": "enemy_gunner",
+      "display_name": "Rivet Guard",
+      "visual_id": "visual_enemy_gunner",
+      "base_hp": 32,
+      "armor": 0,
+      "radius_lu": 14,
+      "speed_lu_s": 55,
+      "contact_damage": 6,
+      "scrap": 3,
+      "knockback_multiplier": 1.0,
+      "behavior": {
+        "profile": "keep_distance",
+        "desired_distance_lu": 220,
+        "attack": {
+          "interval_ticks": 150,
+          "windup_ticks": 30,
+          "recovery_ticks": 30,
+          "payload": {
+            "kind": "projectiles",
+            "aim": "locked",
+            "angles_degrees": [
+              0
+            ],
+            "speed_lu_s": 180,
+            "radius_lu": 6,
+            "range_lu": 600,
+            "damage": 8
+          },
+          "start_range_lu": 420
+        }
+      }
+    },
+    {
+      "id": "enemy_rammer",
+      "display_name": "Ram Cart",
+      "visual_id": "visual_enemy_rammer",
+      "base_hp": 44,
+      "armor": 5,
+      "radius_lu": 18,
+      "speed_lu_s": 60,
+      "contact_damage": 10,
+      "scrap": 3,
+      "knockback_multiplier": 0.5,
+      "behavior": {
+        "profile": "charge",
+        "initial_wait_ticks": 60,
+        "trigger_range_lu": 220,
+        "windup_ticks": 45,
+        "recovery_ticks": 45,
+        "charge": {
+          "kind": "charge",
+          "speed_lu_s": 420,
+          "ticks": 24,
+          "contact_damage": 24
+        }
+      }
+    },
+    {
+      "id": "enemy_sentry",
+      "display_name": "Spark Hub",
+      "visual_id": "visual_enemy_sentry",
+      "base_hp": 45,
+      "armor": 5,
+      "radius_lu": 18,
+      "speed_lu_s": 0,
+      "contact_damage": 8,
+      "scrap": 3,
+      "knockback_multiplier": 0.5,
+      "behavior": {
+        "profile": "stationary",
+        "attack": {
+          "interval_ticks": 180,
+          "windup_ticks": 45,
+          "recovery_ticks": 30,
+          "payload": {
+            "kind": "projectiles",
+            "aim": "world",
+            "angles_degrees": [
+              0,
+              45,
+              90,
+              135,
+              180,
+              225,
+              270,
+              315
+            ],
+            "speed_lu_s": 140,
+            "radius_lu": 6,
+            "range_lu": 700,
+            "damage": 8
+          }
+        }
+      }
+    },
+    {
+      "id": "enemy_marksman",
+      "display_name": "Survey Eye",
+      "visual_id": "visual_enemy_marksman",
+      "base_hp": 30,
+      "armor": 0,
+      "radius_lu": 12,
+      "speed_lu_s": 45,
+      "contact_damage": 6,
+      "scrap": 3,
+      "knockback_multiplier": 1.0,
+      "behavior": {
+        "profile": "keep_distance",
+        "desired_distance_lu": 300,
+        "attack": {
+          "interval_ticks": 180,
+          "windup_ticks": 72,
+          "recovery_ticks": 60,
+          "payload": {
+            "kind": "beam",
+            "reach_lu": 600,
+            "radius_lu": 6,
+            "damage": 18
+          },
+          "start_range_lu": 600
+        }
+      }
+    },
+    {
+      "id": "enemy_scatter",
+      "display_name": "Shard Hopper",
+      "visual_id": "visual_enemy_scatter",
+      "base_hp": 40,
+      "armor": 0,
+      "radius_lu": 16,
+      "speed_lu_s": 60,
+      "contact_damage": 8,
+      "scrap": 3,
+      "knockback_multiplier": 1.0,
+      "behavior": {
+        "profile": "keep_distance",
+        "desired_distance_lu": 180,
+        "attack": {
+          "interval_ticks": 150,
+          "windup_ticks": 45,
+          "recovery_ticks": 30,
+          "payload": {
+            "kind": "projectiles",
+            "aim": "locked",
+            "angles_degrees": [
+              -20,
+              0,
+              20
+            ],
+            "speed_lu_s": 170,
+            "radius_lu": 6,
+            "range_lu": 500,
+            "damage": 10
+          },
+          "start_range_lu": 360
+        }
+      }
+    },
+    {
+      "id": "enemy_crusher",
+      "display_name": "Clamp Walker",
+      "visual_id": "visual_enemy_crusher",
+      "base_hp": 100,
+      "armor": 15,
+      "radius_lu": 24,
+      "speed_lu_s": 48,
+      "contact_damage": 14,
+      "scrap": 5,
+      "knockback_multiplier": 0.25,
+      "behavior": {
+        "profile": "chase_strike",
+        "attack": {
+          "interval_ticks": 150,
+          "windup_ticks": 54,
+          "recovery_ticks": 60,
+          "payload": {
+            "kind": "ground_circle",
+            "radius_lu": 50,
+            "damage": 22
+          },
+          "start_range_lu": 80
+        }
+      }
+    },
+    {
+      "id": "enemy_skimmer",
+      "display_name": "Coil Skater",
+      "visual_id": "visual_enemy_skimmer",
+      "base_hp": 28,
+      "armor": 0,
+      "radius_lu": 12,
+      "speed_lu_s": 110,
+      "contact_damage": 6,
+      "scrap": 3,
+      "knockback_multiplier": 1.0,
+      "behavior": {
+        "profile": "orbit",
+        "orbit_radius_lu": 180,
+        "attack": {
+          "interval_ticks": 120,
+          "windup_ticks": 24,
+          "recovery_ticks": 24,
+          "payload": {
+            "kind": "projectiles",
+            "aim": "locked",
+            "angles_degrees": [
+              0
+            ],
+            "speed_lu_s": 220,
+            "radius_lu": 5,
+            "range_lu": 500,
+            "damage": 8
+          },
+          "start_range_lu": 360
+        }
       }
     }
   ]

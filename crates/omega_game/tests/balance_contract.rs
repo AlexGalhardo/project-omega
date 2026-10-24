@@ -15,7 +15,7 @@ use std::path::PathBuf;
 use std::sync::Arc;
 
 fn content() -> Arc<ContentSnapshot> {
-	let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets/content");
+	let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets/content-prototype");
 	load_content(&dir, Profile::Prototype).expect("prototype content")
 }
 

@@ -158,7 +158,7 @@ fn mix_gain_is_master_times_sfx_and_mute_or_zero_silences() {
 }
 
 fn traced(with_audio: bool) -> Vec<TraceEntry> {
-	let dir = assets().join("content");
+	let dir = assets().join("content-prototype");
 	let content = load_dir(&dir, Profile::Prototype).unwrap();
 	let bounds = content.catalogs.arenas["arena_foundry"].bounds;
 	let mut app = App::new();

@@ -162,6 +162,11 @@ impl<T: Serialize + DeserializeOwned> SlotStore<T> {
 		}
 	}
 
+	/// True after a load problem: saving is refused until `quarantine` runs.
+	pub fn needs_recovery(&self) -> bool {
+		self.blocked
+	}
+
 	pub fn committed_generation(&self) -> u64 {
 		self.committed
 	}

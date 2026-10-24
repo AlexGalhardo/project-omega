@@ -141,7 +141,10 @@ fn balance(args: impl Iterator<Item = String>) -> Result<(), String> {
 		return Err("at least one policy is required".into());
 	}
 	let dir = content_dir.map_or_else(
-		|| std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets/content"),
+		|| {
+			std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+				.join("../../assets/content-prototype")
+		},
 		Into::into,
 	);
 	let content = load_content(&dir, Profile::Prototype)?;
@@ -250,7 +253,8 @@ fn main() -> ExitCode {
 }
 
 fn run_perf02(args: &Args) -> ExitCode {
-	let dir = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets/content");
+	let dir =
+		std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets/content-prototype");
 	let report = match omega_game::diagnostics::perf02::run(args.seed, &dir) {
 		Ok(r) => r,
 		Err(e) => {

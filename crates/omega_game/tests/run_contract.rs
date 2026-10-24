@@ -27,7 +27,7 @@ fn harness(profile: Profile, dir: &str) -> SimHarness {
 }
 
 fn prototype() -> SimHarness {
-	harness(Profile::Prototype, "../../assets/content")
+	harness(Profile::Prototype, "../../assets/content-prototype")
 }
 
 fn begin(h: &mut SimHarness) -> Entity {

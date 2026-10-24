@@ -13,7 +13,7 @@ use omega_game::sim::RunSeed;
 use std::path::PathBuf;
 use std::process::ExitCode;
 
-const USAGE: &str = "usage: omega-game [--resolution WxH] [--catalog FILE] [--screenshot PATH] [--play [--fast-forward-ticks N] [--ui-scale 100|125|150] [--skip-hints]] [--benchmark PERF-ID --duration-seconds N --output PATH] [--e2e-script FILE | --qa-bot cautious|aggressive|chaotic --seed HEX64 [--frames N]] [--headless] [--out-dir DIR]";
+const USAGE: &str = "usage: omega-game [--resolution WxH] [--catalog FILE] [--screenshot PATH] [--preview] [--play [--fast-forward-ticks N] [--ui-scale 100|125|150] [--skip-hints]] [--benchmark PERF-ID --duration-seconds N --output PATH] [--e2e-script FILE | --qa-bot cautious|aggressive|chaotic --seed HEX64 [--frames N]] [--headless] [--out-dir DIR]";
 
 struct Parsed {
 	client: ClientOptions,
@@ -39,6 +39,7 @@ fn parse() -> Result<Parsed, String> {
 				}
 			}
 			"--catalog" => o.catalog = value()?,
+			"--preview" => o.preview = true,
 			"--play" => o.play = true,
 			"--ui-scale" => {
 				let pct: u16 = value()?.parse().map_err(|_| "bad ui scale")?;

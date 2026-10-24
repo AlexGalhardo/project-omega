@@ -7,6 +7,7 @@ use crate::profile::settings::SETTINGS_SCHEMA;
 use crate::profile::{PROFILE_SCHEMA, Profile, SaveStatus, Settings};
 use crate::sim::run::ProfileDirty;
 use crate::ui::SettingsDirty;
+use crate::ui::menus::{ProfileResetRequested, QuarantineRequested};
 use bevy::prelude::*;
 
 #[derive(Resource)]
@@ -47,7 +48,7 @@ impl Plugin for PersistencePlugin {
 		app.insert_resource(profile)
 			.insert_resource(settings)
 			.insert_resource(status)
-			.add_systems(Last, save_when_dirty);
+			.add_systems(Last, (handle_requests, save_when_dirty).chain());
 		if let Some((profile_store, settings_store)) = stores {
 			app.insert_resource(ProfileStore(profile_store))
 				.insert_resource(SettingsStore(settings_store));
@@ -118,5 +119,35 @@ fn save_when_dirty(
 			}
 		}
 		commands.remove_resource::<SettingsDirty>();
+	}
+}
+
+/// Menu requests that touch the files: both only move files aside, never delete them.
+fn handle_requests(world: &mut World) {
+	if world.remove_resource::<QuarantineRequested>().is_some() {
+		let mut moved = false;
+		if let Some(mut store) = world.get_resource_mut::<ProfileStore>()
+			&& store.0.needs_recovery()
+		{
+			moved |= store.0.quarantine(&DiskStorage).is_ok();
+			world.insert_resource(Profile::initial());
+			world.insert_resource(ProfileDirty);
+		}
+		if let Some(mut store) = world.get_resource_mut::<SettingsStore>()
+			&& store.0.needs_recovery()
+		{
+			moved |= store.0.quarantine(&DiskStorage).is_ok();
+			world.insert_resource(Settings::default());
+			world.insert_resource(SettingsDirty);
+		}
+		if moved {
+			world.resource_mut::<SaveStatus>().load_problem = None;
+		}
+	}
+	if world.remove_resource::<ProfileResetRequested>().is_some()
+		&& let Some(mut store) = world.get_resource_mut::<ProfileStore>()
+		&& let Err(e) = store.0.quarantine(&DiskStorage)
+	{
+		world.resource_mut::<SaveStatus>().last_error = Some(explain(&e));
 	}
 }
