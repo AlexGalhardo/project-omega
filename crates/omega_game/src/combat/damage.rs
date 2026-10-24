@@ -37,6 +37,21 @@ type TargetPlayer = (
 	&'static mut Invulnerability,
 );
 
+/// One hostile attack that reached the player this tick, before armor.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct HostileHit {
+	pub attack: AttackId,
+	pub raw: u32,
+}
+
+/// Hostile hits queued by Emit and Collide, settled in Resolve in attack order.
+#[derive(Resource, Debug, Default)]
+pub struct HostileHits {
+	pub pending: Vec<HostileHit>,
+	/// Attack IDs that already reached the player: one hit per attack ID.
+	pub landed: std::collections::BTreeSet<AttackId>,
+}
+
 /// Ticks a hit blocks later incoming damage (GDD section 7.3).
 pub const INVULNERABILITY_TICKS: u64 = 36;
 
@@ -53,6 +68,7 @@ pub fn resolve_damage(
 	arena: Option<Res<ArenaRes>>,
 	hits: Res<HitCandidates>,
 	mut rng: ResMut<RngStreams>,
+	mut hostile: ResMut<HostileHits>,
 	mut ids: ResMut<IdAllocator>,
 	mut queue: ResMut<PresentationQueue>,
 	mut commands: Commands,
@@ -135,6 +151,26 @@ pub fn resolve_damage(
 	else {
 		return;
 	};
+	let mut incoming = std::mem::take(&mut hostile.pending);
+	incoming.sort_by_key(|h| h.attack);
+	for hit in incoming {
+		if player_hp.current == 0 || tick.0 < invuln.next_accept_tick {
+			continue;
+		}
+		let Ok(damage) = enemy_damage(hit.raw, u32::try_from(player_stats.0.armor).unwrap_or(0))
+		else {
+			continue;
+		};
+		player_hp.current = player_hp.current.saturating_sub(damage);
+		invuln.next_accept_tick = tick.0 + INVULNERABILITY_TICKS;
+		queue.push(
+			*tick,
+			PresentationKind::PlayerDamaged {
+				damage,
+				hp_after: player_hp.current,
+			},
+		);
+	}
 	for (_, position, radius, raw) in contacts {
 		if player_hp.current == 0 || tick.0 < invuln.next_accept_tick {
 			break;

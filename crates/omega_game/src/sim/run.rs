@@ -7,9 +7,10 @@ use crate::combat::actor::{
 	ContentRes, Health, Invulnerability, Loadout, Pickup, Player, Pose2, PreviousPose2, Scrap,
 	SpawnError, spawn_player,
 };
-use crate::combat::damage::HitCandidates;
+use crate::combat::damage::{HitCandidates, HostileHits};
 use crate::combat::stats::RegenAccumulator;
 use crate::combat::weapons::{EmittedShapes, HitLedger, Projectile, WeaponTimers};
+use crate::encounters::hostile::HostileProjectile;
 use crate::encounters::{WaveError, WaveRuntime, complete_wave, start_wave};
 use crate::input::AimOrigin;
 use crate::shop::{RunBuild, ShopVisit, open_shop};
@@ -105,6 +106,16 @@ fn clear_transients(world: &mut World) {
 	world.resource_mut::<EmittedShapes>().0.clear();
 	world.resource_mut::<HitLedger>().0.clear();
 	world.resource_mut::<HitCandidates>().0.clear();
+	let hostile: Vec<Entity> = world
+		.query_filtered::<Entity, With<HostileProjectile>>()
+		.iter(world)
+		.collect();
+	for entity in hostile {
+		world.despawn(entity);
+	}
+	let mut hits = world.resource_mut::<HostileHits>();
+	hits.pending.clear();
+	hits.landed.clear();
 }
 
 /// Successful completion collects every remaining earned pickup.

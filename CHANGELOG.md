@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **encounters:** Add the following beam profile (Survey Eye) and verify the Plate Hauler knockback rule (SHA_PLACEHOLDER)
+- **encounters:** Add the swept charge and locked ground-strike profiles (Ram Cart, Clamp Walker) (SHA_PLACEHOLDER)
+- **encounters:** Add the stationary radial volley and orbit-and-shoot profiles (Spark Hub, Coil Skater) (SHA_PLACEHOLDER)
+- **encounters:** Add the enemy attack state machine, keep-distance movement, hostile projectiles and the Rivet Guard and Shard Hopper profiles (SHA_PLACEHOLDER)
 - **combat:** Add payload fixture coverage for all twelve authored weapons, offset and centered circles ([9ae6352](https://github.com/AlexGalhardo/project-omega/commit/9ae635242c415c489d0b3f4a6a166f6bf8c74562))
 - **engine:** Add phase-driven cue model (locked versus following anchors, cancellation, reduced effects) with contract tests ([9ae6352](https://github.com/AlexGalhardo/project-omega/commit/9ae635242c415c489d0b3f4a6a166f6bf8c74562))
 - **research:** Record the RES-P4-001 Brotato study note (original prose, REA limits recorded, all differences kept as GDD) ([5651e70](https://github.com/AlexGalhardo/project-omega/commit/5651e704ef5443360afe7642603de7cda13a3060))

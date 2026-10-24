@@ -3,6 +3,9 @@
 //! Bosses and the ranged/charge/strike profiles belong to later tasks; a wave that
 //! authors a boss is held open here by `boss_blocking` until GAME-P3-004 settles it.
 
+pub mod ai;
+pub mod hostile;
+
 use crate::combat::actor::{
 	ArenaRes, Body, ContentRes, Enemy, EnemyStats, Health, PLAYER_RADIUS_LU, Player, Pose2,
 	PreviousPose2, spawn_enemy,
@@ -88,7 +91,11 @@ pub fn start_wave(world: &mut World, number: u32) -> Result<(), WaveError> {
 
 fn clear_hostiles(world: &mut World) {
 	let stale: Vec<Entity> = world
-		.query_filtered::<Entity, Or<(With<SpawnWarning>, With<Enemy>)>>()
+		.query_filtered::<Entity, Or<(
+			With<SpawnWarning>,
+			With<Enemy>,
+			With<hostile::HostileProjectile>,
+		)>>()
 		.iter(world)
 		.collect();
 	for entity in stale {
@@ -254,6 +261,13 @@ pub fn resolve_warnings(world: &mut World) {
 			let def = &content.catalogs.enemies[&warning.enemy_id];
 			if def.behavior == Behavior::Chase {
 				world.entity_mut(enemy).insert(ChaseAi);
+			} else {
+				let wave = world.resource::<WaveRuntime>().number;
+				world.entity_mut(enemy).insert(ai::EnemyAi::new(
+					def.behavior.clone(),
+					wave,
+					warning.contact_damage,
+				));
 			}
 			let sim_id = world.get::<SimId>(enemy).copied().unwrap();
 			world.resource_mut::<PresentationQueue>().push(
@@ -322,7 +336,18 @@ impl Plugin for EncounterPlugin {
 				.after(advance_tick)
 				.in_set(TickSet::Spawn),
 		)
+		.init_resource::<ai::LiveCues>()
 		.add_systems(GameTick, chase_player.in_set(TickSet::Movement))
+		.add_systems(GameTick, ai::move_enemies.in_set(TickSet::Movement))
+		.add_systems(GameTick, ai::run_attacks.in_set(TickSet::Emit))
+		.add_systems(
+			GameTick,
+			hostile::move_hostile_projectiles.in_set(TickSet::Collide),
+		)
+		.add_systems(
+			GameTick,
+			ai::cancel_orphaned_cues.in_set(TickSet::Transition),
+		)
 		.add_systems(GameTick, complete_wave.in_set(TickSet::Transition));
 	}
 }

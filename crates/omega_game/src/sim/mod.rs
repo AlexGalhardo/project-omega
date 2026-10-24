@@ -113,6 +113,20 @@ pub struct TickInput {
 	pub aim: AimInput,
 }
 
+/// Shape of a hostile warning, copied from the authoritative attack.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum CueShapeFact {
+	Circle { radius: f64 },
+	Capsule { reach: f64, radius: f64 },
+}
+
+/// Where a warning is anchored: fixed in the world, or following its attacker's origin.
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum CueAnchorFact {
+	Locked([f64; 2]),
+	Follow { direction: [f64; 2] },
+}
+
 /// Presentation-only fact. Gameplay specs add variants; none is authoritative.
 #[derive(Debug, Clone, PartialEq)]
 pub enum PresentationKind {
@@ -168,6 +182,29 @@ pub enum PresentationKind {
 	EnemySpawned {
 		sim_id: u64,
 		warning: u64,
+		position: [f64; 2],
+	},
+	/// A hostile windup began; `sim_id` is the attacker's.
+	CueStarted {
+		sim_id: u64,
+		shape: CueShapeFact,
+		anchor: CueAnchorFact,
+		ticks: u32,
+	},
+	/// The windup finished (`cancelled == false`, attack emitted) or was cancelled.
+	CueEnded {
+		sim_id: u64,
+		cancelled: bool,
+	},
+	HostileProjectileSpawned {
+		sim_id: u64,
+		attack: u64,
+		origin: [f64; 2],
+		direction: [f64; 2],
+		radius: f64,
+	},
+	HostileProjectileEnded {
+		sim_id: u64,
 		position: [f64; 2],
 	},
 	PickupCollected {

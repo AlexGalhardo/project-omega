@@ -20,6 +20,7 @@ impl Plugin for CombatPlugin {
 			.init_resource::<weapons::EmittedShapes>()
 			.init_resource::<weapons::HitLedger>()
 			.init_resource::<damage::HitCandidates>()
+			.init_resource::<damage::HostileHits>()
 			.add_systems(GameTick, movement::move_player.in_set(TickSet::Movement))
 			.add_systems(GameTick, weapons::emit_weapons.in_set(TickSet::Emit))
 			.add_systems(
