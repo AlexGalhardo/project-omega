@@ -9,9 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **research:** Record the RES-P2-002 Brotato study note (original prose; REA cannot read the Godot package, so claims are Inferred or Unknown) (SHA_PLACEHOLDER)
-- **research:** Record the RES-P2-001 Brotato study note (original prose; REA cannot read the Godot package, so claims are Inferred or Unknown) (SHA_PLACEHOLDER)
-- **research:** Record the RES-P1-001 Brotato study note (original prose; REA cannot read the Godot package, so claims are Inferred or Unknown) (SHA_PLACEHOLDER)
+- **research:** Record the RES-P2-002 Brotato study note (original prose; REA cannot read the Godot package, so claims are Inferred or Unknown) ([0cd3d48](https://github.com/AlexGalhardo/project-omega/commit/0cd3d4800350f0772eced3ad2999671cb820a3ad))
+- **research:** Record the RES-P2-001 Brotato study note (original prose; REA cannot read the Godot package, so claims are Inferred or Unknown) ([0cd3d48](https://github.com/AlexGalhardo/project-omega/commit/0cd3d4800350f0772eced3ad2999671cb820a3ad))
+- **research:** Record the RES-P1-001 Brotato study note (original prose; REA cannot read the Godot package, so claims are Inferred or Unknown) ([0cd3d48](https://github.com/AlexGalhardo/project-omega/commit/0cd3d4800350f0772eced3ad2999671cb820a3ad))
 - **run:** Add the run lifecycle (Wave, Shop, Victory, Defeat, Summary) with death precedence, Start guard, wave-entry reset, transient cleanup and idempotent settlement (DA-03, DA-11, DA-13) ([8fea1ba](https://github.com/AlexGalhardo/project-omega/commit/8fea1ba35db51ad599fc6046d57b4c25504e7252))
 - **content:** Ship the prototype content subset in assets/content, load it in the client sandbox and validate it in the local gate and release package ([52836c6](https://github.com/AlexGalhardo/project-omega/commit/52836c68ef59b3d2f2b8d6c53bc5efd4c46ee41d))
 - **shop:** Add atomic buy, upgrade, replacement and energy-allocation commands with stale-revision and no-RNG-change rejection (DA-02, DA-08, DA-09) ([2d848a3](https://github.com/AlexGalhardo/project-omega/commit/2d848a3637c54bf5179ea74576a189a0bbf80678))
