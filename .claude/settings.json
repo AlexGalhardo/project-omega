@@ -1,0 +1,43 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(bun *)",
+      "PowerShell(cargo *)",
+      "PowerShell(rustc *)",
+      "PowerShell(git add *)",
+      "PowerShell(git commit *)",
+      "PowerShell(git status)",
+      "PowerShell(git diff *)",
+      "PowerShell(git branch *)",
+      "PowerShell(git log *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git status)",
+      "Bash(git diff *)",
+      "Bash(git branch *)",
+      "Bash(git log *)",
+      "Read(*)",
+      "Write(docs/*)",
+      "Write(*.md)",
+      "Edit(docs/*)",
+      "Edit(*.md)",
+      "Edit(.claude/*)",
+      "Edit(PLAN.md)",
+      "Edit(PROMPT.md)"
+    ],
+    "deny": [
+      "PowerShell(git push *)",
+      "PowerShell(git reset --hard *)",
+      "PowerShell(git force-push *)",
+      "PowerShell(rm -r *)",
+      "PowerShell(Remove-Item -Recurse *)",
+      "Bash(git push *)",
+      "Bash(git reset --hard *)",
+      "Bash(git force-push *)",
+      "Bash(rm -rf *)"
+    ]
+  },
+  "hooks": {
+    "prompt.submit": "echo CAVEMAN MODE ACTIVE — starting task"
+  }
+}
