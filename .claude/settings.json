@@ -2,8 +2,12 @@
   "permissions": {
     "allow": [
       "PowerShell(bun test)",
-      "PowerShell(bun run *)",
-      "PowerShell(bun install)",
+      "PowerShell(bun run build)",
+      "PowerShell(bun run test)",
+      "PowerShell(bun run check)",
+      "PowerShell(bun run lint)",
+      "PowerShell(bun run format)",
+      "PowerShell(bun install --frozen-lockfile)",
       "PowerShell(cargo build)",
       "PowerShell(cargo test)",
       "PowerShell(cargo check)",
