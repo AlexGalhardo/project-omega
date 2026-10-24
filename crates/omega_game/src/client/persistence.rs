@@ -4,7 +4,7 @@
 
 use crate::persist::{DiskStorage, LoadProblem, LoadStatus, SaveError, SlotStore, user_dir};
 use crate::profile::settings::SETTINGS_SCHEMA;
-use crate::profile::{PROFILE_SCHEMA, Profile, Settings};
+use crate::profile::{PROFILE_SCHEMA, Profile, SaveStatus, Settings};
 use crate::sim::run::ProfileDirty;
 use crate::ui::SettingsDirty;
 use bevy::prelude::*;
@@ -14,15 +14,6 @@ struct ProfileStore(SlotStore<Profile>);
 
 #[derive(Resource)]
 struct SettingsStore(SlotStore<Settings>);
-
-/// What the UI shows about persistence: a Saved indicator only after a real success.
-#[derive(Resource, Debug, Default, Clone, PartialEq, Eq)]
-pub struct SaveStatus {
-	pub profile_unsaved: bool,
-	pub settings_unsaved: bool,
-	pub load_problem: Option<String>,
-	pub last_error: Option<String>,
-}
 
 pub struct PersistencePlugin;
 

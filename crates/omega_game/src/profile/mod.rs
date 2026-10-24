@@ -70,3 +70,12 @@ pub fn unknown_grants(content: &ContentSnapshot, profile: &Profile) -> Vec<Strin
 		.cloned()
 		.collect()
 }
+
+/// What the UI shows about persistence: "Saved" only after a real success.
+#[derive(Resource, Debug, Default, Clone, PartialEq, Eq)]
+pub struct SaveStatus {
+	pub profile_unsaved: bool,
+	pub settings_unsaved: bool,
+	pub load_problem: Option<String>,
+	pub last_error: Option<String>,
+}

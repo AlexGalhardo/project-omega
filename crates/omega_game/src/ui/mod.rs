@@ -3,6 +3,7 @@
 
 pub mod compare;
 pub mod hints;
+pub mod menus;
 
 #[cfg(feature = "client")]
 pub mod client;
@@ -281,6 +282,7 @@ pub enum UiAction {
 	DismissHint,
 	SkipAllHints,
 	ResetTutorials,
+	Menu(menus::MenuAction),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -477,6 +479,9 @@ fn result_screen(run: &Run, state: RunState) -> Option<ScreenView> {
 
 /// The panel to show for the current run state, mode and pause flag; `None` during live combat.
 pub fn screen_view(world: &mut World, mode: UiMode, paused: bool) -> Option<ScreenView> {
+	if !world.contains_resource::<Run>() {
+		return menus::menu_screen(world);
+	}
 	let run = world.get_resource::<Run>()?.clone();
 	if let UiMode::Hint(hint) = mode {
 		return Some(ScreenView {
@@ -511,7 +516,13 @@ pub fn screen_view(world: &mut World, mode: UiMode, paused: bool) -> Option<Scre
 				_ => shop_screen(&shop),
 			})
 		}
-		state => result_screen(&run, state),
+		state => {
+			let mut view = result_screen(&run, state)?;
+			let (lines, buttons) = menus::result_extras(world, state == RunState::Summary);
+			view.lines.extend(lines);
+			view.buttons.extend(buttons);
+			Some(view)
+		}
 	}
 }
 
@@ -652,6 +663,7 @@ pub fn apply_action(world: &mut World, action: UiAction) -> String {
 			}
 			String::new()
 		}
+		UiAction::Menu(menu) => menus::apply_menu(world, menu),
 		UiAction::Continue => {
 			let _ = continue_to_summary(world);
 			String::new()
@@ -729,6 +741,8 @@ pub fn back_action(view: &ScreenView) -> Option<UiAction> {
 					| UiAction::CancelAbandon
 					| UiAction::Resume
 					| UiAction::DismissHint
+					| UiAction::Menu(menus::MenuAction::Back)
+					| UiAction::Menu(menus::MenuAction::CancelReset)
 			)
 		})
 		.map(|b| b.action)
