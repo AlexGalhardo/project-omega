@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **client:** Add live presentation (SimId view map, pose interpolation, exact projectile core size, per-frame queue drain) and the --play sandbox with contract tests (SHA_PLACEHOLDER)
+- **client:** Add live presentation (SimId view map, pose interpolation, exact projectile core size, per-frame queue drain) and the --play sandbox with contract tests ([8d602b7](https://github.com/AlexGalhardo/project-omega/commit/8d602b7ddf6c9184dc6290b9e7065358c3ea33e5))
 - **encounters:** Add chase enemies, authored batch scheduling, spawn warnings with postponement and cancellation, common scaling and timer completion with SP-008 contract tests (DA-11, DA-18) ([4e61fab](https://github.com/AlexGalhardo/project-omega/commit/4e61fab82f9b9726f516875bb3c812bc30263050))
 - **combat:** Add damage, crit, knockback, death, scrap pickup, contact damage with 36-tick invulnerability and regeneration resolution with SP-007 contract tests (DA-05, DA-06, DA-13) ([0d879b3](https://github.com/AlexGalhardo/project-omega/commit/0d879b38095657dcce6fa3d22ae22f91db8b78ac))
 - **combat:** Add the player actor spawn and tick movement (DA-01, DA-07) with SP-007 contract tests ([75e649a](https://github.com/AlexGalhardo/project-omega/commit/75e649ad8954481b9a6f90e9a914f6bdba1aa256))
