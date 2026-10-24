@@ -1,0 +1,30 @@
+{
+	"name": "shop-unaffordable",
+	"mode": "prototype",
+	"steps": [
+		{ "do": "wait_state", "states": ["shop"] },
+		{ "do": "debug_headless", "ops": [{ "set_scrap": 0 }] },
+		{ "do": "checkpoint", "name": "broke", "expect": { "scrap": 0, "shop.revision": 0, "loadout.occupied": 1 } },
+		{ "do": "ui", "action": { "buy": 0 } },
+		{ "do": "checkpoint", "name": "weapon-unaffordable", "expect": {
+			"scrap": 0, "shop.revision": 0, "loadout.occupied": 1, "ui.message": { "contains": "more scrap" }
+		} },
+		{ "do": "ui", "action": { "buy": 3 } },
+		{ "do": "checkpoint", "name": "item-unaffordable", "expect": {
+			"scrap": 0, "shop.revision": 0, "loadout.item_count": 0, "shop.offers.3.kind": { "contains": "item" },
+			"ui.message": { "contains": "more scrap" }
+		} },
+		{ "do": "ui", "action": "refresh" },
+		{ "do": "checkpoint", "name": "refresh-unaffordable", "expect": {
+			"scrap": 0, "shop.revision": 0, "shop.refresh_used": false, "ui.message": { "contains": "more scrap" }
+		} },
+		{ "do": "ui", "action": { "buy": 9 } },
+		{ "do": "checkpoint", "name": "offer-out-of-range", "expect": {
+			"scrap": 0, "shop.revision": 0, "ui.message": "Not possible: BadOffer"
+		} },
+		{ "do": "ui", "action": { "replace_slot": 0 } },
+		{ "do": "checkpoint", "name": "stray-replace-is-ignored", "expect": {
+			"scrap": 0, "shop.revision": 0, "ui.mode": "normal", "loadout.occupied": 1
+		} }
+	]
+}

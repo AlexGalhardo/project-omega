@@ -1,0 +1,30 @@
+{
+	"name": "shop-zero-energy-start",
+	"mode": "prototype",
+	"steps": [
+		{ "do": "wait_state", "states": ["shop"] },
+		{ "do": "ui", "action": { "energy_remove": 0 } },
+		{ "do": "ui", "action": { "energy_remove": 0 } },
+		{ "do": "ui", "action": { "energy_remove": 0 } },
+		{ "do": "checkpoint", "name": "all-energy-removed", "expect": {
+			"loadout.powered": false, "loadout.energy_used": 0, "loadout.unallocated": 6, "run.state": "shop"
+		} },
+		{ "do": "ui", "action": "start" },
+		{ "do": "checkpoint", "name": "start-rejected-with-reason", "expect": {
+			"run.state": "shop", "run.wave": 1, "shop.visit": 1,
+			"ui.message": "Give at least one weapon an energy point first.",
+			"loadout.powered": false
+		} },
+		{ "do": "key_tap", "key": "enter" },
+		{ "do": "frames", "count": 3 },
+		{ "do": "checkpoint", "name": "confirm-key-rejected-too", "expect": {
+			"run.state": "shop", "run.wave": 1,
+			"ui.message": "Give at least one weapon an energy point first."
+		} },
+		{ "do": "ui", "action": { "energy_add": 0 } },
+		{ "do": "ui", "action": "start" },
+		{ "do": "checkpoint", "name": "valid-start-works", "expect": {
+			"run.state": "wave", "run.wave": 2, "loadout.powered": true, "shop": null
+		} }
+	]
+}

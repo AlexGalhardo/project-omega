@@ -1,7 +1,10 @@
 //! Bevy UI widgets for the HUD, shop, pause, abandon and result screens (SP-014).
 //! Widgets only render `ScreenView`/`HudView` data and queue typed `UiAction` requests.
 
-use super::{ScreenView, UiAction, UiMode, apply_action, hud_text, hud_view, screen_view};
+use super::{
+	ScreenView, UiAction, UiMode, apply_action, edge_action, hud_text, hud_view, screen_view,
+	take_screen_edges,
+};
 use crate::input::InputBuffer;
 use crate::sim::SimPaused;
 use crate::sim::run::{Run, RunState};
@@ -25,6 +28,9 @@ struct ScreenRoot;
 struct MessageText;
 
 #[derive(Resource, Default)]
+struct ScreenWasOpen(bool);
+
+#[derive(Resource, Default)]
 struct ActionQueue(Vec<UiAction>);
 
 #[derive(Resource, Default)]
@@ -37,7 +43,8 @@ pub struct UiClientPlugin;
 
 impl Plugin for UiClientPlugin {
 	fn build(&self, app: &mut App) {
-		app.init_resource::<ActionQueue>()
+		app.init_resource::<ScreenWasOpen>()
+			.init_resource::<ActionQueue>()
 			.init_resource::<UiMessage>()
 			.init_resource::<UiMode>()
 			.init_resource::<LastScreen>()
@@ -102,16 +109,16 @@ fn keyboard_actions(
 	run: Option<Res<Run>>,
 	mut buffer: ResMut<InputBuffer>,
 	mut queue: ResMut<ActionQueue>,
+	mut was_open: ResMut<ScreenWasOpen>,
 ) {
 	let Some(run) = run else {
 		return;
 	};
 	let screen_open = run.state != RunState::Wave || paused.0;
-	buffer.ui_focus = screen_open;
+	let edges = take_screen_edges(&mut buffer, &mut was_open.0, screen_open);
 	if !screen_open {
 		return;
 	}
-	let edges = buffer.take_ui_edges();
 	let digit = [
 		KeyCode::Digit1,
 		KeyCode::Digit2,
@@ -120,18 +127,10 @@ fn keyboard_actions(
 	]
 	.iter()
 	.position(|&k| keys.just_pressed(k));
+	queue.0.extend(edge_action(run.state, *mode, edges));
 	match (run.state, *mode) {
-		(_, UiMode::ConfirmAbandon) => {
-			if edges.confirm {
-				queue.0.push(UiAction::ConfirmAbandon);
-			} else if edges.back {
-				queue.0.push(UiAction::CancelAbandon);
-			}
-		}
+		(_, UiMode::ConfirmAbandon) => {}
 		(RunState::Wave, _) => {
-			if edges.back {
-				queue.0.push(UiAction::Resume);
-			}
 			if keys.just_pressed(KeyCode::KeyX) {
 				queue.0.push(UiAction::AskAbandon);
 			}
@@ -139,9 +138,6 @@ fn keyboard_actions(
 		(RunState::Shop, UiMode::Replace(_)) => {
 			if let Some(slot) = digit {
 				queue.0.push(UiAction::ReplaceSlot(slot));
-			}
-			if edges.back {
-				queue.0.push(UiAction::CancelReplace);
 			}
 		}
 		(RunState::Shop, _) => {
@@ -160,16 +156,8 @@ fn keyboard_actions(
 					queue.0.push(UiAction::Energy { slot, add: !remove });
 				}
 			}
-			if edges.confirm {
-				queue.0.push(UiAction::Start);
-			}
 		}
-		(RunState::Victory | RunState::Defeat, _) => {
-			if edges.confirm {
-				queue.0.push(UiAction::Continue);
-			}
-		}
-		(RunState::Summary, _) => {}
+		_ => {}
 	}
 }
 

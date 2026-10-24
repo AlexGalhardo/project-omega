@@ -24,7 +24,7 @@ fn parse() -> Result<Parsed, String> {
 	let mut o = ClientOptions::default();
 	let (mut bench, mut duration, mut output) = (None, None, None);
 	let (mut script, mut profile, mut seed, mut headless) = (None, None, None, false);
-	let (mut frames, mut out_dir) = (3600u64, PathBuf::from("artifacts/e2e"));
+	let (mut frames, mut out_dir) = (40_000u64, PathBuf::from("artifacts/e2e"));
 	let mut it = std::env::args().skip(1);
 	while let Some(flag) = it.next() {
 		let mut value = || it.next().ok_or(format!("{flag} needs a value"));

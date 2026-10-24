@@ -5,9 +5,10 @@
 pub mod client;
 
 use crate::combat::actor::{ContentRes, Health, Loadout, Player, PlayerStats, Scrap};
-use crate::combat::energy::TOTAL_POINTS;
+use crate::combat::energy::{MAX_PER_SLOT, TOTAL_POINTS};
 use crate::combat::stats::fire_interval_ticks;
 use crate::encounters::WaveRuntime;
+use crate::input::{InputBuffer, UiEdges};
 use crate::shop::{Offer, ShopCommand, ShopOutcome, ShopReject, ShopVisit, apply, refresh_cost};
 use crate::sim::run::{
 	Outcome, Run, RunState, StartError, abandon, continue_to_summary, start_next_wave,
@@ -260,6 +261,38 @@ pub enum UiAction {
 	Continue,
 }
 
+/// Hands the UI the Confirm and Back presses made while a screen is open. Presses queued
+/// during combat are dropped on the frame a screen opens, so a Confirm hit mid-wave
+/// cannot start the next wave the moment the shop appears.
+pub fn take_screen_edges(buffer: &mut InputBuffer, was_open: &mut bool, open: bool) -> UiEdges {
+	buffer.ui_focus = open;
+	let edges = buffer.take_ui_edges();
+	if std::mem::replace(was_open, open) {
+		edges
+	} else {
+		UiEdges::default()
+	}
+}
+
+/// The action Confirm and Back mean on the current screen; the native client and the QA
+/// harness both use it so keyboard edges behave the same everywhere.
+pub fn edge_action(state: RunState, mode: UiMode, edges: UiEdges) -> Option<UiAction> {
+	match (state, mode) {
+		(_, UiMode::ConfirmAbandon) => {
+			if edges.confirm {
+				Some(UiAction::ConfirmAbandon)
+			} else {
+				edges.back.then_some(UiAction::CancelAbandon)
+			}
+		}
+		(RunState::Wave, _) => edges.back.then_some(UiAction::Resume),
+		(RunState::Shop, UiMode::Replace(_)) => edges.back.then_some(UiAction::CancelReplace),
+		(RunState::Shop, _) => edges.confirm.then_some(UiAction::Start),
+		(RunState::Victory | RunState::Defeat, _) => edges.confirm.then_some(UiAction::Continue),
+		(RunState::Summary, _) => None,
+	}
+}
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Button {
 	pub label: String,
@@ -390,7 +423,7 @@ fn shop_screen(shop: &ShopView) -> ScreenView {
 		buttons.push(button(
 			format!("Slot {} energy +", i + 1),
 			UiAction::Energy { slot: i, add: true },
-			true,
+			slot.points < MAX_PER_SLOT && shop.unallocated > 0,
 		));
 		buttons.push(button(
 			format!("Slot {} energy -", i + 1),

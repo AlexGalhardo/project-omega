@@ -1,0 +1,421 @@
+{
+  "kind": "e2e",
+  "script": "shop-zero-energy-start",
+  "seed": "5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a",
+  "mode": "headless",
+  "passed": true,
+  "frames": 3611,
+  "ticks": 3601,
+  "error": null,
+  "checkpoints": [
+    {
+      "name": "all-energy-removed",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 3600,
+        "paused": false,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 48,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          0.0,
+          0.0
+        ],
+        "run": {
+          "state": "shop",
+          "wave": 1,
+          "total_waves": 3,
+          "outcome": null,
+          "waves_completed": null,
+          "settlements": 0
+        },
+        "shop": {
+          "visit": 1,
+          "revision": 3,
+          "refresh_used": false,
+          "refresh_cost": 8,
+          "offers": [
+            {
+              "kind": "weapon",
+              "id": "wpn_saw",
+              "tier": 1,
+              "price": 22
+            },
+            {
+              "kind": "weapon",
+              "id": "wpn_bolt",
+              "tier": 2,
+              "price": 30
+            },
+            {
+              "kind": "item",
+              "id": "item_sealant",
+              "tier": 0,
+              "price": 18
+            },
+            {
+              "kind": "item",
+              "id": "item_ratchet",
+              "tier": 0,
+              "price": 16
+            }
+          ]
+        },
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 0,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 6,
+          "powered": false
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 3
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "start-rejected-with-reason",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 3600,
+        "paused": false,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 48,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          0.0,
+          0.0
+        ],
+        "run": {
+          "state": "shop",
+          "wave": 1,
+          "total_waves": 3,
+          "outcome": null,
+          "waves_completed": null,
+          "settlements": 0
+        },
+        "shop": {
+          "visit": 1,
+          "revision": 3,
+          "refresh_used": false,
+          "refresh_cost": 8,
+          "offers": [
+            {
+              "kind": "weapon",
+              "id": "wpn_saw",
+              "tier": 1,
+              "price": 22
+            },
+            {
+              "kind": "weapon",
+              "id": "wpn_bolt",
+              "tier": 2,
+              "price": 30
+            },
+            {
+              "kind": "item",
+              "id": "item_sealant",
+              "tier": 0,
+              "price": 18
+            },
+            {
+              "kind": "item",
+              "id": "item_ratchet",
+              "tier": 0,
+              "price": 16
+            }
+          ]
+        },
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 0,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 6,
+          "powered": false
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "Give at least one weapon an energy point first.",
+          "actions": 4
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "confirm-key-rejected-too",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 3600,
+        "paused": false,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 48,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          0.0,
+          0.0
+        ],
+        "run": {
+          "state": "shop",
+          "wave": 1,
+          "total_waves": 3,
+          "outcome": null,
+          "waves_completed": null,
+          "settlements": 0
+        },
+        "shop": {
+          "visit": 1,
+          "revision": 3,
+          "refresh_used": false,
+          "refresh_cost": 8,
+          "offers": [
+            {
+              "kind": "weapon",
+              "id": "wpn_saw",
+              "tier": 1,
+              "price": 22
+            },
+            {
+              "kind": "weapon",
+              "id": "wpn_bolt",
+              "tier": 2,
+              "price": 30
+            },
+            {
+              "kind": "item",
+              "id": "item_sealant",
+              "tier": 0,
+              "price": 18
+            },
+            {
+              "kind": "item",
+              "id": "item_ratchet",
+              "tier": 0,
+              "price": 16
+            }
+          ]
+        },
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 0,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 6,
+          "powered": false
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "Give at least one weapon an energy point first.",
+          "actions": 5
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "valid-start-works",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 3601,
+        "paused": false,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 48,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          0.0,
+          0.0
+        ],
+        "run": {
+          "state": "wave",
+          "wave": 2,
+          "total_waves": 3,
+          "outcome": null,
+          "waves_completed": null,
+          "settlements": 0
+        },
+        "shop": null,
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 1
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 1,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 5,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 7
+        }
+      },
+      "screenshot": null
+    }
+  ]
+}

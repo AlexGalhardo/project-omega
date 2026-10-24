@@ -1,8 +1,10 @@
 //! JSON e2e timeline: input actions plus checkpoints over the authoritative snapshot.
 
+use super::ops::DebugOp;
 use super::{Command, InputDriver, Snapshot, Step, arena};
 use crate::input::{Edge, FrameInput};
 use crate::sim::RunSeed;
+use crate::ui::UiAction;
 use bevy::math::DVec2;
 use omega_2d::camera::ViewportMapping;
 use serde::{Deserialize, Serialize};
@@ -43,12 +45,70 @@ pub enum Button {
 	Right,
 }
 
-/// Expected value of one dotted snapshot path, for example `camera.letterbox`.
+/// Typed shop, lifecycle and modal requests; the same ones a widget or hotkey sends.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum UiStep {
+	Buy(usize),
+	Refresh,
+	EnergyAdd(usize),
+	EnergyRemove(usize),
+	Start,
+	ReplaceSlot(usize),
+	CancelReplace,
+	AskAbandon,
+	ConfirmAbandon,
+	CancelAbandon,
+	Continue,
+}
+
+impl From<UiStep> for UiAction {
+	fn from(step: UiStep) -> Self {
+		match step {
+			UiStep::Buy(offer) => UiAction::Buy(offer),
+			UiStep::Refresh => UiAction::Refresh,
+			UiStep::EnergyAdd(slot) => UiAction::Energy { slot, add: true },
+			UiStep::EnergyRemove(slot) => UiAction::Energy { slot, add: false },
+			UiStep::Start => UiAction::Start,
+			UiStep::ReplaceSlot(slot) => UiAction::ReplaceSlot(slot),
+			UiStep::CancelReplace => UiAction::CancelReplace,
+			UiStep::AskAbandon => UiAction::AskAbandon,
+			UiStep::ConfirmAbandon => UiAction::ConfirmAbandon,
+			UiStep::CancelAbandon => UiAction::CancelAbandon,
+			UiStep::Continue => UiAction::Continue,
+		}
+	}
+}
+
+/// World a script runs against.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Deserialize)]
+#[serde(rename_all = "snake_case")]
+pub enum ScriptMode {
+	/// Foundation sandbox: one player and wave 1 on the full fixture.
+	#[default]
+	Sandbox,
+	/// The shipped prototype content through the real run lifecycle.
+	Prototype,
+}
+
+const RUN_STATES: [&str; 5] = ["wave", "shop", "victory", "defeat", "summary"];
+
+/// Expected value of one dotted snapshot path, for example `camera.letterbox`. Array
+/// elements are addressed by index (`shop.offers.0.kind`).
 #[derive(Debug, Clone, PartialEq, Deserialize)]
 #[serde(untagged)]
 pub enum Expect {
 	Flag(bool),
 	Exact(f64),
+	/// A string value, or `@path` to require equality with the same snapshot path of the
+	/// previous checkpoint (for example `"scrap": "@scrap"` for "unchanged").
+	Text(String),
+	/// A string value containing the text, for messages that carry numbers.
+	Contains {
+		contains: String,
+	},
+	/// JSON `null`: the path must be missing or null in the snapshot.
+	Absent,
 	Range {
 		#[serde(default)]
 		min: Option<f64>,
@@ -110,6 +170,20 @@ pub enum Action {
 	Pause,
 	/// Explicit resume, as the pause menu will offer.
 	Resume,
+	/// Typed UI request against the run lifecycle (prototype mode).
+	Ui {
+		action: UiStep,
+	},
+	/// Waits (bounded by `max_ticks`) until the run reaches one of `states`.
+	WaitState {
+		states: Vec<String>,
+		#[serde(default = "default_wait_ticks")]
+		max_ticks: u32,
+	},
+	/// State edit available only in the headless host; windowed runs fail on it.
+	DebugHeadless {
+		ops: Vec<DebugOp>,
+	},
 	Checkpoint {
 		name: String,
 		#[serde(default)]
@@ -124,10 +198,16 @@ pub enum Action {
 pub struct Script {
 	pub name: String,
 	#[serde(default)]
+	pub mode: ScriptMode,
+	#[serde(default)]
 	pub seed: Option<String>,
 	#[serde(default = "default_resolution")]
 	pub resolution: [u32; 2],
 	pub steps: Vec<Action>,
+}
+
+fn default_wait_ticks() -> u32 {
+	6000
 }
 
 fn default_resolution() -> [u32; 2] {
@@ -171,6 +251,11 @@ impl Script {
 				Action::MouseMove { x, y } | Action::MouseClick { x, y, .. } => {
 					!(x.is_finite() && y.is_finite())
 				}
+				Action::DebugHeadless { ops } => ops.is_empty(),
+				Action::WaitState { states, max_ticks } => {
+					states.is_empty()
+						|| *max_ticks == 0 || states.iter().any(|s| !RUN_STATES.contains(&s.as_str()))
+				}
 				Action::Checkpoint { name, .. } => name.is_empty() || !names.insert(name.clone()),
 				_ => false,
 			};
@@ -193,16 +278,36 @@ pub struct CheckpointResult {
 	pub screenshot: Option<String>,
 }
 
-pub fn evaluate(cp: &Checkpoint, snap: &Snapshot) -> CheckpointResult {
+fn lookup<'a>(json: &'a serde_json::Value, path: &str) -> Option<&'a serde_json::Value> {
+	path.split('.')
+		.try_fold(json, |v, key| match v {
+			serde_json::Value::Array(items) => key.parse::<usize>().ok().and_then(|i| items.get(i)),
+			_ => v.get(key),
+		})
+		.filter(|v| !v.is_null())
+}
+
+pub fn evaluate(cp: &Checkpoint, snap: &Snapshot, previous: Option<&Snapshot>) -> CheckpointResult {
 	let json = serde_json::to_value(snap).unwrap_or(serde_json::Value::Null);
+	let before = previous.and_then(|p| serde_json::to_value(p).ok());
 	let mut failures = Vec::new();
 	for (path, expect) in &cp.expect {
-		let found = path.split('.').try_fold(&json, |v, key| v.get(key));
-		let Some(value) = found.filter(|v| !v.is_null()) else {
-			failures.push(format!("{path}: missing in snapshot"));
+		let Some(value) = lookup(&json, path) else {
+			if *expect != Expect::Absent {
+				failures.push(format!("{path}: missing in snapshot"));
+			}
 			continue;
 		};
 		let ok = match expect {
+			Expect::Absent => false,
+			Expect::Contains { contains } => value.as_str().is_some_and(|v| v.contains(contains)),
+			Expect::Text(want) => match want.strip_prefix('@') {
+				Some(other) => before
+					.as_ref()
+					.and_then(|b| lookup(b, other))
+					.is_some_and(|b| b == value),
+				None => value.as_str() == Some(want.as_str()),
+			},
 			Expect::Flag(want) => value.as_bool() == Some(*want),
 			Expect::Exact(want) => value.as_f64().is_some_and(|v| (v - want).abs() <= 1e-6),
 			Expect::Range { min, max } => value
@@ -225,7 +330,15 @@ pub fn evaluate(cp: &Checkpoint, snap: &Snapshot) -> CheckpointResult {
 enum Pending {
 	None,
 	Frames(u32),
-	UntilTick { target: u64, budget: u64 },
+	UntilTick {
+		target: u64,
+		budget: u64,
+	},
+	UntilState {
+		states: Vec<String>,
+		deadline: u64,
+		budget: u64,
+	},
 }
 
 pub struct ScriptDriver {
@@ -332,6 +445,26 @@ impl InputDriver for ScriptDriver {
 					*budget -= 1;
 					true
 				}
+				Pending::UntilState {
+					states,
+					deadline,
+					budget,
+				} => {
+					let now = obs.run.as_ref().map(|r| r.state);
+					if now.is_some_and(|n| states.iter().any(|s| s == n)) {
+						self.pending = Pending::None;
+						false
+					} else if paused || *budget == 0 || obs.tick >= *deadline {
+						self.failure = Some(format!(
+							"wait_state {states:?} cannot finish (paused: {paused}, state: {now:?}, tick: {})",
+							obs.tick
+						));
+						return self.finish(commands);
+					} else {
+						*budget -= 1;
+						true
+					}
+				}
 				_ => {
 					self.pending = Pending::None;
 					false
@@ -391,6 +524,21 @@ impl InputDriver for ScriptDriver {
 				Action::Resume => {
 					paused = false;
 					commands.push(Command::Resume);
+				}
+				Action::Ui { action } => {
+					commands.push(Command::Ui(action.into()));
+					self.pending = Pending::Frames(1);
+				}
+				Action::DebugHeadless { ops } => {
+					commands.extend(ops.into_iter().map(Command::Debug));
+					self.pending = Pending::Frames(1);
+				}
+				Action::WaitState { states, max_ticks } => {
+					self.pending = Pending::UntilState {
+						states,
+						deadline: obs.tick + u64::from(max_ticks),
+						budget: u64::from(max_ticks) * 4 + 600,
+					};
 				}
 				Action::Checkpoint {
 					name,

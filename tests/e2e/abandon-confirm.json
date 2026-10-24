@@ -1,0 +1,20 @@
+{
+	"name": "abandon-confirm",
+	"mode": "prototype",
+	"steps": [
+		{ "do": "wait", "ticks": 30 },
+		{ "do": "pause" },
+		{ "do": "ui", "action": "ask_abandon" },
+		{ "do": "ui", "action": "confirm_abandon" },
+		{ "do": "checkpoint", "name": "abandoned", "expect": {
+			"run.state": "summary", "run.outcome": "abandoned", "run.settlements": 1,
+			"run.waves_completed": 0, "ui.mode": "normal", "paused": false, "shop": null
+		} },
+		{ "do": "ui", "action": "confirm_abandon" },
+		{ "do": "ui", "action": "continue" },
+		{ "do": "frames", "count": 30 },
+		{ "do": "checkpoint", "name": "result-is-final", "expect": {
+			"run.state": "summary", "run.outcome": "abandoned", "run.settlements": 1
+		} }
+	]
+}

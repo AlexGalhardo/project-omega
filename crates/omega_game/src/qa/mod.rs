@@ -6,22 +6,35 @@
 pub mod bot;
 pub mod cli;
 mod host;
+pub mod ops;
 pub mod script;
 mod snapshot;
 
 pub use cli::{Finished, QaRun, Session, run_headless, run_headless_session, write_report};
 pub use host::HeadlessHost;
-pub use snapshot::{CameraFacts, MenuView, PlayerFacts, Snapshot, arena, camera_facts, capture};
+pub use ops::{DebugOp, apply_debug, apply_ui};
+pub use snapshot::{
+	CameraFacts, LoadoutFacts, MenuView, OfferFacts, PlayerFacts, QaUi, RunFacts, ShopFacts,
+	SlotFacts, Snapshot, UiFacts, arena, camera_facts, capture,
+};
 
 use crate::input::FrameInput;
+use crate::ui::UiAction;
 
 /// Side effect a driver asks its host to perform before the frame is applied.
 #[derive(Debug, Clone, PartialEq)]
 pub enum Command {
-	Resize { width: u32, height: u32 },
+	Resize {
+		width: u32,
+		height: u32,
+	},
 	FocusLost,
 	Resume,
 	Checkpoint(script::Checkpoint),
+	/// Typed request against the run lifecycle, applied like a widget or hotkey.
+	Ui(UiAction),
+	/// Headless-only state edit; the windowed host rejects it.
+	Debug(DebugOp),
 }
 
 /// One frame of driver output: commands run in order, then `frame` goes to the buffer.

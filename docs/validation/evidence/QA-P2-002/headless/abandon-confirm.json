@@ -1,0 +1,170 @@
+{
+  "kind": "e2e",
+  "script": "abandon-confirm",
+  "seed": "5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a",
+  "mode": "headless",
+  "passed": true,
+  "frames": 66,
+  "ticks": 30,
+  "error": null,
+  "checkpoints": [
+    {
+      "name": "abandoned",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 30,
+        "paused": false,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 0,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          0.0,
+          0.0
+        ],
+        "run": {
+          "state": "summary",
+          "wave": 1,
+          "total_waves": 3,
+          "outcome": "abandoned",
+          "waves_completed": 0,
+          "settlements": 1
+        },
+        "shop": null,
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 2
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "result-is-final",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 30,
+        "paused": false,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 0,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          0.0,
+          0.0
+        ],
+        "run": {
+          "state": "summary",
+          "wave": 1,
+          "total_waves": 3,
+          "outcome": "abandoned",
+          "waves_completed": 0,
+          "settlements": 1
+        },
+        "shop": null,
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 4
+        }
+      },
+      "screenshot": null
+    }
+  ]
+}

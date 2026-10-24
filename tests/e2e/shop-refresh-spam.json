@@ -1,0 +1,26 @@
+{
+	"name": "shop-refresh-spam",
+	"mode": "prototype",
+	"steps": [
+		{ "do": "wait_state", "states": ["shop"] },
+		{ "do": "debug_headless", "ops": [{ "set_scrap": 100 }] },
+		{ "do": "checkpoint", "name": "before", "expect": { "scrap": 100, "shop.refresh_used": false, "shop.revision": 0 } },
+		{ "do": "ui", "action": "refresh" },
+		{ "do": "checkpoint", "name": "first-refresh", "expect": {
+			"scrap": 92, "shop.refresh_cost": 8, "shop.refresh_used": true, "shop.revision": 1,
+			"ui.message": "Offers refreshed."
+		} },
+		{ "do": "ui", "action": "refresh" },
+		{ "do": "ui", "action": "refresh" },
+		{ "do": "ui", "action": "refresh" },
+		{ "do": "checkpoint", "name": "spam-rejected", "expect": {
+			"scrap": "@scrap", "shop.revision": "@shop.revision", "shop.offers": "@shop.offers",
+			"shop.refresh_used": true, "ui.message": "Refresh already used this visit."
+		} },
+		{ "do": "ui", "action": "start" },
+		{ "do": "wait_state", "states": ["shop"] },
+		{ "do": "checkpoint", "name": "next-visit-resets", "expect": {
+			"shop.visit": 2, "shop.refresh_used": false, "shop.revision": 0
+		} }
+	]
+}

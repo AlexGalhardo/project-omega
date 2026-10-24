@@ -2,7 +2,7 @@
 //! headless entry point behind `omega-game --headless`.
 
 use super::bot::{Auditor, Bot, BotProfile, Finding, QaReport};
-use super::script::{Checkpoint, CheckpointResult, Script, ScriptDriver, evaluate};
+use super::script::{Checkpoint, CheckpointResult, Script, ScriptDriver, ScriptMode, evaluate};
 use super::{HeadlessHost, InputDriver, Snapshot, Step};
 use crate::sim::RunSeed;
 use serde::Serialize;
@@ -73,6 +73,8 @@ pub struct Session {
 	frames: u64,
 	last: Option<Snapshot>,
 	panic: Option<String>,
+	prototype: bool,
+	rejected: Option<String>,
 }
 
 impl Session {
@@ -82,14 +84,16 @@ impl Session {
 				let text = std::fs::read_to_string(script)
 					.map_err(|e| format!("cannot read {}: {e}", script.display()))?;
 				let parsed = Script::parse(&text)?;
-				Ok(Self::new(
+				let mut session = Self::new(
 					Driver::Script(ScriptDriver::new(&parsed)),
 					parsed.name.clone(),
 					None,
 					parsed.run_seed()?,
 					parsed.resolution,
 					out_dir.clone(),
-				))
+				);
+				session.prototype = parsed.mode == ScriptMode::Prototype;
+				Ok(session)
 			}
 			QaRun::Bot {
 				profile,
@@ -101,14 +105,16 @@ impl Session {
 				if *frames == 0 || resolution.contains(&0) {
 					return Err("bot frames and resolution must be positive".into());
 				}
-				Ok(Self::new(
+				let mut session = Self::new(
 					Driver::Bot(Box::new(Bot::new(*profile, seed, *frames))),
 					format!("qa-bot-{profile}-{}", &seed.to_hex()[..8]),
 					Some(*profile),
 					*seed,
 					*resolution,
 					out_dir.clone(),
-				))
+				);
+				session.prototype = true;
+				Ok(session)
 			}
 		}
 	}
@@ -133,7 +139,25 @@ impl Session {
 			frames: 0,
 			last: None,
 			panic: None,
+			prototype: false,
+			rejected: None,
 		}
+	}
+
+	/// A window runs the fixed loop on the wall clock, so one rendered frame can carry up to
+	/// the catch-up cap of ticks (0.25 s at 60 Hz); headless frames carry exactly one.
+	pub fn allow_catch_up_ticks(&mut self) {
+		self.auditor.tick_slack = 15;
+	}
+
+	/// True when the session drives the real prototype loop rather than the sandbox.
+	pub fn is_prototype(&self) -> bool {
+		self.prototype
+	}
+
+	/// A command the host could not honour (for example a debug op in a windowed run).
+	pub fn reject(&mut self, message: String) {
+		self.rejected.get_or_insert(message);
 	}
 
 	pub fn seed(&self) -> RunSeed {
@@ -155,7 +179,8 @@ impl Session {
 	}
 
 	pub fn checkpoint(&mut self, cp: &Checkpoint, snap: &Snapshot) -> &mut CheckpointResult {
-		self.checkpoints.push(evaluate(cp, snap));
+		let previous = self.checkpoints.last().map(|c| c.snapshot.clone());
+		self.checkpoints.push(evaluate(cp, snap, previous.as_ref()));
 		self.checkpoints.last_mut().expect("just pushed")
 	}
 
@@ -164,11 +189,14 @@ impl Session {
 	}
 
 	pub fn finish(mut self, last: Snapshot, mode: &str, error: Option<String>) -> Finished {
-		let error = error.or_else(|| self.driver.as_dyn().failure().map(str::to_owned));
+		let error = error
+			.or_else(|| self.rejected.take())
+			.or_else(|| self.driver.as_dyn().failure().map(str::to_owned));
 		let ticks = last.tick;
 		let (json, passed) = match (self.profile, self.driver) {
 			(Some(profile), Driver::Bot(bot)) => {
 				let mut findings = self.auditor.findings;
+				findings.extend(bot.findings.iter().cloned());
 				let panics = u32::from(self.panic.is_some());
 				for detail in self.panic.into_iter().chain(error) {
 					findings.push(Finding {
@@ -178,6 +206,12 @@ impl Session {
 						detail,
 					});
 				}
+				let run = last.run.as_ref();
+				let (completed, outcome, max_wave) = (
+					run.is_some_and(|r| r.state == "summary"),
+					run.and_then(|r| r.outcome),
+					run.map_or(0, |r| r.wave),
+				);
 				let passed = findings.is_empty();
 				let report = QaReport {
 					kind: "qa-bot",
@@ -188,6 +222,9 @@ impl Session {
 					counts: bot.counts,
 					findings,
 					panics,
+					completed,
+					outcome,
+					max_wave,
 					passed,
 					final_snapshot: Some(last),
 				};
@@ -232,7 +269,11 @@ pub fn write_report(finished: &Finished) -> Result<(), String> {
 /// Runs the session without a window and returns its finished report.
 pub fn run_headless_session(run: &QaRun) -> Result<Finished, String> {
 	let mut session = Session::from_run(run)?;
-	let mut host = HeadlessHost::new(session.seed(), session.resolution)?;
+	let mut host = if session.is_prototype() {
+		HeadlessHost::prototype(session.seed(), session.resolution)?
+	} else {
+		HeadlessHost::new(session.seed(), session.resolution)?
+	};
 	let budget = session.frame_budget();
 	let outcome = catch_unwind(AssertUnwindSafe(|| host.run(&mut session, budget)));
 	let error = match outcome {

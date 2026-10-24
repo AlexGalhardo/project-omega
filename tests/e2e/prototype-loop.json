@@ -1,0 +1,71 @@
+{
+	"name": "prototype-loop",
+	"mode": "prototype",
+	"resolution": [1280, 720],
+	"steps": [
+		{ "do": "checkpoint", "name": "launch", "expect": {
+			"tick": 0, "run.state": "wave", "run.wave": 1, "run.total_waves": 3,
+			"scrap": 0, "player.hp": { "min": 1 }, "loadout.occupied": 1, "loadout.powered": true
+		} },
+
+		{ "do": "key_down", "key": "d" },
+		{ "do": "wait", "ticks": 40 },
+		{ "do": "key_up", "key": "d" },
+		{ "do": "mouse_move", "x": 900, "y": 360 },
+		{ "do": "mouse_down", "button": "right" },
+		{ "do": "wait", "ticks": 120 },
+		{ "do": "mouse_up", "button": "right" },
+		{ "do": "checkpoint", "name": "moved-and-aimed", "expect": {
+			"player.x": { "min": 1 }, "enemy_count": { "min": 1 }, "run.state": "wave"
+		} },
+
+		{ "do": "wait_state", "states": ["shop"] },
+		{ "do": "checkpoint", "name": "shop-after-wave-1", "screenshot": true, "expect": {
+			"run.state": "shop", "run.wave": 1, "enemy_count": 0, "scrap": { "min": 1 },
+			"shop.visit": 1, "shop.revision": 0, "shop.refresh_used": false,
+			"player.hp": { "min": 1 }
+		} },
+		{ "do": "frames", "count": 10 },
+
+		{ "do": "ui", "action": { "buy": 3 } },
+		{ "do": "checkpoint", "name": "bought-item", "expect": {
+			"shop.offers.3.kind": "sold", "shop.revision": 1, "loadout.item_count": 1,
+			"ui.message": "Purchased."
+		} },
+		{ "do": "ui", "action": { "buy": 0 } },
+		{ "do": "checkpoint", "name": "bought-weapon", "expect": {
+			"shop.offers.0.kind": "sold", "shop.revision": 2, "loadout.occupied": 2
+		} },
+		{ "do": "ui", "action": { "energy_add": 1 } },
+		{ "do": "ui", "action": { "energy_add": 1 } },
+		{ "do": "ui", "action": { "energy_add": 1 } },
+		{ "do": "checkpoint", "name": "energy-allocated", "screenshot": true, "expect": {
+			"loadout.slots.1.points": 3, "loadout.energy_used": 6, "loadout.unallocated": 0,
+			"loadout.powered": true
+		} },
+		{ "do": "frames", "count": 10 },
+
+		{ "do": "ui", "action": "start" },
+		{ "do": "checkpoint", "name": "wave-2", "expect": {
+			"run.state": "wave", "run.wave": 2, "shop": null, "player.x": 0, "loadout.energy_used": 6
+		} },
+		{ "do": "wait_state", "states": ["shop"] },
+		{ "do": "checkpoint", "name": "shop-after-wave-2", "expect": {
+			"run.state": "shop", "run.wave": 2, "shop.visit": 2, "enemy_count": 0
+		} },
+		{ "do": "ui", "action": "start" },
+		{ "do": "checkpoint", "name": "wave-3", "expect": { "run.state": "wave", "run.wave": 3 } },
+
+		{ "do": "wait_state", "states": ["victory", "defeat"] },
+		{ "do": "checkpoint", "name": "run-over", "screenshot": true, "expect": {
+			"run.settlements": 1, "shop": null, "enemy_count": { "min": 0 }
+		} },
+		{ "do": "frames", "count": 10 },
+		{ "do": "ui", "action": "continue" },
+		{ "do": "checkpoint", "name": "summary", "screenshot": true, "expect": {
+			"run.state": "summary", "run.settlements": 1, "run.waves_completed": { "min": 2 }
+		} },
+		{ "do": "frames", "count": 10 }
+	]
+}
+

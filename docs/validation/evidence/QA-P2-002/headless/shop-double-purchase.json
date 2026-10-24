@@ -1,0 +1,346 @@
+{
+  "kind": "e2e",
+  "script": "shop-double-purchase",
+  "seed": "5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a",
+  "mode": "headless",
+  "passed": true,
+  "frames": 3605,
+  "ticks": 3600,
+  "error": null,
+  "checkpoints": [
+    {
+      "name": "before",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 3600,
+        "paused": false,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 1000,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          0.0,
+          0.0
+        ],
+        "run": {
+          "state": "shop",
+          "wave": 1,
+          "total_waves": 3,
+          "outcome": null,
+          "waves_completed": null,
+          "settlements": 0
+        },
+        "shop": {
+          "visit": 1,
+          "revision": 0,
+          "refresh_used": false,
+          "refresh_cost": 8,
+          "offers": [
+            {
+              "kind": "weapon",
+              "id": "wpn_saw",
+              "tier": 1,
+              "price": 22
+            },
+            {
+              "kind": "weapon",
+              "id": "wpn_bolt",
+              "tier": 2,
+              "price": 30
+            },
+            {
+              "kind": "item",
+              "id": "item_sealant",
+              "tier": 0,
+              "price": 18
+            },
+            {
+              "kind": "item",
+              "id": "item_ratchet",
+              "tier": 0,
+              "price": 16
+            }
+          ]
+        },
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 0
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "first-purchase",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 3600,
+        "paused": false,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 984,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          0.0,
+          0.0
+        ],
+        "run": {
+          "state": "shop",
+          "wave": 1,
+          "total_waves": 3,
+          "outcome": null,
+          "waves_completed": null,
+          "settlements": 0
+        },
+        "shop": {
+          "visit": 1,
+          "revision": 1,
+          "refresh_used": false,
+          "refresh_cost": 8,
+          "offers": [
+            {
+              "kind": "weapon",
+              "id": "wpn_saw",
+              "tier": 1,
+              "price": 22
+            },
+            {
+              "kind": "weapon",
+              "id": "wpn_bolt",
+              "tier": 2,
+              "price": 30
+            },
+            {
+              "kind": "item",
+              "id": "item_sealant",
+              "tier": 0,
+              "price": 18
+            },
+            {
+              "kind": "sold",
+              "id": "",
+              "tier": 0,
+              "price": 0
+            }
+          ]
+        },
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [
+            "item_ratchet"
+          ],
+          "item_count": 1,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "Purchased.",
+          "actions": 1
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "second-purchase-rejected",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 3600,
+        "paused": false,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 984,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          0.0,
+          0.0
+        ],
+        "run": {
+          "state": "shop",
+          "wave": 1,
+          "total_waves": 3,
+          "outcome": null,
+          "waves_completed": null,
+          "settlements": 0
+        },
+        "shop": {
+          "visit": 1,
+          "revision": 1,
+          "refresh_used": false,
+          "refresh_cost": 8,
+          "offers": [
+            {
+              "kind": "weapon",
+              "id": "wpn_saw",
+              "tier": 1,
+              "price": 22
+            },
+            {
+              "kind": "weapon",
+              "id": "wpn_bolt",
+              "tier": 2,
+              "price": 30
+            },
+            {
+              "kind": "item",
+              "id": "item_sealant",
+              "tier": 0,
+              "price": 18
+            },
+            {
+              "kind": "sold",
+              "id": "",
+              "tier": 0,
+              "price": 0
+            }
+          ]
+        },
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [
+            "item_ratchet"
+          ],
+          "item_count": 1,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "Not possible: NotForSale",
+          "actions": 3
+        }
+      },
+      "screenshot": null
+    }
+  ]
+}

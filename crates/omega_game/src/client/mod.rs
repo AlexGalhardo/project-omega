@@ -88,10 +88,12 @@ struct BenchSamples {
 /// Runs the native client until the window closes, the screenshot is written or the
 /// benchmark finishes.
 pub fn run(mut options: ClientOptions) -> AppExit {
+	let mut session_seed = None;
 	let session = match options.qa.as_ref().map(crate::qa::Session::from_run) {
 		Some(Ok(session)) => {
 			[options.width, options.height] = session.resolution;
 			options.play = true;
+			session_seed = Some(session.seed());
 			Some(session)
 		}
 		Some(Err(e)) => {
@@ -140,8 +142,8 @@ pub fn run(mut options: ClientOptions) -> AppExit {
 	)
 	.add_plugins((GameCorePlugin, crate::input::InputClientPlugin))
 	.insert_resource(ClearColor(Color::BLACK))
-	.insert_resource(RngStreams::new(&dev_seed()))
-	.insert_resource(dev_seed())
+	.insert_resource(RngStreams::new(&session_seed.unwrap_or_else(dev_seed)))
+	.insert_resource(session_seed.unwrap_or_else(dev_seed))
 	.insert_resource(ActiveSkin(skin))
 	.insert_resource(Options(options))
 	.init_resource::<FrameCounter>()

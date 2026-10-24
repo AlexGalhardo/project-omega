@@ -1,0 +1,954 @@
+{
+  "kind": "e2e",
+  "script": "foundation",
+  "seed": "5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a",
+  "mode": "headless",
+  "passed": true,
+  "frames": 146,
+  "ticks": 121,
+  "error": null,
+  "checkpoints": [
+    {
+      "name": "launch",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 0,
+        "paused": false,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 0,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          0.0,
+          0.0
+        ],
+        "run": null,
+        "shop": null,
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 0
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "assets-ready",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 30,
+        "paused": false,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 0.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 0,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          0.0,
+          0.0
+        ],
+        "run": null,
+        "shop": null,
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 0
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "moved",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 90,
+        "paused": false,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 180.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 0,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          180.0,
+          0.0
+        ],
+        "run": null,
+        "shop": null,
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 0
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "resize-16-9",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 90,
+        "paused": false,
+        "window": [
+          1920,
+          1080
+        ],
+        "player": {
+          "x": 180.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 0,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1920.0,
+          "content_h": 1080.0,
+          "pixels_per_lu": 1.6,
+          "letterbox": false
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          180.0,
+          0.0
+        ],
+        "run": null,
+        "shop": null,
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 0
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "resize-21-9",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 90,
+        "paused": false,
+        "window": [
+          2560,
+          1080
+        ],
+        "player": {
+          "x": 180.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 0,
+        "camera": {
+          "content_x": 320.0,
+          "content_y": 0.0,
+          "content_w": 1920.0,
+          "content_h": 1080.0,
+          "pixels_per_lu": 1.6,
+          "letterbox": true
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          180.0,
+          0.0
+        ],
+        "run": null,
+        "shop": null,
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 0
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "resize-5-4",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 90,
+        "paused": false,
+        "window": [
+          1280,
+          1024
+        ],
+        "player": {
+          "x": 180.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 0,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 152.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": true
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          180.0,
+          0.0
+        ],
+        "run": null,
+        "shop": null,
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 0
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "bar-click-ignored",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 93,
+        "paused": false,
+        "window": [
+          1280,
+          1024
+        ],
+        "player": {
+          "x": 180.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 0,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 152.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": true
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          180.0,
+          0.0
+        ],
+        "run": null,
+        "shop": null,
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 0
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "unfocused-a",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 93,
+        "paused": true,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 180.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 0,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          180.0,
+          0.0
+        ],
+        "run": null,
+        "shop": null,
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 0
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "unfocused-b",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 93,
+        "paused": true,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 180.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 0,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          180.0,
+          0.0
+        ],
+        "run": null,
+        "shop": null,
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 0
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "refocused",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 103,
+        "paused": false,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 180.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 0,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          180.0,
+          0.0
+        ],
+        "run": null,
+        "shop": null,
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 0
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "pause-spam",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 103,
+        "paused": true,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 180.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 0,
+        "scrap": 0,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": null,
+        "aim_origin": [
+          180.0,
+          0.0
+        ],
+        "run": null,
+        "shop": null,
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 0
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "invalid-input",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 121,
+        "paused": false,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 180.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 4,
+        "scrap": 0,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": [
+          9.711984845532754,
+          -303.20727142781493
+        ],
+        "aim_origin": [
+          180.0,
+          0.0
+        ],
+        "run": null,
+        "shop": null,
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 0
+        }
+      },
+      "screenshot": null
+    },
+    {
+      "name": "final",
+      "passed": true,
+      "failures": [],
+      "snapshot": {
+        "tick": 121,
+        "paused": false,
+        "window": [
+          1280,
+          720
+        ],
+        "player": {
+          "x": 180.0,
+          "y": 0.0,
+          "hp": 120,
+          "hp_max": 120
+        },
+        "enemy_count": 4,
+        "scrap": 0,
+        "camera": {
+          "content_x": 0.0,
+          "content_y": 0.0,
+          "content_w": 1280.0,
+          "content_h": 720.0,
+          "pixels_per_lu": 1.0666666666666667,
+          "letterbox": false
+        },
+        "nearest_enemy": [
+          9.711984845532754,
+          -303.20727142781493
+        ],
+        "aim_origin": [
+          180.0,
+          0.0
+        ],
+        "run": null,
+        "shop": null,
+        "loadout": {
+          "slots": [
+            {
+              "weapon": "wpn_bolt",
+              "tier": 1,
+              "points": 3
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            },
+            {
+              "weapon": null,
+              "tier": 0,
+              "points": 0
+            }
+          ],
+          "occupied": 1,
+          "energy_used": 3,
+          "items": [],
+          "item_count": 0,
+          "unallocated": 3,
+          "powered": true
+        },
+        "ui": {
+          "mode": "normal",
+          "message": "",
+          "actions": 0
+        }
+      },
+      "screenshot": null
+    }
+  ]
+}

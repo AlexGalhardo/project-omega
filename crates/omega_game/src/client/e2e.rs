@@ -6,7 +6,7 @@
 //! reaching the window in the same frame still add their edges to the buffer.
 
 use crate::input::InputBuffer;
-use crate::qa::{Command, Session, capture, write_report};
+use crate::qa::{Command, QaUi, Session, apply_ui, capture, write_report};
 use crate::sim::SimPaused;
 use bevy::app::AppExit;
 use bevy::prelude::*;
@@ -26,18 +26,20 @@ struct QaHost {
 	settle: u32,
 }
 
-pub fn install(app: &mut App, session: Session) {
-	app.insert_resource(QaHost {
-		session: Some(session),
-		requested: None,
-		frames: 0,
-		outcome: None,
-		settle: SETTLE_FRAMES,
-	})
-	.add_systems(
-		RunFixedMainLoop,
-		drive.in_set(RunFixedMainLoopSystems::BeforeFixedMainLoop),
-	);
+pub fn install(app: &mut App, mut session: Session) {
+	session.allow_catch_up_ticks();
+	app.init_resource::<QaUi>()
+		.insert_resource(QaHost {
+			session: Some(session),
+			requested: None,
+			frames: 0,
+			outcome: None,
+			settle: SETTLE_FRAMES,
+		})
+		.add_systems(
+			RunFixedMainLoop,
+			drive.in_set(RunFixedMainLoopSystems::BeforeFixedMainLoop),
+		);
 }
 
 fn window_size(world: &mut World, host: &mut QaHost) -> Option<[u32; 2]> {
@@ -99,6 +101,10 @@ fn step(world: &mut World, host: &mut QaHost) {
 			Command::Resume => world.resource_scope(|w, mut b: Mut<InputBuffer>| {
 				b.resume(&mut w.resource_mut::<SimPaused>());
 			}),
+			Command::Ui(action) => apply_ui(world, action),
+			Command::Debug(op) => session.reject(format!(
+				"debug_headless {op:?} is only available in headless runs"
+			)),
 			Command::Checkpoint(cp) => {
 				let at = capture(world, host.requested.unwrap_or(window));
 				let path = session.out_dir.join(format!("{}.png", cp.name));
