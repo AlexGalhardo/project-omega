@@ -1081,7 +1081,7 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 **Asserts:** V14 AC2/4/5 — plus `scripts/check.ps1` exit 0.
 
-#### GAME-P3-015. Complete shop comparisons and confirmation UI (M) — TODO
+#### GAME-P3-015. Complete shop comparisons and confirmation UI (M) — DONE
 
 **Depends on:** GAME-P3-012, GAME-P2-008. **Read first:** [SP-014](docs/specs/sp-014-ui-accessibility.md) (GDD-015 (§15); Art Bible §7).
 
@@ -1089,10 +1089,10 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 **Microtasks:**
 
-- [ ] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
-- [ ] Write the failing acceptance tests first
-- [ ] Implement within the spec allowed paths
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence
+- [x] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
+- [x] Write the failing acceptance tests first
+- [x] Implement within the spec allowed paths
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence
 
 **Asserts:** V14 AC1/3; DA-08/09/10 — plus `scripts/check.ps1` exit 0.
 

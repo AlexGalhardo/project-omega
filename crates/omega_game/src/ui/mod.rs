@@ -1,6 +1,8 @@
 //! HUD and shop view models (SP-014). Pure reads of the simulation: widgets render these
 //! values and send typed commands back; nothing here mutates rules state.
 
+pub mod compare;
+
 #[cfg(feature = "client")]
 pub mod client;
 
@@ -119,6 +121,8 @@ pub struct OfferView {
 	pub enabled: bool,
 	/// Text reason shown when the offer cannot be bought.
 	pub reason: Option<String>,
+	/// Comparison lines from the player's actual stats.
+	pub detail: Vec<String>,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -152,12 +156,14 @@ pub fn shop_view(world: &mut World) -> Option<ShopView> {
 				price: None,
 				enabled: false,
 				reason: Some("Nothing left to offer".into()),
+				detail: Vec::new(),
 			},
 			Offer::Sold => OfferView {
 				label: "Sold".into(),
 				price: None,
 				enabled: false,
 				reason: Some("Already bought this visit".into()),
+				detail: Vec::new(),
 			},
 			Offer::Weapon { id, tier, price } => {
 				let name = content
@@ -178,6 +184,15 @@ pub fn shop_view(world: &mut World) -> Option<ShopView> {
 			}
 		})
 		.collect();
+	let mut offers: Vec<OfferView> = offers;
+	let (loadout, stats) = world
+		.query_filtered::<(&Loadout, &PlayerStats), With<Player>>()
+		.iter(world)
+		.next()
+		.map(|(l, s)| (l.clone(), s.0))?;
+	for (view, offer) in offers.iter_mut().zip(&visit.offers) {
+		view.detail = compare::offer_detail(&content, &loadout, &stats, offer);
+	}
 	let cost = refresh_cost(visit.visit);
 	let (refresh_enabled, refresh_reason) = if visit.refresh_used {
 		(false, Some("Refresh already used this visit".to_string()))
@@ -208,6 +223,7 @@ fn priced(label: String, price: u32, scrap: u32) -> OfferView {
 		price: Some(price),
 		enabled: affordable,
 		reason: (!affordable).then(|| format!("Need {} more scrap", price - scrap)),
+		detail: Vec::new(),
 	}
 }
 
@@ -314,7 +330,7 @@ fn pause_screen(world: &mut World) -> Option<ScreenView> {
 	})
 }
 
-fn replace_screen(shop: &ShopView, offer: usize) -> ScreenView {
+fn replace_screen(shop: &ShopView, offer: usize, details: Vec<String>) -> ScreenView {
 	let mut buttons: Vec<Button> = shop
 		.slots
 		.iter()
@@ -333,12 +349,14 @@ fn replace_screen(shop: &ShopView, offer: usize) -> ScreenView {
 		})
 		.collect();
 	buttons.push(button("Cancel", UiAction::CancelReplace, true));
+	let mut lines = vec![
+		format!("{} needs a free slot.", shop.offers[offer].label),
+		"Choose the weapon to lose; its energy moves to the new weapon.".into(),
+	];
+	lines.extend(details);
 	ScreenView {
 		title: "Replace a weapon".into(),
-		lines: vec![
-			format!("{} needs a free slot.", shop.offers[offer].label),
-			"Choose the weapon to lose; its energy moves to the new weapon.".into(),
-		],
+		lines,
 		buttons,
 	}
 }
@@ -355,6 +373,9 @@ fn shop_screen(shop: &ShopView) -> ScreenView {
 			UiAction::Buy(i),
 			offer.enabled,
 		));
+		for detail in &offer.detail {
+			lines.push(format!("  [{}] {detail}", i + 1));
+		}
 		if let Some(reason) = &offer.reason {
 			lines.push(format!("  [{}] unavailable: {reason}", i + 1));
 		}
@@ -460,12 +481,34 @@ pub fn screen_view(world: &mut World, mode: UiMode, paused: bool) -> Option<Scre
 		RunState::Shop => {
 			let shop = shop_view(world)?;
 			Some(match mode {
-				UiMode::Replace(offer) => replace_screen(&shop, offer),
+				UiMode::Replace(offer) => {
+					let details = replacement_details(world, offer);
+					replace_screen(&shop, offer, details)
+				}
 				_ => shop_screen(&shop),
 			})
 		}
 		state => result_screen(&run, state),
 	}
+}
+
+fn replacement_details(world: &mut World, offer: usize) -> Vec<String> {
+	let Some(incoming) = world
+		.get_resource::<ShopVisit>()
+		.and_then(|v| v.offers.get(offer).cloned())
+	else {
+		return Vec::new();
+	};
+	let content = world.resource::<ContentRes>().0.clone();
+	let Some((loadout, stats)) = world
+		.query_filtered::<(&Loadout, &PlayerStats), With<Player>>()
+		.iter(world)
+		.next()
+		.map(|(l, s)| (l.clone(), s.0))
+	else {
+		return Vec::new();
+	};
+	compare::replacement_lines(&content, &loadout, &stats, &incoming)
 }
 
 /// True when a new-weapon purchase would need a replacement slot (full loadout, weapon not owned).

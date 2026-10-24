@@ -269,3 +269,100 @@ fn pause_screen_shows_stats_with_units_and_abandon_needs_confirmation() {
 	assert_eq!(summary.title, "Summary");
 	let _ = DVec2::ZERO;
 }
+
+#[test]
+fn upgrade_offer_shows_old_and_new_damage_and_the_slots_actual_rate() {
+	let mut h = run_in_shop();
+	world(&mut h).resource_mut::<Scrap>().0 = 500;
+	let upgrade = Offer::Weapon {
+		id: "wpn_bolt".into(),
+		tier: 2,
+		price: 30,
+	};
+	world(&mut h).resource_mut::<ShopVisit>().offers[0] = upgrade;
+	let view = omega_game::ui::shop_view(world(&mut h)).unwrap();
+	let line = &view.offers[0].detail[0];
+	// Bolt base 12: tier 1 = 12, tier 2 = 16 (12 * 140 / 100 = 16.8 floored).
+	assert!(line.contains("damage 12 -> 16"), "{line}");
+	assert!(line.contains("4.00/s at 3 pt"), "{line}");
+	assert!(line.contains("range 300 LU"), "{line}");
+}
+
+#[test]
+fn new_weapon_in_an_empty_slot_shows_rates_at_every_point_count() {
+	let mut h = run_in_shop();
+	let view = omega_game::ui::shop_view(world(&mut h)).unwrap();
+	let weapon = view
+		.offers
+		.iter()
+		.find(|o| o.label.starts_with("New "))
+		.expect("a new weapon is offered");
+	let text = weapon.detail.join(" | ");
+	assert!(text.contains("goes to slot 2 with 0 pt"), "{text}");
+	for points in ["1 pt", "2 pt", "3 pt"] {
+		assert!(text.contains(points), "{text}");
+	}
+	assert!(
+		!text.contains("unpowered"),
+		"an empty slot is not shown as powered or unpowered: {text}"
+	);
+}
+
+#[test]
+fn item_offers_list_their_modifiers_with_units() {
+	let mut h = run_in_shop();
+	let view = omega_game::ui::shop_view(world(&mut h)).unwrap();
+	let item = view
+		.offers
+		.iter()
+		.find(|o| o.label.starts_with("Item "))
+		.unwrap();
+	assert!(
+		item.detail[0].contains('+') || item.detail[0].contains('-'),
+		"{:?}",
+		item.detail
+	);
+}
+
+#[test]
+fn replacement_prompt_names_what_is_lost_and_gained_per_slot() {
+	let mut h = run_in_shop();
+	let p = player(&mut h);
+	{
+		let mut l = world(&mut h).get_mut::<Loadout>(p).unwrap();
+		for i in 1..4 {
+			l.slots[i] = Some(EquippedWeapon {
+				weapon_id: "wpn_saw".into(),
+				tier: 1,
+			});
+		}
+	}
+	world(&mut h).resource_mut::<Scrap>().0 = 500;
+	world(&mut h).resource_mut::<ShopVisit>().offers[0] = Offer::Weapon {
+		id: "wpn_bolt".into(),
+		tier: 1,
+		price: 20,
+	};
+	world(&mut h).get_mut::<Loadout>(p).unwrap().slots[0] = Some(EquippedWeapon {
+		weapon_id: "wpn_saw".into(),
+		tier: 2,
+	});
+	let screen = screen_view(world(&mut h), UiMode::Replace(0), false).unwrap();
+	let text = screen.lines.join("\n");
+	assert!(text.contains("Slot 1: lose Chain Saw tier 2"), "{text}");
+	assert!(text.contains("gain Bolt Driver tier 1"), "{text}");
+	assert_eq!(
+		screen
+			.buttons
+			.iter()
+			.filter(|b| b.label.starts_with("Replace ["))
+			.count(),
+		4
+	);
+	assert!(
+		screen
+			.buttons
+			.iter()
+			.any(|b| b.action == UiAction::CancelReplace)
+	);
+}
