@@ -1,6 +1,6 @@
 # ROADMAP.md: development plan for Project Omega
 
-> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** ENG-P2-001 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
+> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** RES-P2-002 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
 >
 > This is the onboarding file. It says where the project is, what the next task is and how to prove it is done. Every work session, human or AI agent, starts here.
 >
@@ -591,7 +591,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Asserts:** V08 common-profile subset; DA-11/18 — plus `scripts/check.ps1` exit 0.
 
-#### ENG-P2-001. Live pose/projectile presentation (M) — TODO
+#### ENG-P2-001. Live pose/projectile presentation (M) — IN_REVIEW
 
 **Depends on:** ENG-P1-004. **Read first:** [SP-012](docs/specs/sp-012-camera-visuals.md) (Art Bible §4–7, §9–10; architecture §3 (ENG-CAM-001, ENG-VIS-001)).
 
@@ -599,11 +599,11 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Promote: files `crates/omega_2d/src/visuals/` (projection), `crates/omega_game/src/client/` presentation systems
-- [ ] Map `SimId` → presentation entity; interpolate `PreviousPose2` → `Pose2` for rendering only
-- [ ] Drain `PresentationQueue` once per rendered frame; spawn projectile cores with exact collision diameter
-- [ ] Native check: catalog swap at Menu keeps the trace (DA-20) and alignment (AA-05)
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
+- [x] Promote: files `crates/omega_2d/src/visuals/` (projection), `crates/omega_game/src/client/` presentation systems
+- [x] Map `SimId` → presentation entity; interpolate `PreviousPose2` → `Pose2` for rendering only
+- [x] Drain `PresentationQueue` once per rendered frame; spawn projectile cores with exact collision diameter
+- [ ] Native check (owner, Q-001): catalog swap at Menu keeps the trace (DA-20) and alignment (AA-05)
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
 
 **Asserts:** V12 AC2–4; catalog swap trace — plus `scripts/check.ps1` exit 0.
 

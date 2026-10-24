@@ -2,8 +2,11 @@
 //! a static preview of the proof visual catalog (ENG-P1-004, GAME-P1-004), native
 //! screenshots for readability review, and the PERF-01 empty-scene benchmark.
 
+pub mod presentation;
+
 use crate::GameCorePlugin;
 use crate::diagnostics::{Metric, Report, ReportMetadata};
+use crate::sim::{RngStreams, RunSeed};
 use bevy::math::DVec2;
 use bevy::prelude::*;
 use bevy::render::view::screenshot::{Screenshot, save_to_disk};
@@ -13,6 +16,7 @@ use omega_2d::geometry::Bounds2;
 use omega_2d::visuals::{
 	Resolved, VisualCatalog, VisualCategory, VisualId, VisualPose, pose_transform, sprite_parts,
 };
+use presentation::{ActiveSkin, LivePresentationPlugin};
 use std::path::PathBuf;
 
 /// Arena `arena_foundry` playable rectangle (GDD-004).
@@ -35,6 +39,8 @@ pub struct ClientOptions {
 	pub catalog: String,
 	pub screenshot: Option<PathBuf>,
 	pub benchmark: Option<BenchmarkOptions>,
+	/// Prototype sandbox: spawn the player and run wave 1 live instead of the static preview.
+	pub play: bool,
 }
 
 impl Default for ClientOptions {
@@ -45,6 +51,7 @@ impl Default for ClientOptions {
 			catalog: "proof-catalog.json".into(),
 			screenshot: None,
 			benchmark: None,
+			play: false,
 		}
 	}
 }
@@ -61,9 +68,6 @@ pub fn asset_root() -> PathBuf {
 
 #[derive(Resource)]
 struct Options(ClientOptions);
-
-#[derive(Resource)]
-struct ActiveSkin(VisualCatalog);
 
 #[derive(Resource, Default)]
 struct FrameCounter(u32);
@@ -117,13 +121,48 @@ pub fn run(options: ClientOptions) -> AppExit {
 	)
 	.add_plugins((GameCorePlugin, crate::input::InputClientPlugin))
 	.insert_resource(ClearColor(Color::BLACK))
+	.insert_resource(RngStreams::new(&dev_seed()))
+	.insert_resource(dev_seed())
 	.insert_resource(ActiveSkin(skin))
 	.insert_resource(Options(options))
 	.init_resource::<FrameCounter>()
 	.init_resource::<BenchSamples>()
 	.add_systems(Startup, spawn_preview)
 	.add_systems(Update, (screenshot_and_exit, benchmark));
+	if app.world().resource::<Options>().0.play {
+		app.add_plugins(LivePresentationPlugin)
+			.add_systems(Startup, start_play.after(spawn_preview));
+	}
 	app.run()
+}
+
+/// Fixed seed until the run lifecycle (GAME-P2-010) derives one per run.
+fn dev_seed() -> RunSeed {
+	RunSeed::from_hex(&"5a".repeat(32)).expect("static seed")
+}
+
+/// Development sandbox: the full fixture catalog stands in until GAME-P2-009 ships the
+/// exact prototype subset and GAME-P2-010 the lifecycle.
+fn start_play(world: &mut World) {
+	use crate::combat::actor::{ArenaRes, ContentRes, spawn_player};
+	use crate::content::{Profile, load_dir};
+	let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/content/full");
+	let content = match load_dir(&dir, Profile::Full) {
+		Ok(c) => c,
+		Err(e) => {
+			error!("cannot load play content: {e:?}");
+			return;
+		}
+	};
+	let arena = content.catalogs.arenas["arena_foundry"].clone();
+	world.insert_resource(ContentRes(std::sync::Arc::new(content)));
+	world.insert_resource(ArenaRes(arena.bounds));
+	if let Err(e) = spawn_player(world, "char_patch", arena.player_spawn) {
+		error!("cannot spawn player: {e:?}");
+	}
+	if let Err(e) = crate::encounters::start_wave(world, 1) {
+		error!("cannot start wave: {e:?}");
+	}
 }
 
 fn arena() -> Bounds2 {
@@ -163,12 +202,20 @@ fn spawn_visual(
 
 /// Static preview: player, smallest friendly and hostile projectile cores, a locked
 /// ground warning, a missing enemy visual shown through its fallback, and an icon.
-fn spawn_preview(mut commands: Commands, assets: Res<AssetServer>, skin: Res<ActiveSkin>) {
+fn spawn_preview(
+	mut commands: Commands,
+	assets: Res<AssetServer>,
+	skin: Res<ActiveSkin>,
+	options: Res<Options>,
+) {
 	commands.spawn((Camera2d, LogicalCamera { world: arena() }));
 	commands.spawn((
 		Sprite::from_color(FLOOR_DEEP, (ARENA_MAX - ARENA_MIN).as_vec2()),
 		Transform::from_xyz(0.0, 0.0, omega_2d::visuals::DrawLayer::ArenaFloor.z()),
 	));
+	if options.0.play {
+		return;
+	}
 	let s = &skin.0;
 	spawn_visual(
 		&mut commands,
