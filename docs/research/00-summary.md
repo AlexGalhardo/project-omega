@@ -1,6 +1,6 @@
 # Stage 1 — Research summary
 
-Date: 2026-10-23. Status: **research checkpoint delivered; Stage 2 in progress**. The later owner approval of the integration strategy is canonical in [DEC-001](../decisions/decision-register.md#dec-001--bevy-integration-strategy); recommendations below retain their research context. Planning is not complete. No game implementation, feasibility spike, benchmark, REA inspection or independent model review has occurred.
+Research date: 2026-10-23. Navigation updated 2026-10-24: **research delivered; Stages 2, 3 and 4 artifacts approved**. The owner decisions are canonical in the [decision register](../decisions/decision-register.md); recommendations below retain their dated research context. Planning is not complete; Stage 5 task mapping remains. No game implementation, feasibility spike, benchmark, REA inspection or independent model review has occurred.
 
 ## Project mandate and current state
 
@@ -33,7 +33,7 @@ Source IDs resolve to dated URLs/revisions in [sources.md](sources.md). Recommen
 
 Keep strategy **C — a minimal patch fork** available only for a reproduced blocker, with evidence that public hooks and an acceptable upstream solution are insufficient, owner approval, a regression test and an exit condition. Strategy **A — a full fork** offers internal control but creates a substantially larger maintenance responsibility. No measured sync cost or requirement currently justifies it.
 
-Use fixed-step gameplay with explicit ordering and a presentation boundary, typed/versioned content, standard testing and a measured baseline before optimization. Prefer SVG source assets exported to textures. Keep visual style replaceable without altering simulation rules. Subsequent approvals of identity, platform and content scope are recorded in the decision register. Aiming, progression, mechanical differentiator and final art direction remain open; research recommendations do not approve them by implication.
+Use fixed-step gameplay with explicit ordering and a presentation boundary, typed/versioned content, standard testing and a measured baseline before optimization. Prefer SVG source assets exported to textures. Keep visual style replaceable without altering simulation rules. Subsequent product approvals are recorded in the decision register. Detailed mechanics and art direction are now proposed in the [GDD](../gdd.md) and [Art Bible](../art-bible.md); research recommendations do not independently approve those drafts.
 
 ## Deliverables and checkpoints
 
@@ -49,13 +49,13 @@ Use fixed-step gameplay with explicit ordering and a presentation boundary, type
 
 ## Risks and unknowns
 
-**Unknown:** delivery throughput and release horizon, minimum Windows/hardware requirements, original differentiator, feasibility of the approved content envelope, actual feel, build/runtime performance, exact reference formulas and independent review findings. These are tracked in [open questions](open-questions.md), not silently resolved here.
+**Unknown:** delivery throughput and release horizon, minimum Windows/hardware requirements, feasibility of the approved content envelope, actual feel, build/runtime performance, exact reference formulas and independent review findings. The original differentiator was subsequently selected in DEC-007. Evidence gaps are tracked in [open questions](open-questions.md), not silently resolved here.
 
 **Inferred:** the largest delivery risks are excessive content, engine generalization before need, learning/migration overhead, unproven integration, and confusing automated test success with a satisfying playable game. The strongest mitigations are small approved scope, an early complete playable slice, native playtesting and evidence-based cuts. No schedule or performance budget is established.
 
 ## Documentary verification
 
-**Verified locally:** the expected research/legal files exist; all 11 Markdown files decode as UTF-8; an automated check found no broken local file/heading links, undefined cited source IDs or unbalanced fenced blocks. The later-stage artifacts remain absent. A manual consistency pass checked recommendation/approval boundaries and corrected ambiguous dependency-direction wording. This is document validation, not a game test, full legal audit or independent review.
+**Verified locally at the Stage 1 checkpoint:** the expected research/legal files existed; all 11 then-current Markdown files decoded as UTF-8; an automated check found no broken local file/heading links, undefined cited source IDs or unbalanced fenced blocks. Later-stage artifacts were absent at that checkpoint; subsequent design work is recorded in PLAN.md and the GDD. A manual consistency pass checked recommendation/approval boundaries and corrected ambiguous dependency-direction wording. This is document validation, not a game test, full legal audit or independent review.
 
 ## Planning gates and continuation
 
@@ -72,4 +72,4 @@ No GDD, Art Bible, architecture ADRs, implementation specs, agent contract, road
 
 The full traceability chain is the later planning acceptance condition: evidence -> approved decision -> GDD requirement -> ADR/architecture -> spec -> roadmap task -> acceptance test. At this stage only evidence, proposals and question IDs exist; absent later links are **intentionally pending**, not a passed planning audit.
 
-**Continuation:** Q01 is resolved in [DEC-001](../decisions/decision-register.md#dec-001--bevy-integration-strategy); Windows-only 1.0 scope is approved in [DEC-002](../decisions/decision-register.md#dec-002--version-10-platform-scope). Owner experience is recorded in [DEC-003](../decisions/decision-register.md#dec-003--owner-experience-baseline). Weekly availability is recorded in [DEC-004](../decisions/decision-register.md#dec-004--weekly-owner-availability). The compact content envelope is approved in [DEC-005](../decisions/decision-register.md#dec-005--compact-version-10-content-envelope). The thematic identity is approved in [DEC-006](../decisions/decision-register.md#dec-006--original-thematic-identity). Next is Q05, the principal mechanical differentiator. Wait for the owner before advancing the brainstorming queue.
+**Continuation:** The owner approved GDD/Art Bible and all Stage 4 draft/proposed artifacts. See [PLAN.md](../../PLAN.md) for current status and Stage 5 continuation; the original brainstorming queue is no longer active. Approval does not imply executed gameplay validation.

@@ -1,138 +1,147 @@
 # PLAN — Rust 2D Engine + Arena-Survival Roguelite
 
-**Current Stage:** 1 (Research)  
-**Last Updated:** 2026-10-23
+**Current Stage:** Planning complete (Stages 1–6). Implementation status lives in ROADMAP.md.
+
+**Last Updated:** 2026-10-24
+
+Planning-stage history. Implementation status and onboarding: [ROADMAP.md](ROADMAP.md).
+
+## Dashboard
+
+Implementation status moved to [ROADMAP.md](ROADMAP.md): its header names the current phase and next task. This file keeps the history of planning stages 1–6.
 
 ---
 
 ## Overview
 
-Execution plan across 6 stages as defined in `PROMPT.md`. Each stage has approval gates. Do not skip stages or start implementation before Stage 4 approval.
+Execution plan across 6 stages as defined in `PROMPT.md`. Stage 2 was approved on 2026-10-23. On 2026-10-24 the owner approved Stages 3 and 4 (DEC-011, DEC-012), the Stage 5 roadmap and review corrections (DEC-013), GDD revision 2 (DEC-014), refreshed dependency pins (DEC-015) and engineering/release conventions (DEC-016). The independent planning review exists in [docs/reviews/](docs/reviews/2026-10-24-planning-review.md); its findings were corrected on 2026-10-24.
 
 ---
 
 ## Stage 1 — Research
 
-**Objective:** Complete research tracks A–G in `docs/research/`.  
+**Objective:** Complete research tracks A–G in `docs/research/`.
 **Gate:** Findings documented, unknowns identified, provisional strategy documented.
 
 ### Tracks (Priority Order)
 
-- [ ] **Track C — Bevy fork strategy** (highest priority: blocks all architecture decisions)
+- [x] **Track C — Bevy fork strategy** (documentary research; experiments remain pending)
   - Study current stable Bevy release, module layout, hot reload, testing, platform support
   - Evaluate fork vs plugins vs hybrid approach
   - Compare on maintenance, sync cost per release, API stability, build times
   - Recommend fork strategy with evidence
 
-- [ ] **Track A — Brotato gameplay model**
+- [x] **Track A — Brotato gameplay model**
   - Analyze core loop, wave structure, spawning, movement, combat, stats, progression
   - Compare with similar games (Vampire Survivors, 20 Minutes Till Dawn, Halls of Torment)
   - Extract design principles and black-box gameplay experiments
 
-- [ ] **Track D — Rust practices and tooling**
+- [x] **Track D — Rust practices and tooling**
   - Toolchain, MSRV policy, workspace layout, lints, testing, benchmarking, CI
   - Recommend minimal, justified toolset
 
-- [ ] **Track E — Architecture for ECS roguelite**
+- [x] **Track E — Architecture for ECS roguelite**
   - Simulation vs presentation, fixed-step simulation, RNG determinism
   - Performance risks (enemy/projectile counts, spatial partitioning, draw calls)
 
-- [ ] **Track B — REA (reverse engineering assistance)**
+- [x] **Track B — REA (reverse engineering assistance)**
   - Capabilities, supported targets, OS requirements, MCP setup
   - Define permitted role under IP policy and evidence workflow
 
-- [ ] **Track F — SVG asset pipeline**
+- [x] **Track F — SVG asset pipeline**
   - Compare runtime rendering, offline rasterization, hybrid approaches
   - Requirement: art style must be replaceable without touching gameplay
 
-- [ ] **Track G — Spec-Driven Development for AI agents**
+- [x] **Track G — Spec-Driven Development for AI agents**
   - ADRs, spec templates, acceptance tests, vertical slices, task sizing
   - Parallel work via worktrees with file ownership
 
 ### Deliverables
 
-- [ ] `docs/research/00-summary.md` — executive findings, provisional strategy
-- [ ] `docs/research/01-gameplay-reference.md` — Track A
-- [ ] `docs/research/02-rea.md` — Track B
-- [ ] `docs/research/03-bevy-and-fork-strategy.md` — Track C
-- [ ] `docs/research/04-rust-architecture-and-tooling.md` — Tracks D and E
-- [ ] `docs/research/05-asset-pipeline.md` — Track F
-- [ ] `docs/research/06-sdd-and-agent-workflow.md` — Track G
-- [ ] `docs/research/sources.md` — source ledger with URLs and access dates
-- [ ] `docs/research/open-questions.md` — unknowns and blockers
+- [x] `docs/research/00-summary.md` — executive findings, provisional strategy
+- [x] `docs/research/01-gameplay-reference.md` — Track A
+- [x] `docs/research/02-rea.md` — Track B
+- [x] `docs/research/03-bevy-and-fork-strategy.md` — Track C
+- [x] `docs/research/04-rust-architecture-and-tooling.md` — Tracks D and E
+- [x] `docs/research/05-asset-pipeline.md` — Track F
+- [x] `docs/research/06-sdd-and-agent-workflow.md` — Track G
+- [x] `docs/research/sources.md` — source ledger with URLs and access dates
+- [x] `docs/research/open-questions.md` — unknowns and blockers
 
-**Next Step:** Present findings and ask owner for Stage 2 approval.
+**Checkpoint:** Documentary research delivered. See the source ledger for versions and limits; no gameplay observation, REA execution or benchmark is claimed.
 
 ---
 
 ## Stage 2 — Brainstorming
 
-**Objective:** Ask high-impact questions, record decisions.  
+**Objective:** Ask high-impact questions, record decisions.
 **Gate:** Owner approves decision summary.
 
 ### Decision Areas (Priority Order)
 
-- [ ] Fork strategy (from Track C research)
-- [ ] Target platforms and dev OS
-- [ ] Owner's Rust/Bevy experience and available time
-- [ ] 1.0 scope (content counts)
-- [ ] Original name, identity, and differentiators from Brotato
-- [ ] Core mechanics (aiming, weapon slots, stats, shop, meta-progression)
-- [ ] Art direction (SVG style)
-- [ ] Audio and music approach
-- [ ] Controller and accessibility
-- [ ] Repository structure and visibility
-- [ ] Commercial vs personal release
-- [ ] Budget and paid tools
+- [x] Fork strategy (from Track C research)
+- [x] Target platforms and dev OS (minimum OS/hardware explicitly deferred)
+- [x] Owner's Rust/Bevy experience and available time
+- [x] 1.0 scope (content counts)
+- [x] Original identity and differentiator; final name explicitly deferred
+- [x] Core direction (detailed stat/rule proposals belong to Stage 3)
+- [x] Art direction (SVG style)
+- [x] Audio/music production default
+- [x] Controller/accessibility detailed commitment deferred to GDD review
+- [x] Repository default; visibility/license explicitly deferred
+- [x] Commercial/personal release explicitly deferred
+- [x] No paid-service prerequisite; budget ceiling explicitly deferred
 
 ### Deliverables
 
-- [ ] `docs/decisions/decision-register.md` — all decisions with ID, rationale, status
-- [ ] `docs/decisions/scope-and-non-goals.md` — required 1.0 / desired / post-1.0 / non-goal lists
-- [ ] `docs/decisions/approval-summary.md` — owner-facing summary of all decisions
+- [x] `docs/decisions/decision-register.md` — decisions and owner approval recorded
+- [x] `docs/decisions/scope-and-non-goals.md` — approved scope and explicit deferrals
+- [x] Owner-facing summary approved on 2026-10-23; canonical approval evidence is in the decision register's Stage 2 boundary section, avoiding a duplicate summary file
 
 ---
 
 ## Stage 3 — GDD and Art Bible
 
-**Objective:** Design implementable game specification.  
+**Objective:** Design implementable game specification.
 **Gate:** Owner approves both documents.
 
 ### Deliverables
 
-- [ ] `docs/gdd.md` — concept, pillars, gameplay loop, combat, stats with formulas, content schemas, state machine, UI/HUD, onboarding, scope split (Prototype → Alpha → Beta → RC → 1.0 → post-launch)
-- [ ] `docs/art-bible.md` — visual pillars, palette, shape language, silhouettes, animation, VFX, SVG pipeline, future pixel-art path, placeholder audio strategy
+- [x] `docs/gdd.md` — draft rules, formulas/examples, complete content catalogs/schemas, state machine, UI/accessibility, persistence and release scope split
+- [x] `docs/art-bible.md` — draft visuals, SVG pipeline/catalog, art replacement path, original/licensed audio policy and production acceptance
+- [x] Owner explicitly approved both Stage 3 documents on 2026-10-24
 
-**Consistency Check:** No contradictions between GDD and art bible (hitboxes, timing, UI match).
+**Consistency Check:** GDD-020 records actual catalog/reference/arithmetic/link checks and manual geometry/timing/UI review. Passed documentary checks do not establish runtime readability or balance.
 
 ---
 
 ## Stage 4 — Architecture and SDD
 
-**Objective:** Spec system ready for implementation agents.  
+**Objective:** Spec system ready for implementation agents.
 **Gate:** Owner approves architecture, ADRs, and specs.
 
 ### Deliverables
 
-- [ ] **Repository strategy** — single repo vs separate engine/game, workspace layout, Git dependency pinning, `[patch]` overrides
-- [ ] **Module map** — responsibility, inputs/outputs, owned data, public interface, events, failure modes, test approach, performance notes for each crate
-- [ ] **Fixed-step simulation and RNG** — determinism guarantees, seeding strategy
-- [ ] **Performance plan** — benchmark scenarios, metrics (P95/P99 frame time, allocations, entity counts, draw calls), target hardware
-- [ ] **Testing layers** — unit, integration, headless seeded simulations, property tests, regression tests, benchmarks
-- [ ] `docs/architecture/adr/` — ADRs for fork, toolchain/MSRV, workspace layout, collision/physics, asset pipeline, content format, save format, input, CI, agent workflow
-- [ ] `docs/specs/_template.md` — standard spec format (ID, status, problem, requirements, technical design, acceptance criteria, tests, DoD)
-- [ ] `docs/specs/index.md` — all specs and their dependencies
-- [ ] `AGENTS.md` + thin model-specific adapters (`CLAUDE.md`) — agent operating contract, task IDs, spec references, allowed paths, test requirements, report format
-- [ ] `docs/validation/definition-of-done.md` — what "done" means
-- [ ] `docs/validation/quality-gates.md` — how to verify completion
+- [x] **Repository strategy** — two-crate workspace, upstream dependency and scoped patch policy in architecture.md
+- [x] **Module map** — responsibilities, state/interfaces/events, failures, tests and performance notes
+- [x] **Fixed-step simulation and RNG** — ordered tick, separate streams and limited repeatability claims
+- [x] **Performance plan** — scenarios/metrics and verified development-hardware inventory; no measured budgets
+- [x] **Testing layers** — scoped unit/integration/invariant/headless/native/regression checks; benchmarks separate
+- [x] `docs/architecture/adr/` — eleven approved ADRs, including simulation/RNG
+- [x] `docs/specs/_template.md` — full authoring and evidence requirements
+- [x] `docs/specs/index.md` — eighteen approved specs, dependency graph and GDD/Art requirement coverage
+- [x] `AGENTS.md` + thin `CLAUDE.md` — canonical model-independent workflow and explicit file ownership
+- [x] `docs/validation/definition-of-done.md` — evidence-based completion
+- [x] `docs/validation/quality-gates.md` — commands/acceptance layers and approval boundaries
+- [x] Owner blanket approval recorded in DEC-012; no repeated approval request needed
 
-**Gate:** Implementation agent can pick a READY task and know exactly what to build.
+**Gate:** Contracts define what an implementation task must build, exclude and validate. Specs are APPROVED; actual READY tasks require Stage 5 assignment, exact ownership and satisfied dependencies. The documentary audit result is recorded in quality-gates.md (Stage 4 and 5 documentary record).
 
 ---
 
 ## Stage 5 — Roadmap Finalization
 
-**Objective:** Executable, dependency-aware plan in 5 phases.  
+**Objective:** Executable, dependency-aware plan in 5 phases. **Deliverable:** [ROADMAP.md](ROADMAP.md) (named `PLAN.md` in PROMPT.md section 8; the repository keeps stages here and tasks there). Approved under DEC-013.
 **Gate:** Internally consistent; next tasks are READY.
 
 ### Five Phases
@@ -145,24 +154,24 @@ Execution plan across 6 stages as defined in `PROMPT.md`. Each stage has approva
 
 ### Task Structure
 
-- [ ] Phase hierarchy: Phase → Milestone → Task with stable IDs (`ENG-P1-001`, `GAME-P2-004`)
-- [ ] Each task: title, status, dependencies, spec reference, complexity, acceptance criteria, verification
-- [ ] Task sizing: fits in one reviewable change
-- [ ] Dashboard: current phase/milestone, next READY tasks, blockers, latest verified checkpoint
-- [ ] Phase entry/exit criteria measurable and checkable
-- [ ] Circular dependencies checked and resolved
-- [ ] Realistic for one developer with AI agents
+- [x] Phase hierarchy: Phase → Milestone → Task with stable IDs (`ENG-P1-001`, `GAME-P2-004`)
+- [x] Each task: title, status, dependencies, spec reference, complexity, acceptance criteria, verification
+- [x] Task sizing: fits in one reviewable change
+- [x] Dashboard: current phase/milestone, next READY tasks, blockers, latest verified checkpoint
+- [x] Phase entry/exit criteria measurable and checkable
+- [x] Circular dependencies checked and resolved
+- [x] Realistic for one developer with AI agents
 
 ---
 
 ## Stage 6 — Review Handoff
 
-**Objective:** Self-contained prompt for adversarial principal reviewer.  
-**Gate:** Review completed and reported.
+**Objective:** Self-contained prompt for adversarial principal reviewer.
+**Gate:** Self-contained review handoff prepared; actual independent review is a separate event and must not be claimed before it occurs.
 
 ### Deliverable
 
-- [ ] `docs/reviews/` — reviewer prompt and findings from Claude Fable 5.1
+- [x] `PROJECT-REVIEW.md` — self-contained prompt for Claude Fable 5.1; the actual review was performed on 2026-10-24 and recorded in `docs/reviews/2026-10-24-planning-review.md` (verdict CHANGES REQUIRED; all findings addressed under DEC-013)
   - Research quality, game design, Bevy architecture, fork sustainability, specs, roadmap realism
   - Developer experience, security, licensing, IP
   - Verdict: APPROVED / APPROVED WITH CONDITIONS / CHANGES REQUIRED / REJECTED
@@ -173,24 +182,22 @@ Execution plan across 6 stages as defined in `PROMPT.md`. Each stage has approva
 
 Before declaring planning complete:
 
-- [ ] Traceability: Evidence → Decision → Requirement (GDD) → ADR/Architecture → Spec → Roadmap task → Acceptance test
-- [ ] Flag any requirement with no task
-- [ ] Flag any task with no requirement
-- [ ] Flag any decision with no rationale
-- [ ] Flag any contradiction between documents
+- [x] Traceability: Evidence → Decision → Requirement (GDD) → ADR/Architecture → Spec → Roadmap task → Acceptance test
+- [x] Flag any requirement with no task
+- [x] Flag any task with no requirement
+- [x] Flag any decision with no rationale
+- [x] Flag any contradiction between documents
 
 ---
 
-## Overnight Execution Notes
+## Execution notes
 
-- **Checkpoint after each stage** and commit with message: `docs(stage-X): checkpoint after [task]`
-- **Keep working directory clean** — `git status` before each session
-- **Record all decisions** in `docs/decisions/` with links
-- **Link specs to GDD** — don't duplicate information
-- **Update this file** as progress happens
+- Commit per reviewable task with Conventional Commits; stage exact paths, never blanket-add.
+- Keep `git status` clean before each session; record decisions in `docs/decisions/`.
+- Update this dashboard when a task changes status.
 
-**Branch:** `main` (can switch to `overnight/research` if long session)
+**Branch:** `main`.
 
 ---
 
-**Last Checkpoint:** 2026-10-23 — Setup complete, ready for Stage 1.
+**Last Checkpoint:** 2026-10-24 — planning review corrections applied; Phase 1 Foundation closed (release 0.3.0). Continue in ROADMAP.md.

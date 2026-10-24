@@ -1,6 +1,30 @@
 # Source ledger and evidence conventions
 
-Status: Stage 1 research record. **All sources below were accessed on 2026-10-23.** A source ID used in another research document resolves to the URL, revision and limitations here. Access dates are not publication dates. Only relevant sections were inspected unless explicitly stated; retrieval is not execution or independent replication.
+Status: research and architecture source ledger. **Stage 1 sources were accessed on 2026-10-23; E4 sources below on 2026-10-24.** A source ID resolves to its URL, revision and limitations here. Access dates are not publication dates. Only relevant sections were inspected unless stated; retrieval is not execution or independent replication.
+
+## Stage 4 verification
+
+All E4 records accessed 2026-10-24. Verified means source/document availability and the stated fact; no project build or compatibility test was performed. Candidate version choices are Recommendations, not claims to use every library's latest release.
+
+| ID | Primary source and revision | Verified scope / limits |
+| --- | --- | --- |
+| E4-01 | [Bevy Cargo.toml](https://raw.githubusercontent.com/bevyengine/bevy/v0.20.0/Cargo.toml), tag v0.20.0 | Version, declared Rust 1.97.1 minimum, edition and feature names; no project build. |
+| E4-02 | [Bevy release](https://github.com/bevyengine/bevy/releases/tag/v0.20.0), latest redirect on access | Latest endpoint resolved to 0.20.0; release page shows October 8. |
+| E4-03 | [Headless example](https://raw.githubusercontent.com/bevyengine/bevy/v0.20.0/examples/app/headless.rs), v0.20.0 | Official example of excluding window/rendering; not executed. |
+| E4-04 | [Fixed timestep example](https://raw.githubusercontent.com/bevyengine/bevy/v0.20.0/examples/ecs/fixed_timestep.rs), v0.20.0 | Explicit fixed schedule/time configuration; project chooses its own 60 Hz. |
+| E4-05 | [Cargo workspaces](https://doc.rust-lang.org/cargo/reference/workspaces.html), current docs snapshot | Shared lockfile and root workspace configuration; exact future implementation must compile. |
+| E4-06 | [Rust 1.99.1 announcement](https://blog.rust-lang.org/2026/10/15/Rust-1.99.1/), 2026-10-15 | Stable release available; no compiler installed by this task. |
+| E4-07 | [Serde 1.0.228](https://docs.rs/serde/1.0.228/serde/), [serde_json 1.0.145](https://docs.rs/serde_json/1.0.145/serde_json/) | Versioned serialization documentation; dependency graph not audited yet. |
+| E4-08 | [rand_chacha 0.9.0](https://docs.rs/rand_chacha/0.9.0/rand_chacha/) | Generator variants and RNG trait re-exports; whole-game determinism remains conditional. |
+| E4-09 | [getrandom 0.3.4 fill](https://docs.rs/getrandom/0.3.4/getrandom/fn.fill.html) | Byte-buffer fill returns errors; source for run-seed adapter. |
+| E4-10 | [sha2 0.10.9](https://docs.rs/sha2/0.10.9/sha2/) | SHA-256 support; no security audit inferred. |
+| E4-11 | [cargo-deny 0.18.4 release](https://github.com/EmbarkStudios/cargo-deny/releases/tag/0.18.4) | Candidate tool release exists; not installed/run. |
+| E4-12 | [std::fs::rename](https://doc.rust-lang.org/std/fs/fn.rename.html), page identifies Rust 1.99.1 | Replacement/error/platform behavior documented. Version-prefixed URL was inaccessible; current documentation identifies the selected version. No crash-durability experiment. |
+| E4-13 | [resvg 0.45.1 release](https://github.com/linebender/resvg/releases/tag/v0.45.1) | Exporter candidate release exists; Windows export not tested. |
+| E4-14 | [Spec Kit template](https://raw.githubusercontent.com/github/spec-kit/main/templates/spec-template.md), main snapshot | Actual template read: scenarios, requirements, entities, measurable outcomes. Commit not resolved; extract these conventions only, no framework adoption or template execution. |
+| E4-15 | [Actions runner images](https://raw.githubusercontent.com/actions/runner-images/main/README.md), main snapshot | windows-2022 listed; hosted image contents change and must be recorded per run. No CI execution. |
+
+Local hardware evidence E4-L01: Windows CIM queries on 2026-10-24 reported Ryzen 7 5700X3D (8 cores/16 threads), RTX 4060, 32 GiB RAM, Windows 11 Pro 10.0.26300, graphics driver 32.0.16.1742. This is a development reference machine, not a minimum requirement or benchmark. Hardware inventory contains no performance measurements.
 
 ## Evidence vocabulary
 

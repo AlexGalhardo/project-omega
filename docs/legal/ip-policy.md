@@ -10,7 +10,7 @@ Do not copy or redistribute proprietary code, assets, music, text, or data files
 
 ## Restricted inspection
 
-Binary or package inspection of Brotato, including REA inventory or extraction, is prohibited until the owner has both checked the applicable EULA and law and explicitly approved a specific question and inspection scope. Ownership of a game copy alone does not satisfy this project gate. Approval must identify the target build/platform, question, permitted operations, excluded files/data, and retention/sharing restrictions. No such approval exists as of this document's creation.
+Binary or package inspection of Brotato, including REA inventory or extraction, is prohibited unless the owner has explicitly approved a specific question and inspection scope and has taken responsibility for the applicable EULA and law. Approval must identify the target build/platform, question, permitted operations, excluded files/data, and retention/sharing restrictions. **Current approval:** [DEC-019](../decisions/decision-register.md#dec-019--scoped-rea-inspection-of-the-owners-brotato-copy) (2026-10-24) covers the owner's Steam Windows copy for the didactic objective in DEC-017.
 
 If approved, the only transferable result is an original behavioral description of rules, formulas, or timings, with uncertainty and evidence recorded. Proprietary source, decompiled code, assembly, screenshots containing extracted assets, and package data must not enter this repository or implementation-agent context as reusable material. Stop and seek a scoped decision if the permitted question cannot be answered without crossing these boundaries.
 

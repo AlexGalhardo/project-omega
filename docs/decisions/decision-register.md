@@ -1,6 +1,6 @@
 # Decision register
 
-Stage 2 decision collection is complete; the decision summary still requires owner approval before Stage 3. This file is the canonical record. The owner instructed the planner on 2026-10-23 to use recommendations for all remaining questions and stop asking further brainstorming questions. Those defaults are recorded below with their evidence and limitations. This does not authorize implementation or approve Stage 3.
+Stage 2 was approved by the owner on 2026-10-23. On 2026-10-24 the owner directed Stage 4, approved all draft/proposed artifacts, and explicitly approved the GDD and Art Bible. This is the canonical approval record. Stage 3/4 documents and specs are approved design contracts; implementation readiness still requires the Stage 5 roadmap, satisfied dependencies and actual validation.
 
 ## DEC-001 — Bevy integration strategy
 
@@ -9,7 +9,7 @@ Stage 2 decision collection is complete; the decision summary still requires own
 | Question | Q01: full fork, upstream with own plugins, or a minimal patch fork? |
 | Options | A: full Bevy fork; B: released upstream Bevy plus own plugins; C: minimal patch fork plus plugins. |
 | Choice | B: released upstream Bevy plus own plugins. |
-| Status | Approved |
+| Status | Superseded by DEC-018 (vendored Bevy fork), 2026-10-24 |
 | Approval evidence | Verified: owner answered yes on 2026-10-23 to the explicit proposal to approve B, retaining a future move to C only for a demonstrated blocker and owner approval. |
 | Rationale | Minimize engine maintenance and preserve time for the game while using Bevy's extension mechanisms. No current requirement demonstrates a need for internal changes. Maintenance-cost comparisons are Inferred, not measured. |
 | Evidence | [Track C](../research/03-bevy-and-fork-strategy.md), especially C01–C16 in the [source ledger](../research/sources.md#track-c). |
@@ -123,7 +123,7 @@ Stage 2 decision collection is complete; the decision summary still requires own
 | --- | --- |
 | Question | How should characters differ, what persists, and what production direction should guide the game? |
 | Choice | Four characters; each starts with one weapon and one unique modifier. Between-run progression unlocks characters, weapons or items through objective challenges, with no permanent attribute bonuses. Visual direction: stylized vector art with readable scrap-robot silhouettes and contrasting industrial colors. Audio production default: original or properly licensed placeholder sounds and music; no paid generation service is required. |
-| Status | Approved (visual/audio defaults accepted under the owner's blanket instruction; detailed implementation remains for Stage 3) |
+| Status | Approved |
 | Approval evidence | Verified owner answer on 2026-10-23 accepted the visual recommendation and instructed the planner to follow recommendations for all remaining questions. The owner explicitly approved the character and unlock choices. Audio is a conservative planning default under that instruction. |
 | Origin | Original character, progression and art direction. Audio placeholders must have documented provenance and license. |
 | Rationale | Character starts and challenge unlocks create variety without persistent power growth; clear silhouettes suit crowded arena combat. |
@@ -136,8 +136,8 @@ Stage 2 decision collection is complete; the decision summary still requires own
 | --- | --- |
 | Question | How should remaining workflow, accessibility, distribution and budget choices be handled without further brainstorming questions? |
 | Choice | Use one repository with a Cargo workspace as the provisional lowest-maintenance layout; no paid tools or external services are prerequisites. Use one difficulty level for the initial 1.0 release (separate from the single game mode count). Keyboard/mouse is the primary input. Controller support and a baseline of readable contrast, scalable UI, remappable controls and reduced screen effects are provisional GDD recommendations, not approved 1.0 requirements. Defer final title, repository visibility and license, commercial/personal release, storefront, budget ceiling, minimum Windows version, hardware target, detailed controller mapping and release date. |
-| Status | Provisional defaults / Deferred choices |
-| Approval evidence | Verified owner instruction on 2026-10-23: follow recommendations for remaining questions and do not ask more questions. The listed defaults are planning recommendations, not claims of measured cost or feasibility. |
+| Status | Approved |
+| Approval evidence | Verified owner instruction on 2026-10-23: follow recommendations for remaining questions and do not ask more questions; subsequently approved the consolidated Stage 2 summary. Approval accepts the listed defaults and deferrals, including one difficulty level. Detailed controller/accessibility proposals still await GDD approval as explicitly stated in the choice. No measured cost or feasibility is claimed. |
 | Rationale | Keep the project economical and accessible while avoiding irreversible choices about branding, legal terms, platform floor or distribution before the GDD and release plan. |
 | Consequences | Stage 3 may propose controls/accessibility and art/audio workflow for review; controller support and accessibility details are not 1.0 commitments until approved with the GDD. Stage 4 must validate workspace and dependency choices. Visibility and licensing must be settled before release or public engine API commitments. No spending or third-party account is authorized by this default. |
 | Revisit condition | Owner review of the Stage 2 summary, GDD/art-bible approval, or implementation evidence identifies a material trade-off. |
@@ -148,4 +148,119 @@ Stage 2 decision collection is complete; the decision summary still requires own
 
 ## Stage 2 boundary
 
-The owner directed that no further brainstorming questions be asked and that remaining recommendations be used as defaults. Final title, commercial/personal release, visibility/license, budget ceiling, hardware floor and release date remain explicitly deferred, with consequences recorded in DEC-010. See the [research queue](../research/open-questions.md) for technical unknowns; it is not a competing product-decision register. The complete Stage 2 summary still requires owner approval before Stage 3 begins.
+**Verified owner approval, 2026-10-23:** the owner approved Stage 2 and requested Stage 3. The approval covers the consolidated DEC-001–DEC-010 summary and its explicit deferrals. Final title, commercial/personal release, visibility/license, budget ceiling, hardware floor and release date remain deferred under DEC-010. See the [research queue](../research/open-questions.md) for technical unknowns. This approval authorizes writing the GDD and Art Bible, not implementation.
+
+## DEC-011 — Stage 3 original design baseline proposal
+
+| Field | Record |
+| --- | --- |
+| Question | Which precise rules and production contracts make the approved direction implementable? |
+| Options | Specify a compact original baseline with explicit provisional values; defer mechanics until implementation; reproduce reference formulas. |
+| Choice | Use [GDD revision 1](../gdd.md) and [Art Bible revision 1](../art-bible.md) as the Stage 4 baseline. Values marked P remain provisional for balance/production validation. |
+| Status | Approved |
+| Evidence | Owner authorized Stage 3, then directed Stage 4 on 2026-10-24 and subsequently explicitly approved both the GDD and Art Bible. This is owner approval, not an independent detailed review or tested balance. Research evidence limits remain linked from both documents. |
+| Rationale | Define testable mechanics, content, failure behavior and replaceable presentation before implementation; retain measured balance/feasibility as future evidence. |
+| Consequences | Includes a proposed 60-tick simulation, formulas, tier/economy rules, full content catalogs, profile/settings persistence, controller/accessibility proposal, offline SVG pipeline and original placeholder audio policy. These are not tested results or architecture API choices. |
+| Revisit condition | Owner Stage 3 review, later architecture findings or playtest evidence; change approved rules through a recorded change request rather than silent redesign. |
+
+## DEC-012 — Stage 4 architecture and spec approval
+
+| Field | Record |
+| --- | --- |
+| Question | May the drafted architecture, ADRs, specs and operating contracts advance out of draft/proposed status? |
+| Options | Approve the planning contracts; retain drafts for owner questions; reject a specific proposal with evidence. |
+| Choice | Approve all authored Stage 4 planning contracts under the owner's explicit blanket approval. Canonical scope is [architecture](../architecture/architecture.md), its eleven ADRs, [18 specs](../specs/index.md), [agent contract](../../AGENTS.md) and validation documents. |
+| Status | Approved |
+| Approval evidence | Verified owner instruction on 2026-10-24: approve all files/items requiring owner acceptance to leave draft. The owner also explicitly approved the GDD and Art Bible. |
+| Rationale | Owner chose to accept recommended planning defaults and continue without repeated approval questions. |
+| Consequences | Mark documents/specs APPROVED and ADRs Approved; do not mark READY, IMPLEMENTED, VERIFIED or DONE without their separate objective conditions. Stage 5 task/dependency mapping remains to create. No build/test/review result is inferred from approval. |
+| Revisit condition | A concrete implementation incompatibility, test failure or scope conflict requires a recorded change request and targeted verification. |
+
+## DEC-013 — Stage 5 roadmap approval and review corrections
+
+| Field | Record |
+| --- | --- |
+| Question | Is ROADMAP.md approved as the Stage 5 task plan, and may Phase 1 Foundation start? |
+| Options | Approve ROADMAP.md with the review corrections; keep it PROPOSED; reject it. |
+| Choice | Approve [ROADMAP.md](../../ROADMAP.md) as corrected for findings REV-001 through REV-021 of the [2026-10-24 planning review](../reviews/2026-10-24-planning-review.md), and authorize all Phase 1 Foundation tasks in roadmap order. Later phases still require Foundation exit evidence. |
+| Status | Approved |
+| Approval evidence | Verified owner instruction, 2026-10-24 (owner conversation, Brazilian Portuguese): correct every point of the planning review, then start Phase 1 Foundation and leave the project ready for Phase 2 onwards. Approved revision: the first commit that contains this entry; its hash is the `docs(stage-5)` commit recorded in git history. |
+| Rationale | The review found governance and record-keeping gaps, not design defects; the owner chose to fix them and proceed. |
+| Consequences | PLAN.md is the single status file and carries the dashboard. CR-001, CR-002 and CR-003 are filed and approved under DEC-014 and DEC-015. Phase 2 tasks remain TODO until their dependencies are DONE. |
+| Revisit condition | A Foundation result that invalidates a roadmap dependency or estimate. |
+
+## DEC-014 — GDD revision 2: exact rate units and boss request tick
+
+| Field | Record |
+| --- | --- |
+| Question | How are REV-007 (unspecified boss warning start) and REV-008 (`base_rate` without exact unit) resolved? |
+| Options | See [CR-001](change-requests/cr-001-boss-request-tick.md) and [CR-002](change-requests/cr-002-exact-rate-units.md). |
+| Choice | Approve both change requests: `base_rate_centi` integer hundredths of attacks per second, energy multiplier as integer percent, integer interval formula; Wave records carry `boss_request_tick`, authored as 0 for waves 5 and 10. GDD moves to revision 2. No balance value changes. |
+| Status | Approved |
+| Approval evidence | Same owner instruction as DEC-013 ("correct every point of the review"). |
+| Rationale | Removes floating-point boundary ambiguity before SP-006, and fixes boss pacing before SP-008. |
+| Consequences | SP-003 content schemas implement the revised fields in Phase 1. |
+| Revisit condition | Playtest evidence that boss arrival at wave start is poor pacing; change the authored tick, not the schema. |
+
+## DEC-015 — Dependency and tool pins refreshed to latest stable
+
+| Field | Record |
+| --- | --- |
+| Question | Which dependency/tool versions does the Foundation bootstrap pin? |
+| Options | Keep the Stage 4 candidates; refresh to the latest stable releases at bootstrap time. See [CR-003](change-requests/cr-003-dependency-refresh.md). |
+| Choice | Refresh to the latest stable releases verified with `cargo info` on 2026-10-24, pinned exactly: Rust 1.99.1, Bevy 0.20.0, serde 1.0.229, serde_json 1.0.154, rand_chacha 0.10.0, sha2 0.11.1; cargo-deny 0.20.2 and resvg 0.48.1 as tools. getrandom is deferred until native run creation needs it. |
+| Status | Approved |
+| Approval evidence | Owner standing rule (global instructions): always install the latest stable, production-ready version, never pre-releases. |
+| Rationale | Stage 4 candidates were already one or more releases behind; refreshing before the first lockfile costs nothing. |
+| Consequences | Architecture section 2 and ADR-002 reference this decision. The bootstrap evidence records the resolved graph. |
+| Revisit condition | A compile, license or advisory incompatibility; record it through a change request. |
+
+## DEC-016 — Engineering conventions and release process
+
+| Field | Record |
+| --- | --- |
+| Question | Which formatting, versioning and release conventions does the repository use? |
+| Options | Tool defaults; owner conventions from global instructions and the owner's existing repositories. |
+| Choice | Tabs of width 4 everywhere except YAML/Markdown/JSON formats that need spaces (`.editorconfig`, `rustfmt.toml hard_tabs`), markdownlint-cli2, Conventional Commits, SemVer starting at 0.1.0, Keep a Changelog. Releases follow the owner's [vukem](https://github.com/AlexGalhardo/vukem/releases) pattern: tag `vX.Y.Z`, notes extracted from the matching CHANGELOG.md section, archive per platform (Windows x86_64 only), SBOM per archive, `checksums.txt` signed keyless with cosign and a build provenance attestation. |
+| Status | Approved |
+| Approval evidence | Owner instruction, 2026-10-24, naming CI/CD with GitHub Actions, Keep a Changelog, SemVer, `.editorconfig` with tabs, formatter, linter and the vukem release pattern. |
+| Rationale | One consistent convention across the owner's repositories. |
+| Consequences | Release workflow and process are documented in [docs/release.md](../release.md). Pushing tags remains an owner action. |
+| Revisit condition | A storefront or distribution decision under DEC-010. |
+
+## DEC-017 — The project's two primary objectives
+
+| Field | Record |
+| --- | --- |
+| Question | What is this project for? |
+| Choice | Two primary objectives, both for didactic learning: **(1)** study the owner's legitimately purchased Steam copy of Brotato with REA (reverse engineering assistance) and progressively re-create the game; **(2)** develop the project's own 2D-focused game engine as a direct fork of [Bevy](https://bevy.org/). |
+| Status | Approved |
+| Approval evidence | Verified owner instruction, 2026-10-24 (owner conversation): two primary objectives "para fins didáticos de aprendizado", with the Brotato installation at `C:\Program Files (x86)\Steam\steamapps\common\Brotato` purchased on Steam. |
+| Rationale | The owner's learning goals: how a shipped arena-survival game works internally, and how a production engine works by owning and extending one. |
+| Consequences | DEC-018 replaces DEC-001's upstream-only strategy with a vendored fork. DEC-019 authorizes scoped REA inspection. The re-creation stays an independent implementation: code, art, audio, text and names in this repository remain original (IP policy). Inspection findings can calibrate the GDD only through change requests. |
+| Revisit condition | Any plan to distribute builds publicly, change repository visibility or sell the game requires a new owner decision and a legal review first. |
+
+## DEC-018 — Engine from a vendored Bevy fork
+
+| Field | Record |
+| --- | --- |
+| Question | How is "own engine as a direct Bevy fork" implemented? |
+| Options | A: GitHub fork referenced by git SHA; B: Bevy source vendored inside this repository and patched in place; C: keep upstream crates (DEC-001 B). |
+| Choice | B. The published Bevy 0.20.0 crates (upstream commit `b3bdd75becaffe9a16677cf5bae5bd6d198f052b`) live in [`engine/bevy/`](../../engine/README.md) and the root manifest patches crates.io to them. No GitHub fork. The fork evolves in parallel with the game: new engine code when the game needs it, and fixes for engine bugs. `crates/omega_2d` remains the project's own 2D layer on top. |
+| Status | Approved; supersedes DEC-001 choice B |
+| Approval evidence | Verified owner instruction, 2026-10-24: download the code into this project and develop it in parallel with the game; no explicit GitHub fork. |
+| Rationale | Full ownership of engine code for learning, with the smallest operational cost: one repository, one lockfile, no submodule or git dependency. |
+| Consequences | [ADR-012](../architecture/adr/012-vendored-bevy-fork.md) supersedes ADR-001. Every engine change is logged in the engine patch log with a regression test. Upgrades re-apply logged patches onto a new release. About 37 MB of engine source is committed. |
+| Revisit condition | Repository size or upgrade effort becomes a measured problem. |
+
+## DEC-019 — Scoped REA inspection of the owner's Brotato copy
+
+| Field | Record |
+| --- | --- |
+| Question | Under which scope may REA inspect Brotato (IP policy "Restricted inspection")? |
+| Choice | **Target:** the owner's Steam Windows build at `C:\Program Files (x86)\Steam\steamapps\common\Brotato` (`Brotato.exe`, `Brotato.pck`). **Question:** how the game's rules, formulas, timings, wave/shop/stat systems and data model work, for didactic re-creation. **Permitted operations:** local, read-only REA inventory and static analysis (including Godot PCK inspection), plus ordinary play. **Excluded:** DRM or license bypass; modifying the installation; committing, or pasting into implementation context, any extracted asset, script, decompiled code, raw data table or screenshot of extracted assets. **Retention:** raw REA output stays outside the repository (for example `%LOCALAPPDATA%\ProjectOmega\rea\`); only original prose notes describing behavior, with uncertainty, enter `docs/research/brotato-notes/`. |
+| Status | Approved, owner-asserted legal basis |
+| Approval evidence | Verified owner instruction, 2026-10-24 (DEC-017). The owner states the copy was purchased on Steam. EULA and law review are the owner's responsibility; no agent verified them and this is not a legal opinion. |
+| Rationale | Fulfils objective (1) while keeping the repository free of proprietary material. |
+| Consequences | REA is not yet installed (verified 2026-10-24: no `rea` on PATH). Setup follows [Track B](../research/02-rea.md) as task RES-P1-001. REA output may travel to a remote model provider; the inspecting session must know that before running it. |
+| Revisit condition | Any need to copy material instead of describing it; any distribution plan. |
