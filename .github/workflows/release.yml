@@ -68,7 +68,7 @@ jobs:
           $name = "project-omega_${env:VERSION}_windows_amd64"
           New-Item -ItemType Directory -Force "dist/$name/assets" | Out-Null
           Copy-Item target/release/omega-game.exe, target/release/omega-content.exe, target/release/omega-sim.exe "dist/$name/"
-          Copy-Item -Recurse assets/presentation, assets/generated, assets/content "dist/$name/assets/"
+          Copy-Item -Recurse assets/presentation, assets/generated, assets/content, assets/audio "dist/$name/assets/"
           Copy-Item README.md, CHANGELOG.md "dist/$name/"
           Copy-Item engine/bevy/bevy/LICENSE-MIT "dist/$name/LICENSE-BEVY-MIT"
           Copy-Item engine/bevy/bevy/LICENSE-APACHE "dist/$name/LICENSE-BEVY-APACHE"

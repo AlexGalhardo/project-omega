@@ -28,7 +28,7 @@ struct MessageText;
 struct ActionQueue(Vec<UiAction>);
 
 #[derive(Resource, Default)]
-struct UiMessage(String);
+pub struct UiMessage(pub String);
 
 #[derive(Resource, Default)]
 struct LastScreen(Option<ScreenView>);

@@ -133,8 +133,12 @@ pub fn run(options: ClientOptions) -> AppExit {
 	.add_systems(Startup, spawn_preview)
 	.add_systems(Update, (screenshot_and_exit, benchmark));
 	if app.world().resource::<Options>().0.play {
-		app.add_plugins((LivePresentationPlugin, crate::ui::client::UiClientPlugin))
-			.add_systems(Startup, start_play.after(spawn_preview));
+		app.add_plugins((
+			LivePresentationPlugin,
+			crate::ui::client::UiClientPlugin,
+			crate::audio::client::AudioCuePlugin,
+		))
+		.add_systems(Startup, start_play.after(spawn_preview));
 	}
 	app.run()
 }

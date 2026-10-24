@@ -1,6 +1,7 @@
 //! Project Omega game library shared by the native client, content CLI and headless
 //! scenario runner. Rules live here; reusable engine contracts live in `omega_2d`.
 
+pub mod audio;
 pub mod combat;
 pub mod content;
 pub mod diagnostics;

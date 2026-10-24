@@ -1,6 +1,6 @@
 # ROADMAP.md: development plan for Project Omega
 
-> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-012 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
+> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-013 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
 >
 > This is the onboarding file. It says where the project is, what the next task is and how to prove it is done. Every work session, human or AI agent, starts here.
 >
@@ -702,7 +702,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Asserts:** V14 prototype subset; native run — plus `scripts/check.ps1` exit 0.
 
-#### GAME-P2-012. Cleared placeholder event audio (S) — TODO
+#### GAME-P2-012. Cleared placeholder event audio (S) — IN_REVIEW
 
 **Depends on:** GAME-P2-011; ENG-P1-005 [ENG-VIS-001 asset manifest]. **Read first:** [SP-015](docs/specs/sp-015-audio.md) (Art Bible §11; GDD-016).
 
@@ -710,10 +710,10 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Promote: files `crates/omega_game/src/audio/`, cleared placeholder files with provenance records
-- [ ] Cue mapping from presentation records (hit, shop, wave start/end); mute and state teardown
-- [ ] Native audition note; simulation trace unchanged with audio on/off
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
+- [x] Promote: files `crates/omega_game/src/audio/`, cleared placeholder files with provenance records
+- [x] Cue mapping from presentation records (hit, shop, wave start/end); mute and state teardown
+- [ ] Native audition (owner, questions-to-dev.md); simulation trace unchanged with audio on/off
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
 
 **Asserts:** V15 AC1/2; native audition — plus `scripts/check.ps1` exit 0.
 
