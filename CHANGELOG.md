@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **persist:** Add fault-injected interrupted-write, corrupt, future-schema and quarantine recovery with contract tests (SHA_PLACEHOLDER)
+- **persist:** Add two-slot JSON save envelopes with SHA-256, temp-write verify rename publication, serial generations and separate profile and settings stores (SHA_PLACEHOLDER)
+- **profile:** Add the profile and settings models, idempotent challenge grants on successful wave completion and the frozen per-run unlock snapshot (SHA_PLACEHOLDER)
 - **encounters:** Add the following beam profile (Survey Eye) and verify the Plate Hauler knockback rule ([bbe21a5](https://github.com/AlexGalhardo/project-omega/commit/bbe21a54ea5de8f0ca2c550b4545b8b296c8f966))
 - **encounters:** Add the swept charge and locked ground-strike profiles (Ram Cart, Clamp Walker) ([bbe21a5](https://github.com/AlexGalhardo/project-omega/commit/bbe21a54ea5de8f0ca2c550b4545b8b296c8f966))
 - **encounters:** Add the stationary radial volley and orbit-and-shoot profiles (Spark Hub, Coil Skater) ([bbe21a5](https://github.com/AlexGalhardo/project-omega/commit/bbe21a54ea5de8f0ca2c550b4545b8b296c8f966))

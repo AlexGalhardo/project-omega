@@ -943,7 +943,7 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 **Asserts:** V18 full catalog — plus `scripts/check.ps1` exit 0.
 
-#### GAME-P3-008. Idempotent challenge grants (S) — TODO
+#### GAME-P3-008. Idempotent challenge grants (S) — DONE
 
 **Depends on:** GAME-P3-007. **Read first:** [SP-010](docs/specs/sp-010-progression-save.md) (GDD-013/014 (§13–14); architecture §7; ADR-007).
 
@@ -951,14 +951,14 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 **Microtasks:**
 
-- [ ] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
-- [ ] Write the failing acceptance tests first
-- [ ] Implement within the spec allowed paths
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence
+- [x] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
+- [x] Write the failing acceptance tests first
+- [x] Implement within the spec allowed paths
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence
 
 **Asserts:** V10 AC1/2; DA-14 — plus `scripts/check.ps1` exit 0.
 
-#### GAME-P3-009. Profile/settings save protocol (M) — TODO
+#### GAME-P3-009. Profile/settings save protocol (M) — DONE
 
 **Depends on:** GAME-P3-008. **Read first:** [SP-010](docs/specs/sp-010-progression-save.md) (GDD-013/014 (§13–14); architecture §7; ADR-007).
 
@@ -966,14 +966,14 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 **Microtasks:**
 
-- [ ] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
-- [ ] Write the failing acceptance tests first
-- [ ] Implement within the spec allowed paths
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence
+- [x] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
+- [x] Write the failing acceptance tests first
+- [x] Implement within the spec allowed paths
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence
 
 **Asserts:** V10 save fixtures — plus `scripts/check.ps1` exit 0.
 
-#### GAME-P3-010. Interrupted-write and recovery behavior (M) — TODO
+#### GAME-P3-010. Interrupted-write and recovery behavior (M) — DONE
 
 **Depends on:** GAME-P3-009. **Read first:** [SP-010](docs/specs/sp-010-progression-save.md) (GDD-013/014 (§13–14); architecture §7; ADR-007).
 
@@ -981,10 +981,10 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 **Microtasks:**
 
-- [ ] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
-- [ ] Write the failing acceptance tests first
-- [ ] Implement within the spec allowed paths
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence
+- [x] Promote to READY: assign exact files/globs and name one test per acceptance criterion (rule 1.2); expand these microtasks
+- [x] Write the failing acceptance tests first
+- [x] Implement within the spec allowed paths
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence
 
 **Asserts:** V10 AC3–5; native persistence — plus `scripts/check.ps1` exit 0.
 

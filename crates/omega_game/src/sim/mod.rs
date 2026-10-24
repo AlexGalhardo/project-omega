@@ -207,6 +207,10 @@ pub enum PresentationKind {
 		sim_id: u64,
 		position: [f64; 2],
 	},
+	/// A challenge was granted for the first time (profile progression).
+	UnlockGranted {
+		id: String,
+	},
 	PickupCollected {
 		value: u32,
 	},

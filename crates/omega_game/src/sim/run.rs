@@ -2,7 +2,7 @@
 //! (SP-011, GDD section 4). Transitions resolve in `TickSet::Transition`, after damage
 //! and collection, and death is always decided before wave completion.
 
-use super::{GameTick, TickSet};
+use super::{GameTick, PresentationKind, PresentationQueue, SimTick, TickSet};
 use crate::combat::actor::{
 	ContentRes, Health, Invulnerability, Loadout, Pickup, Player, Pose2, PreviousPose2, Scrap,
 	SpawnError, spawn_player,
@@ -13,6 +13,7 @@ use crate::combat::weapons::{EmittedShapes, HitLedger, Projectile, WeaponTimers}
 use crate::encounters::hostile::HostileProjectile;
 use crate::encounters::{WaveError, WaveRuntime, complete_wave, start_wave};
 use crate::input::AimOrigin;
+use crate::profile::{Profile, grant_for_wave_completion};
 use crate::shop::{RunBuild, ShopVisit, open_shop};
 use bevy::math::DVec2;
 use bevy::prelude::*;
@@ -93,6 +94,38 @@ fn settle(world: &mut World, outcome: Outcome) {
 		scrap,
 	});
 	run.settlements += 1;
+	if let Some(mut profile) = world.get_resource_mut::<Profile>() {
+		profile.completed_runs += 1;
+		if outcome == Outcome::Victory {
+			profile.victories += 1;
+		}
+		world.insert_resource(ProfileDirty);
+	}
+}
+
+/// Set whenever the in-memory profile changed and a save is owed.
+#[derive(Resource, Debug, Default, Clone, Copy, PartialEq, Eq)]
+pub struct ProfileDirty;
+
+/// Challenge evaluation on a successful wave completion (after death precedence).
+fn grant_challenges(world: &mut World, wave: u32) {
+	if !world.contains_resource::<Profile>() {
+		return;
+	}
+	let content = world.resource::<ContentRes>().0.clone();
+	let granted = {
+		let mut profile = world.resource_mut::<Profile>();
+		grant_for_wave_completion(&content, &mut profile, wave)
+	};
+	if granted.is_empty() {
+		return;
+	}
+	world.insert_resource(ProfileDirty);
+	let tick = *world.resource::<SimTick>();
+	let mut queue = world.resource_mut::<PresentationQueue>();
+	for id in granted {
+		queue.push(tick, PresentationKind::UnlockGranted { id });
+	}
 }
 
 fn clear_transients(world: &mut World) {
@@ -270,6 +303,7 @@ fn run_transitions(world: &mut World) {
 		let run = world.resource::<Run>();
 		(run.wave, run.total_waves)
 	};
+	grant_challenges(world, wave);
 	if wave >= total {
 		settle(world, Outcome::Victory);
 		world.resource_mut::<Run>().state = RunState::Victory;
