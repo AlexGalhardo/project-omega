@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **ui:** Add the prototype HUD, shop, replacement prompt, pause, abandon and result screens as view models with keyboard and mouse widgets, plus --fast-forward-ticks for evidence captures (SHA_PLACEHOLDER)
+- **ui:** Add the prototype HUD, shop, replacement prompt, pause, abandon and result screens as view models with keyboard and mouse widgets, plus --fast-forward-ticks for evidence captures ([8477a0a](https://github.com/AlexGalhardo/project-omega/commit/8477a0a77ddf46548e342d165e35c9f70e9885ec))
 - **research:** Record the RES-P2-002 Brotato study note (original prose; REA cannot read the Godot package, so claims are Inferred or Unknown) ([0cd3d48](https://github.com/AlexGalhardo/project-omega/commit/0cd3d4800350f0772eced3ad2999671cb820a3ad))
 - **research:** Record the RES-P2-001 Brotato study note (original prose; REA cannot read the Godot package, so claims are Inferred or Unknown) ([0cd3d48](https://github.com/AlexGalhardo/project-omega/commit/0cd3d4800350f0772eced3ad2999671cb820a3ad))
 - **research:** Record the RES-P1-001 Brotato study note (original prose; REA cannot read the Godot package, so claims are Inferred or Unknown) ([0cd3d48](https://github.com/AlexGalhardo/project-omega/commit/0cd3d4800350f0772eced3ad2999671cb820a3ad))
