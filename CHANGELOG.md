@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **encounters:** Add chase enemies, authored batch scheduling, spawn warnings with postponement and cancellation, common scaling and timer completion with SP-008 contract tests (DA-11, DA-18) (SHA_PLACEHOLDER)
+- **encounters:** Add chase enemies, authored batch scheduling, spawn warnings with postponement and cancellation, common scaling and timer completion with SP-008 contract tests (DA-11, DA-18) ([4e61fab](https://github.com/AlexGalhardo/project-omega/commit/4e61fab82f9b9726f516875bb3c812bc30263050))
 - **combat:** Add damage, crit, knockback, death, scrap pickup, contact damage with 36-tick invulnerability and regeneration resolution with SP-007 contract tests (DA-05, DA-06, DA-13) ([0d879b3](https://github.com/AlexGalhardo/project-omega/commit/0d879b38095657dcce6fa3d22ae22f91db8b78ac))
 - **combat:** Add the player actor spawn and tick movement (DA-01, DA-07) with SP-007 contract tests ([75e649a](https://github.com/AlexGalhardo/project-omega/commit/75e649ad8954481b9a6f90e9a914f6bdba1aa256))
 - **input:** Add the keyboard/mouse action buffer, aim mapping and focus pause with SP-005 contract tests ([b6d8691](https://github.com/AlexGalhardo/project-omega/commit/b6d86910198fe3b3d074abaffa86ad1ef19f0124))
