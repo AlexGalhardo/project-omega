@@ -1,0 +1,84 @@
+name: CI
+
+# Correctness CI (ADR-009, quality-gates.md). Read-only permissions, no secrets.
+# Hosted runners are not a graphics performance reference.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+  ZERO_SEED: "0000000000000000000000000000000000000000000000000000000000000000"
+
+jobs:
+  rust:
+    name: Rust (fmt, clippy, tests, client)
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # rust-toolchain.toml pins 1.99.1; rustup on the runner installs it on first use.
+      - name: Toolchain
+        run: |
+          rustup show active-toolchain
+          rustc --version
+          cargo --version
+          echo "ImageOS=$env:ImageOS ImageVersion=$env:ImageVersion"
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2.9.3
+      - name: Format
+        run: cargo fmt --all -- --check
+      - name: Clippy (headless core)
+        run: cargo clippy --workspace --no-default-features --all-targets --locked -- -D warnings
+      - name: Test (headless core)
+        run: cargo test --workspace --no-default-features --locked
+      - name: Content validation
+        run: |
+          cargo run -q -p omega_game --no-default-features --locked --bin omega-content -- validate crates/omega_game/tests/fixtures/content/full --profile full
+          cargo run -q -p omega_game --no-default-features --locked --bin omega-content -- validate crates/omega_game/tests/fixtures/content/prototype --profile prototype
+      - name: Headless repeatability scenario
+        run: cargo run -q -p omega_game --no-default-features --locked --bin omega-sim -- --scenario repeatability --seed $env:ZERO_SEED --ticks 600
+      - name: Check client
+        run: cargo check -p omega_game --features client --locked
+      - name: Clippy (client)
+        run: cargo clippy -p omega_game -p omega_2d --features client --all-targets --locked -- -D warnings
+      - name: Test client contracts
+        run: cargo test -p omega_2d --features client --locked --test visual_contract --test asset_contract
+      - name: Validate exported assets
+        shell: powershell
+        run: ./scripts/validate-assets.ps1 -Manifest assets/presentation/proof-manifest.json
+
+  deny:
+    name: Dependency policy (cargo-deny)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: taiki-e/install-action@1e29709c0ec63babbe8f266397a465f29a825f91 # v2.87.31
+        with:
+          tool: cargo-deny@0.20.2
+      - name: cargo deny check
+        run: |
+          cargo deny --version
+          cargo deny check
+
+  markdown:
+    name: Lint (Markdown)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: DavidAnson/markdownlint-cli2-action@21c1be1b93ad9ed58fa840aacc3f279cde2a72ff # v24.2.0
+        with:
+          globs: "**/*.md"

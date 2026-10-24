@@ -1,0 +1,10 @@
+version: 2
+updates:
+  # Action SHAs only. Cargo pins are exact and change through a recorded decision
+  # (DEC-015); Bevy is the vendored fork in engine/bevy.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: ci
