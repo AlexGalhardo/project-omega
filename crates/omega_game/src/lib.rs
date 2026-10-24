@@ -2,6 +2,7 @@
 //! scenario runner. Rules live here; reusable engine contracts live in `omega_2d`.
 
 pub mod audio;
+pub mod balance;
 pub mod combat;
 pub mod content;
 pub mod diagnostics;
