@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **content:** Ship the prototype content subset in assets/content, load it in the client sandbox and validate it in the local gate and release package (SHA_PLACEHOLDER)
 - **shop:** Add atomic buy, upgrade, replacement and energy-allocation commands with stale-revision and no-RNG-change rejection (DA-02, DA-08, DA-09) ([2d848a3](https://github.com/AlexGalhardo/project-omega/commit/2d848a3637c54bf5179ea74576a189a0bbf80678))
 - **shop:** Add shop eligibility, one-ceiling prices, two/two offer draws with fallback and one paid refresh ([2d848a3](https://github.com/AlexGalhardo/project-omega/commit/2d848a3637c54bf5179ea74576a189a0bbf80678))
 - **client:** Add live presentation (SimId view map, pose interpolation, exact projectile core size, per-frame queue drain) and the --play sandbox with contract tests ([8d602b7](https://github.com/AlexGalhardo/project-omega/commit/8d602b7ddf6c9184dc6290b9e7065358c3ea33e5))

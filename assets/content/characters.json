@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "records": [
+    {
+      "id": "char_patch",
+      "display_name": "Patch",
+      "visual_id": "visual_char_patch",
+      "starting_weapon_id": "wpn_bolt",
+      "modifier": {
+        "stat": "max_hp",
+        "value": 20
+      },
+      "initial": true
+    }
+  ]
+}

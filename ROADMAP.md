@@ -1,6 +1,6 @@
 # ROADMAP.md: development plan for Project Omega
 
-> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-009 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
+> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-010 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
 >
 > This is the onboarding file. It says where the project is, what the next task is and how to prove it is done. Every work session, human or AI agent, starts here.
 >
@@ -655,7 +655,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Asserts:** V09 AC2/4; DA-02/03/08/09 — plus `scripts/check.ps1` exit 0.
 
-#### GAME-P2-009. Exact prototype content subset (S) — TODO
+#### GAME-P2-009. Exact prototype content subset (S) — DONE
 
 **Depends on:** GAME-P1-003. **Read first:** [SP-018](docs/specs/sp-018-production-content.md) (GDD §9–11, §13, §17; Art Bible §12).
 
@@ -663,10 +663,10 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Promote: create `assets/content/` from the prototype fixture (SP-018 owns production data)
-- [ ] `omega-content validate assets/content --profile prototype` passes and `--profile full` fails
-- [ ] Client and harness load `assets/content/` explicitly in prototype profile
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
+- [x] Promote: create `assets/content/` from the prototype fixture (SP-018 owns production data)
+- [x] `omega-content validate assets/content --profile prototype` passes and `--profile full` fails
+- [x] Client and harness load `assets/content/` explicitly in prototype profile
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
 
 **Asserts:** V03 profile tests; V18 subset fixtures — plus `scripts/check.ps1` exit 0.
 

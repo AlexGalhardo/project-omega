@@ -141,13 +141,11 @@ fn dev_seed() -> RunSeed {
 	RunSeed::from_hex(&"5a".repeat(32)).expect("static seed")
 }
 
-/// Development sandbox: the full fixture catalog stands in until GAME-P2-009 ships the
-/// exact prototype subset and GAME-P2-010 the lifecycle.
+/// Development sandbox on the shipped prototype content until GAME-P2-010 adds the lifecycle.
 fn start_play(world: &mut World) {
 	use crate::combat::actor::{ArenaRes, ContentRes, spawn_player};
 	use crate::content::{Profile, load_dir};
-	let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/content/full");
-	let content = match load_dir(&dir, Profile::Full) {
+	let content = match load_dir(&asset_root().join("content"), Profile::Prototype) {
 		Ok(c) => c,
 		Err(e) => {
 			error!("cannot load play content: {e:?}");

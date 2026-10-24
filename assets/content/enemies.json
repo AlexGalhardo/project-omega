@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "records": [
+    {
+      "id": "enemy_chaser",
+      "display_name": "Scrapper",
+      "visual_id": "visual_enemy_chaser",
+      "base_hp": 24,
+      "armor": 0,
+      "radius_lu": 13,
+      "speed_lu_s": 70,
+      "contact_damage": 8,
+      "scrap": 2,
+      "knockback_multiplier": 1.0,
+      "behavior": {
+        "profile": "chase"
+      }
+    },
+    {
+      "id": "enemy_runner",
+      "display_name": "Wire Rat",
+      "visual_id": "visual_enemy_runner",
+      "base_hp": 14,
+      "armor": 0,
+      "radius_lu": 10,
+      "speed_lu_s": 125,
+      "contact_damage": 6,
+      "scrap": 2,
+      "knockback_multiplier": 1.0,
+      "behavior": {
+        "profile": "chase"
+      }
+    }
+  ]
+}

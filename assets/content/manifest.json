@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "authoring_notes": "Fixture transcribed from GDD revision 2; values are provisional (P).",
+  "files": {
+    "characters": "characters.json",
+    "weapons": "weapons.json",
+    "items": "items.json",
+    "enemies": "enemies.json",
+    "bosses": "bosses.json",
+    "arenas": "arenas.json",
+    "waves": "waves.json",
+    "shop": "shop.json",
+    "unlocks": "unlocks.json"
+  }
+}
