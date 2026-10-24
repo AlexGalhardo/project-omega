@@ -9,7 +9,7 @@ use omega_game::client::{BenchmarkOptions, ClientOptions, run};
 use std::path::PathBuf;
 use std::process::ExitCode;
 
-const USAGE: &str = "usage: omega-game [--resolution WxH] [--catalog FILE] [--screenshot PATH] [--play] [--benchmark PERF-ID --duration-seconds N --output PATH]";
+const USAGE: &str = "usage: omega-game [--resolution WxH] [--catalog FILE] [--screenshot PATH] [--play [--fast-forward-ticks N]] [--benchmark PERF-ID --duration-seconds N --output PATH]";
 
 fn parse() -> Result<ClientOptions, String> {
 	let mut o = ClientOptions::default();
@@ -29,6 +29,9 @@ fn parse() -> Result<ClientOptions, String> {
 			}
 			"--catalog" => o.catalog = value()?,
 			"--play" => o.play = true,
+			"--fast-forward-ticks" => {
+				o.fast_forward_ticks = value()?.parse().map_err(|_| "bad tick count")?;
+			}
 			"--screenshot" => o.screenshot = Some(PathBuf::from(value()?)),
 			"--benchmark" => bench = Some(value()?),
 			"--duration-seconds" => {

@@ -8,7 +8,7 @@ publish.workspace = true
 
 [features]
 default = ["client"]
-client = ["bevy/2d", "bevy/ui", "bevy/audio", "omega_2d/client"]
+client = ["bevy/2d", "bevy/ui", "bevy/audio", "bevy/default_font", "omega_2d/client"]
 
 [dependencies]
 bevy.workspace = true

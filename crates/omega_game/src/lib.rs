@@ -8,6 +8,7 @@ pub mod encounters;
 pub mod input;
 pub mod shop;
 pub mod sim;
+pub mod ui;
 
 #[cfg(feature = "client")]
 pub mod client;

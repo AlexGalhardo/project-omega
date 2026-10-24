@@ -41,6 +41,8 @@ pub struct ClientOptions {
 	pub benchmark: Option<BenchmarkOptions>,
 	/// Prototype sandbox: spawn the player and run wave 1 live instead of the static preview.
 	pub play: bool,
+	/// With `play`: run this many simulation ticks before the first frame (evidence captures).
+	pub fast_forward_ticks: u32,
 }
 
 impl Default for ClientOptions {
@@ -52,6 +54,7 @@ impl Default for ClientOptions {
 			screenshot: None,
 			benchmark: None,
 			play: false,
+			fast_forward_ticks: 0,
 		}
 	}
 }
@@ -130,7 +133,7 @@ pub fn run(options: ClientOptions) -> AppExit {
 	.add_systems(Startup, spawn_preview)
 	.add_systems(Update, (screenshot_and_exit, benchmark));
 	if app.world().resource::<Options>().0.play {
-		app.add_plugins(LivePresentationPlugin)
+		app.add_plugins((LivePresentationPlugin, crate::ui::client::UiClientPlugin))
 			.add_systems(Startup, start_play.after(spawn_preview));
 	}
 	app.run()
@@ -157,6 +160,10 @@ fn start_play(world: &mut World) {
 	world.insert_resource(ArenaRes(bounds));
 	if let Err(e) = crate::sim::run::begin_run(world, "char_patch", Default::default()) {
 		error!("cannot begin run: {e:?}");
+	}
+	let ticks = world.resource::<Options>().0.fast_forward_ticks;
+	for _ in 0..ticks {
+		world.run_schedule(crate::sim::GameTick);
 	}
 }
 

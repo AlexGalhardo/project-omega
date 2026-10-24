@@ -1,6 +1,6 @@
 # ROADMAP.md: development plan for Project Omega
 
-> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-011 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
+> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-012 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
 >
 > This is the onboarding file. It says where the project is, what the next task is and how to prove it is done. Every work session, human or AI agent, starts here.
 >
@@ -685,7 +685,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Asserts:** V11 prototype subset; DA-03/11/13/16 — plus `scripts/check.ps1` exit 0.
 
-#### GAME-P2-011. Minimal HUD, shop controls and pause (M) — TODO
+#### GAME-P2-011. Minimal HUD, shop controls and pause (M) — IN_REVIEW
 
 **Depends on:** GAME-P2-010; ENG-P2-001 [ENG-VIS-001]. **Read first:** [SP-014](docs/specs/sp-014-ui-accessibility.md) (GDD-015 (§15); Art Bible §7).
 
@@ -693,11 +693,12 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Promote: files `crates/omega_game/src/ui/`
-- [ ] HUD: HP, wave n/3, timer, scrap, four slots with tier and energy pips
-- [ ] Shop screen: four offers, costs, refresh, energy controls, Start with disabled reasons; keyboard and mouse
-- [ ] Pause overlay; native run through the whole loop with screenshots
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
+- [x] Promote: files `crates/omega_game/src/ui/`
+- [x] HUD: HP, wave n/3, timer, scrap, four slots with tier and energy pips
+- [x] Shop screen: four offers, costs, refresh, energy controls, Start with disabled reasons; keyboard and mouse
+- [x] Pause overlay
+- [ ] Native run through the whole loop (owner, Q in questions-to-dev.md); screenshots `hud.png` and `shop.png` recorded
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
 
 **Asserts:** V14 prototype subset; native run — plus `scripts/check.ps1` exit 0.
 
