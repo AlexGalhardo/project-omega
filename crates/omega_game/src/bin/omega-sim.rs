@@ -7,7 +7,7 @@ use omega_game::sim::{RunSeed, SimHarness, TickInput, TraceEntry};
 use std::process::ExitCode;
 use std::time::Instant;
 
-const USAGE: &str = "usage: omega-sim --scenario smoke|repeatability --seed HEX64 --ticks N [--trace PATH] [--measure --output PATH]";
+const USAGE: &str = "usage: omega-sim --scenario smoke|repeatability --seed HEX64 --ticks N [--trace PATH] [--measure --output PATH] | --scenario perf02 --seed HEX64 --output PATH";
 const MAX_TICKS: u64 = 10_000_000;
 
 struct Args {
@@ -44,10 +44,20 @@ fn parse() -> Result<Args, String> {
 		}
 	}
 	let scenario = scenario.ok_or("--scenario is required")?;
-	if !["smoke", "repeatability"].contains(&scenario.as_str()) {
+	if !["smoke", "repeatability", "perf02"].contains(&scenario.as_str()) {
 		return Err(format!(
 			"scenario `{scenario}` is not available yet; PERF-02..07 arrive with the combat and encounter specs"
 		));
+	}
+	if scenario == "perf02" {
+		return Ok(Args {
+			scenario,
+			seed: seed.ok_or("--seed is required")?,
+			ticks: 1,
+			trace: None,
+			measure: true,
+			output: Some(output.ok_or("perf02 needs --output")?),
+		});
 	}
 	if measure != output.is_some() {
 		return Err("--measure and --output go together".into());
@@ -86,6 +96,9 @@ fn main() -> ExitCode {
 			return ExitCode::from(2);
 		}
 	};
+	if args.scenario == "perf02" {
+		return run_perf02(&args);
+	}
 	let mut timings = Vec::new();
 	let traces = run(args.seed, args.ticks, args.measure.then_some(&mut timings));
 	if args.scenario == "repeatability" {
@@ -136,5 +149,28 @@ fn main() -> ExitCode {
 		traces.len(),
 		last.tick
 	);
+	ExitCode::SUCCESS
+}
+
+fn run_perf02(args: &Args) -> ExitCode {
+	let dir = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("../../assets/content");
+	let report = match omega_game::diagnostics::perf02::run(args.seed, &dir) {
+		Ok(r) => r,
+		Err(e) => {
+			eprintln!("perf02 failed: {e}");
+			return ExitCode::FAILURE;
+		}
+	};
+	let Some(path) = &args.output else {
+		return ExitCode::FAILURE;
+	};
+	if let Some(dir) = std::path::Path::new(path).parent() {
+		let _ = std::fs::create_dir_all(dir);
+	}
+	if let Err(e) = std::fs::write(path, report.to_json()) {
+		eprintln!("cannot write report {path}: {e}");
+		return ExitCode::FAILURE;
+	}
+	println!("perf02: wrote {path}");
 	ExitCode::SUCCESS
 }

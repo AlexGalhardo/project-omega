@@ -2,6 +2,8 @@
 //! never touch RNG streams or authoritative state. Unobserved metrics are listed as
 //! unsupported, never reported as zero.
 
+pub mod perf02;
+
 use serde::Serialize;
 
 /// Nearest-rank percentiles over raw samples (`ceil(p*N)-1` index).

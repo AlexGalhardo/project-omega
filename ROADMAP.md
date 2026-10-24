@@ -1,6 +1,6 @@
 # ROADMAP.md: development plan for Project Omega
 
-> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** GAME-P2-013 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
+> **Current phase:** PROTOTYPE (Phase 2) · **Next task:** QA-P2-002 (promote to READY, then implement). Foundation (Phase 1) closed on 2026-10-24 with release `v0.3.0`; GAME-P1-004 and QA-P1-002 wait only for the owner's native visual review (section 3).
 >
 > This is the onboarding file. It says where the project is, what the next task is and how to prove it is done. Every work session, human or AI agent, starts here.
 >
@@ -733,7 +733,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Asserts:** `cargo test -p omega_game --no-default-features --locked --test balance_contract`; balance report committed; `scripts/check.ps1` exit 0.
 
-#### QA-P2-001. Prototype regressions and first playtest (M) — TODO
+#### QA-P2-001. Prototype regressions and first playtest (M) — IN_REVIEW
 
 **Depends on:** GAME-P2-011, GAME-P2-012. **Read first:** [SP-007](docs/specs/sp-007-combat.md) (GDD-005 (§6), §7.2–7.3, §9.2; DA-05/06/07/13); [SP-009](docs/specs/sp-009-shop.md) (GDD-008 (§8); DA-08/09/10); [SP-011](docs/specs/sp-011-run-states.md) (GDD-003 (§4); DA-03/11/13/16); [SP-016](docs/specs/sp-016-diagnostics.md) (performance plan; architecture §8).
 
@@ -741,10 +741,10 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Seeded loop regression cases for V07/V09/V11 pass
-- [ ] PERF-02 prototype workload report
+- [x] Seeded loop regression cases for V07/V09/V11 pass
+- [x] PERF-02 prototype workload report
 - [ ] **Owner native playtest** (pacing, readability, economy) recorded; this is the Prototype exit and needs the owner
-- [ ] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
+- [x] Run the verification commands and `scripts/check.ps1`; record evidence; close by rule 1.5
 
 **Asserts:** V07/V09/V11; PERF-02 prototype; observed playtest — plus `scripts/check.ps1` exit 0.
 
@@ -769,7 +769,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 ### P3-M1: Full combat/content and durable progression
 
-#### RES-P3-001. REA study: enemies, bosses, waves and spawning (S) — TODO
+#### RES-P3-001. REA study: enemies, bosses, waves and spawning (S) — DONE
 
 **Depends on:** RES-P2-001. **Read first:** rule 1.10; DEC-019; GDD §10–§11; docs/research/brotato-notes/README.md.
 
@@ -777,11 +777,11 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Questions: enemy behavior families and their timings; telegraphs; spawn placement and safety; wave scaling of HP and damage; boss phases and attack schedules; elite or special enemies
-- [ ] Inspect with REA (scope DEC-019) and ordinary play; keep raw output outside the repository
-- [ ] Write the prose note with confidence labels and method; no extracted material
-- [ ] Compare with GDD §10–§11; file change requests or record "keep GDD" per difference; list provisional approvals in `questions-to-dev.md`
-- [ ] Run `bun run lint`; commit the note and any change request
+- [x] Questions: enemy behavior families and their timings; telegraphs; spawn placement and safety; wave scaling of HP and damage; boss phases and attack schedules; elite or special enemies
+- [x] Inspect with REA (scope DEC-019) and ordinary play; keep raw output outside the repository
+- [x] Write the prose note with confidence labels and method; no extracted material
+- [x] Compare with GDD §10–§11; file change requests or record "keep GDD" per difference; list provisional approvals in `questions-to-dev.md`
+- [x] Run `bun run lint`; commit the note and any change request
 
 **Asserts:** note exists and passes markdownlint; `git grep` finds no pasted code or data blocks from the game; every difference has a CR or a recorded decision.
 
@@ -990,7 +990,7 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 ### P3-M2: Complete player-facing systems
 
-#### RES-P3-002. REA study: characters, unlocks, progression and saves (S) — TODO
+#### RES-P3-002. REA study: characters, unlocks, progression and saves (S) — DONE
 
 **Depends on:** RES-P2-002. **Read first:** rule 1.10; DEC-019; GDD §9.1, §13–§15; docs/research/brotato-notes/README.md.
 
@@ -998,11 +998,11 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 **Microtasks:**
 
-- [ ] Questions: character differences and starting kits; unlock conditions; what persists between runs; menu and result flow; accessibility and input options
-- [ ] Inspect with REA (scope DEC-019) and ordinary play; keep raw output outside the repository
-- [ ] Write the prose note with confidence labels and method; no extracted material
-- [ ] Compare with GDD §9.1, §13–§15; file change requests or record "keep GDD" per difference; list provisional approvals in `questions-to-dev.md`
-- [ ] Run `bun run lint`; commit the note and any change request
+- [x] Questions: character differences and starting kits; unlock conditions; what persists between runs; menu and result flow; accessibility and input options
+- [x] Inspect with REA (scope DEC-019) and ordinary play; keep raw output outside the repository
+- [x] Write the prose note with confidence labels and method; no extracted material
+- [x] Compare with GDD §9.1, §13–§15; file change requests or record "keep GDD" per difference; list provisional approvals in `questions-to-dev.md`
+- [x] Run `bun run lint`; commit the note and any change request
 
 **Asserts:** note exists and passes markdownlint; `git grep` finds no pasted code or data blocks from the game; every difference has a CR or a recorded decision.
 
@@ -1147,7 +1147,7 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 ### P4-M1: Production presentation and balance
 
-#### RES-P4-001. REA study: balance numbers and pacing (S) — TODO
+#### RES-P4-001. REA study: balance numbers and pacing (S) — DONE
 
 **Depends on:** RES-P3-001, RES-P3-002. **Read first:** rule 1.10; DEC-019; GDD P values in §7–§11; docs/research/brotato-notes/README.md.
 
@@ -1155,11 +1155,11 @@ Cancelled: Split into GAME-P3-016 to GAME-P3-019 (REV-010).
 
 **Microtasks:**
 
-- [ ] Questions: typical run length; damage and HP curves per wave; economy pacing; item and weapon power bands; difficulty spikes
-- [ ] Inspect with REA (scope DEC-019) and ordinary play; keep raw output outside the repository
-- [ ] Write the prose note with confidence labels and method; no extracted material
-- [ ] Compare with GDD P values in §7–§11; file change requests or record "keep GDD" per difference; list provisional approvals in `questions-to-dev.md`
-- [ ] Run `bun run lint`; commit the note and any change request
+- [x] Questions: typical run length; damage and HP curves per wave; economy pacing; item and weapon power bands; difficulty spikes
+- [x] Inspect with REA (scope DEC-019) and ordinary play; keep raw output outside the repository
+- [x] Write the prose note with confidence labels and method; no extracted material
+- [x] Compare with GDD P values in §7–§11; file change requests or record "keep GDD" per difference; list provisional approvals in `questions-to-dev.md`
+- [x] Run `bun run lint`; commit the note and any change request
 
 **Asserts:** note exists and passes markdownlint; `git grep` finds no pasted code or data blocks from the game; every difference has a CR or a recorded decision.
 

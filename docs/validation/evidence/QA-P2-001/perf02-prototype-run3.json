@@ -1,0 +1,93 @@
+{
+  "metadata": {
+    "scenario": "PERF-02",
+    "package_version": "0.3.0",
+    "build_profile": "release",
+    "target_os": "windows",
+    "target_arch": "x86_64",
+    "commit": "0fffd87",
+    "cpu": "AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD",
+    "seed_hex": "5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a",
+    "content_revision": "d5f2248cfb2c807bd49cb112836f4e6dff1f58daa637a343f7cdb9373c335f75",
+    "settings": [
+      [
+        "profile",
+        "prototype (three waves)"
+      ],
+      [
+        "ticks",
+        "10800"
+      ],
+      [
+        "shop_visits",
+        "2"
+      ],
+      [
+        "final_state",
+        "Victory"
+      ],
+      [
+        "player_present",
+        "true"
+      ],
+      [
+        "input",
+        "scripted strafing and manual-aim sweep"
+      ]
+    ],
+    "percentile_method": "nearest-rank, index ceil(p*N)-1"
+  },
+  "metrics": [
+    {
+      "name": "sim_tick_wall_time",
+      "unit": "us",
+      "samples": 10800,
+      "percentiles": {
+        "p50": 55.9,
+        "p95": 122.7,
+        "p99": 161.6,
+        "max": 914.8
+      }
+    },
+    {
+      "name": "live_enemies",
+      "unit": "count",
+      "samples": 10800,
+      "percentiles": {
+        "p50": 4.0,
+        "p95": 6.0,
+        "p99": 7.0,
+        "max": 8.0
+      }
+    },
+    {
+      "name": "live_projectiles",
+      "unit": "count",
+      "samples": 10800,
+      "percentiles": {
+        "p50": 1.0,
+        "p95": 3.0,
+        "p99": 3.0,
+        "max": 3.0
+      }
+    },
+    {
+      "name": "live_pickups",
+      "unit": "count",
+      "samples": 10800,
+      "percentiles": {
+        "p50": 7.0,
+        "p95": 18.0,
+        "p99": 20.0,
+        "max": 20.0
+      }
+    }
+  ],
+  "unsupported": [
+    "render_frame_time",
+    "gpu_frame_time",
+    "allocation_count",
+    "allocation_bytes",
+    "working_set"
+  ]
+}

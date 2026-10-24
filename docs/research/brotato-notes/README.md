@@ -14,3 +14,6 @@ Original prose notes from studying the owner's purchased Steam copy of Brotato, 
 - [01-inventory.md](01-inventory.md): REA setup, install inventory, tool limits (RES-P1-001).
 - [02-combat-stats-weapons.md](02-combat-stats-weapons.md): stats, weapons, combat (RES-P2-001).
 - [03-shop-economy-run-flow.md](03-shop-economy-run-flow.md): shop, economy, run flow (RES-P2-002).
+- [04-enemies-bosses-waves.md](04-enemies-bosses-waves.md): enemies, bosses, waves, spawning (RES-P3-001).
+- [05-characters-unlocks-saves.md](05-characters-unlocks-saves.md): characters, unlocks, progression, saves (RES-P3-002).
+- [06-balance-pacing.md](06-balance-pacing.md): balance numbers and pacing (RES-P4-001).
