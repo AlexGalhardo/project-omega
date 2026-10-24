@@ -11,4 +11,6 @@ Original prose notes from studying the owner's purchased Steam copy of Brotato, 
 
 ## Index
 
-No notes yet. First task: RES-P1-001 in ROADMAP.md.
+- [01-inventory.md](01-inventory.md): REA setup, install inventory, tool limits (RES-P1-001).
+- [02-combat-stats-weapons.md](02-combat-stats-weapons.md): stats, weapons, combat (RES-P2-001).
+- [03-shop-economy-run-flow.md](03-shop-economy-run-flow.md): shop, economy, run flow (RES-P2-002).

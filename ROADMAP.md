@@ -439,7 +439,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Asserts:** V01 with path-resolved lockfile; engine/README.md
 
-#### RES-P1-001. REA setup and Brotato inventory under DEC-019 (S) — TODO
+#### RES-P1-001. REA setup and Brotato inventory under DEC-019 (S) — DONE
 
 **Depends on:** REA and Ghidra installed 2026-10-24. **Read first:** docs/research/02-rea.md; DEC-019.
 
@@ -449,9 +449,9 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 - [x] Install REA: `rea-agents@6.7.0` registered as a Claude Code MCP server at local scope for this project only (`claude mcp add --scope local rea -e GHIDRA_INSTALL_DIR=... -e JAVA_HOME=... -- cmd.exe /d /c npx -y rea-agents@6.7.0 mcp`), status Connected (2026-10-24)
 - [x] Install the Ghidra backend: Ghidra 12.1.4 (SHA-256 `ddac49f9...d4db` matched the release) in `%LOCALAPPDATA%\Programs\ghidra_12.1.4_PUBLIC`, Temurin JDK 21.0.12; user variables `GHIDRA_INSTALL_DIR` and `JAVA_HOME`
-- [ ] Readiness check on a synthetic target: `rea analyze target/release/omega-content.exe` started Ghidra analysis but hit `provider_timeout`; raise the timeout or use a small synthetic PE, and record tool versions
-- [ ] Brotato is a Godot game: game logic lives in `Brotato.pck`, which REA 6.7.0 does not list as a supported format. Record which questions REA can answer (native `Brotato.exe` is the Godot engine) and ask the owner in `questions-to-dev.md` before adding any other PCK tool
-- [ ] First prose note in `docs/research/brotato-notes/` following its README rules; raw output stays in `%LOCALAPPDATA%\ProjectOmega\rea\`
+- [x] Readiness check on a synthetic target: `rea analyze target/release/omega-content.exe` started Ghidra analysis but hit `provider_timeout`; raise the timeout or use a small synthetic PE, and record tool versions
+- [x] Brotato is a Godot game: game logic lives in `Brotato.pck`, which REA 6.7.0 does not list as a supported format. Record which questions REA can answer (native `Brotato.exe` is the Godot engine) and ask the owner in `questions-to-dev.md` before adding any other PCK tool
+- [x] First prose note in `docs/research/brotato-notes/` following its README rules; raw output stays in `%LOCALAPPDATA%\ProjectOmega\rea\`
 
 **Asserts:** Notes file plus recorded tool versions; no extracted material committed — plus `scripts/check.ps1` exit 0.
 
@@ -479,7 +479,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 ### P2-M1: Playable combat slice
 
-#### RES-P2-001. REA study: player stats, weapons and combat (S) — TODO
+#### RES-P2-001. REA study: player stats, weapons and combat (S) — DONE
 
 **Depends on:** RES-P1-001. **Read first:** rule 1.10; DEC-019; GDD §5–§7 and §9.2; docs/research/brotato-notes/README.md.
 
@@ -487,11 +487,11 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Questions: stat list, caps and stacking; weapon tiers and fire-rate rules; damage, armor and crit formulas; projectile, melee and area hit rules; invulnerability after a hit; knockback
-- [ ] Inspect with REA (scope DEC-019) and ordinary play; keep raw output outside the repository
-- [ ] Write the prose note with confidence labels and method; no extracted material
-- [ ] Compare with GDD §5–§7 and §9.2; file change requests or record "keep GDD" per difference; list provisional approvals in `questions-to-dev.md`
-- [ ] Run `bun run lint`; commit the note and any change request
+- [x] Questions: stat list, caps and stacking; weapon tiers and fire-rate rules; damage, armor and crit formulas; projectile, melee and area hit rules; invulnerability after a hit; knockback
+- [x] Inspect with REA (scope DEC-019) and ordinary play; keep raw output outside the repository
+- [x] Write the prose note with confidence labels and method; no extracted material
+- [x] Compare with GDD §5–§7 and §9.2; file change requests or record "keep GDD" per difference; list provisional approvals in `questions-to-dev.md`
+- [x] Run `bun run lint`; commit the note and any change request
 
 **Asserts:** note exists and passes markdownlint; `git grep` finds no pasted code or data blocks from the game; every difference has a CR or a recorded decision.
 
@@ -609,7 +609,7 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 ### P2-M2: Complete preparation loop
 
-#### RES-P2-002. REA study: shop, economy and run flow (S) — TODO
+#### RES-P2-002. REA study: shop, economy and run flow (S) — DONE
 
 **Depends on:** RES-P1-001. **Read first:** rule 1.10; DEC-019; GDD §3–§4 and §8; docs/research/brotato-notes/README.md.
 
@@ -617,11 +617,11 @@ Critical path: ENG-P1-001 → GAME-P1-001 / GAME-P1-003 / ENG-P1-004 → GAME-P2
 
 **Microtasks:**
 
-- [ ] Questions: currency drops and collection; shop offer count, rarity and weighting; prices and inflation per wave; reroll cost; item stacking and limits; wave-to-shop flow
-- [ ] Inspect with REA (scope DEC-019) and ordinary play; keep raw output outside the repository
-- [ ] Write the prose note with confidence labels and method; no extracted material
-- [ ] Compare with GDD §3–§4 and §8; file change requests or record "keep GDD" per difference; list provisional approvals in `questions-to-dev.md`
-- [ ] Run `bun run lint`; commit the note and any change request
+- [x] Questions: currency drops and collection; shop offer count, rarity and weighting; prices and inflation per wave; reroll cost; item stacking and limits; wave-to-shop flow
+- [x] Inspect with REA (scope DEC-019) and ordinary play; keep raw output outside the repository
+- [x] Write the prose note with confidence labels and method; no extracted material
+- [x] Compare with GDD §3–§4 and §8; file change requests or record "keep GDD" per difference; list provisional approvals in `questions-to-dev.md`
+- [x] Run `bun run lint`; commit the note and any change request
 
 **Asserts:** note exists and passes markdownlint; `git grep` finds no pasted code or data blocks from the game; every difference has a CR or a recorded decision.
 
