@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **qa:** Merge the prototype-loop e2e scripts, typed UI actions and the bot's shop play (11 scripts, 3 profiles x 20 seeds with no findings), fix a Confirm leak into the shop and an energy button that could only be rejected, and write the prototype QA report (SHA_PLACEHOLDER)
+- **qa:** Merge the prototype-loop e2e scripts, typed UI actions and the bot's shop play (11 scripts, 3 profiles x 20 seeds with no findings), fix a Confirm leak into the shop and an energy button that could only be rejected, and write the prototype QA report ([07d9f50](https://github.com/AlexGalhardo/project-omega/commit/07d9f509efd77c1af9c89ca18e64097b3ec6a82a))
 - **balance:** Add the balance simulator (six bot policies, metrics, JSON and Markdown reports, omega-sim --scenario balance) and the CR-004 prototype pressure calibration with before and after reports ([c6b154a](https://github.com/AlexGalhardo/project-omega/commit/c6b154a5f803ec04e0b07bb6451a1631de71eaf6))
 - **ui:** Add UI scale, first-run hints that pause combat, reduced-effects mapping, a two-column panel layout verified at 1280x720 and 1920x1080, and client profile and settings loading and saving ([38372a7](https://github.com/AlexGalhardo/project-omega/commit/38372a7cff766c6dc5b8e75c1bd213b519d88217))
 - **ui:** Add shop comparisons (damage by tier, actual rates, rates per point count for empty slots, item modifiers) and replacement details ([6e7040c](https://github.com/AlexGalhardo/project-omega/commit/6e7040c8b706c4fcf077c6cc8bfeaddae6003932))
